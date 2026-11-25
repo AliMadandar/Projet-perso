@@ -93,19 +93,20 @@ function home(main) {
   const docs = [...state.documents].sort((a, b) => b.updated.localeCompare(a.updated)),
     sent = docs.filter(d => d.status === 'Envoyé'),
     accepted = docs.filter(d => d.status === 'Accepté');
+  const materials = kind => '<span class="material-piece material--' + kind + '" aria-hidden="true"></span>';
   const figures = [
     ['draft', 'doc', 'Brouillons', docs.filter(d => d.status === 'Brouillon').length, 'À préparer'],
     ['sent', 'arrow', 'Devis envoyés', sent.length, 'En attente de réponse'],
     ['accepted', 'check', 'Montant accepté', euros(accepted.reduce((s, d) => s + total(d), 0)), 'Total TTC des devis acceptés']
   ].map(([kind, mark, label, value, detail]) =>
     '<div class="kpi kpi--' + kind + '"><small class="kpi-label">' + icon(mark) + label + '</small>' +
-    '<strong>' + value + '</strong><span>' + detail + '</span></div>'
+    '<strong>' + value + '</strong><span class="kpi-detail">' + detail + '</span>' + materials(kind) + '</div>'
   ).join('');
-  main.innerHTML = mobileHome(docs,canEdit())+'<section class="hero"><div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">' + esc(new Intl.DateTimeFormat('fr-FR', {
+  main.innerHTML = mobileHome(docs,canEdit())+'<section class="hero"><div><p class="eyebrow">' + esc(new Intl.DateTimeFormat('fr-FR', {
     weekday: 'long',
     day: 'numeric',
     month: 'long'
-  }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
+  }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div><div class="hero-materials" aria-hidden="true">' + ['draft', 'sent', 'accepted'].map(materials).join('') + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
 }
 function docs(main) {
   main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'].map(s => [s, s]), 'Tous') + '</div><div id="results"></div></section>';

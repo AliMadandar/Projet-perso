@@ -1,7 +1,7 @@
 .mobile-home,.mobile-tabs,.bar .mobile-brand,.quote-switch{display:none}
 @media screen and (max-width:900px){
   .mobile-home{display:grid;grid-template-columns:1fr auto;gap:14px 6px;align-items:center}.mobile-home h1{font-size:clamp(26px,6vw,38px)}.mobile-home>.primary{font-size:13px}
-  .mobile-home+.hero{display:none}.resume-card{grid-column:1/-1;background:var(--draft-card);color:var(--ink);padding:19px;border-radius:18px;border-inline-start:4px solid var(--draft-edge)}.resume-card small{color:var(--draft-accent)}.resume-card strong{display:block;margin-top:8px;font-size:24px;font-weight:650;line-height:1.18;overflow-wrap:anywhere}.resume-card p{margin:5px 0 13px}
+  .mobile-home+.hero{display:none}.resume-card{grid-column:1/-1;color:var(--ink);padding:19px;border-inline-start-width:3px}.resume-card small{color:var(--draft-accent)}.resume-card strong{display:block;margin-top:8px;font-size:24px;font-weight:650;line-height:1.18;overflow-wrap:anywhere}.resume-card p{margin:5px 0 13px}
   .shell #sidebar{display:none}.shell{min-height:100dvh}
   .workspace .bar{height:auto;min-height:56px;padding:calc(6px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left));gap:5px;background:var(--surface);border-bottom:1px solid var(--rule)}
   .bar .mobile-brand{display:inline-flex;align-items:center}.bar .mobile-brand .brand{color:var(--accent-text);font-size:14px}.bar .mobile-brand .brand img{width:30px;height:30px}.bar>span:not(.mobile-brand){display:none}

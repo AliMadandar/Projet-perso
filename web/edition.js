@@ -3,7 +3,7 @@ import { amounts, euros } from './money.js';
 import { photosPaper } from './photos.js';
 
 export const trades = {
-  'Tous corps d’état': ['ambre','Périmètre et coordination des différents lots'],
+  'Tous corps d’état': ['prune','Périmètre et coordination des différents lots'],
   'Peinture': ['sauge','Supports, préparation, teinte, finition et nombre de couches'],
   'Carrelage': ['terre','Format des carreaux, calepinage, joints et préparation du support'],
   'Revêtements de sol': ['ambre','Type de pose, sous-couche, seuils et plinthes'],
@@ -26,7 +26,7 @@ export const lotIdeas = {
  'Maçonnerie et étanchéité':['Préparation','Maçonnerie','Étanchéité','Relevés et finitions'],
  'Menuiseries':['Dépose','Pose des menuiseries','Habillages et finitions']
 };
-const colors=['ambre','terre','sauge','ardoise'];
+const colors=['prune','ambre','terre','sauge','ardoise'];
 const pairs=arr=>arr.map(v=>[v,v]);
 export function newEdition(trade='Tous corps d’état'){
   return {trade,color:trades[trade][0],layout:'Atelier',font:'Éditorial',order:'Échéancier puis modalités',logo:'',intro:'',spec:'',supply:'Les fournitures comprises sont précisées pour chaque prestation. Les postes en pose seule prévoient la fourniture du revêtement ou de l’équipement par le client.',timing:'Le calendrier d’intervention sera convenu avec le client après acceptation du devis.',travel:'Déplacement compris dans les prix indiqués.',fee:'Devis gratuit.',waste:'',payment:'Règlement par virement bancaire.',middle:5000};
@@ -64,8 +64,8 @@ export function quoteItems(lines, discount) {
         detail('price', 'PU HT', euros(price)) + detail('tax', 'TVA', pct(tax)) +
         detail('total', 'Total HT', euros(total)) + '</tr>';
     }).join('');
-    const subtotal = group.lot ? '<tr class="quote-subtotal" role="row"><td colspan="5" role="cell"><span>Sous-total HT' +
-      (discount ? ' avant remise' : '') + '</span><strong>' + euros(lotTotal) + '</strong></td></tr>' : '';
+    const subtotal = group.lot ? '<tr class="quote-subtotal" role="row"><th scope="row" colspan="4" role="rowheader">Sous-total HT' +
+      (discount ? ' avant remise' : '') + '</th><td role="cell"><strong>' + euros(lotTotal) + '</strong></td></tr>' : '';
     return '<tbody role="rowgroup">' + heading + rows + subtotal + '</tbody>';
   }).join('');
   return '<table class="q-items quote-items" role="table" aria-label="Prestations du devis"><thead role="rowgroup"><tr role="row">' +
@@ -76,24 +76,24 @@ export function quoteItems(lines, discount) {
 export function editionPaper(d){
   const e=d.edition,c=d.company,m=amounts(d.lines,d.discount,d.deposit);
   const nums=installments(m.total,d.deposit,e.middle),rates=[d.deposit,e.middle,10000-d.deposit-e.middle];
-  const schedule=['À la signature','En cours de chantier','À la réception'].map((v,i)=>rates[i]?'<div><b>'+pct(rates[i])+'</b><span>'+v+'</span><strong>'+euros(nums[i])+'</strong></div>':'').join('');
+  const schedule=['À la signature','En cours de chantier','À la réception'].map((v,i)=>rates[i]?'<div><span>'+v+' <b>· '+pct(rates[i])+'</b></span><strong>'+euros(nums[i])+'</strong></div>':'').join('');
   const sum=(k,v)=>'<div><span>'+esc(k)+'</span><b>'+euros(v)+'</b></div>';
-  const html='<article class="sheet couture quote-document '+(e.font==='Contemporain'?'sans-titres ':'')+'tone-'+(colors.includes(e.color)?e.color:'ambre')+(e.layout==='Compact'?' condensed':'')+'">'+
-    '<header class="q-head"><div class="q-brand"><img src="'+esc(e.logo||'/ma-logo.png')+'" alt=""><b>'+esc(c.name)+'</b></div><div><b>Devis</b><span>'+esc(d.number||'Brouillon')+'</span></div></header>'+
+  const payment = '<section class="q-pay"><h3>Échéancier de règlement</h3><div>'+schedule+'</div></section>';
+  const details = fact('Paiement',e.payment)+fact('Intervention',e.timing)+
+    fact('Déplacement et devis',[e.travel,e.fee].filter(Boolean).join(' '))+fact('Gestion des déchets',e.waste)+
+    fact('Assurance professionnelle',c.insurance)+fact('Médiation de la consommation',c.mediator)+
+    fact('Précisions',d.notes)+fact('Conditions particulières',d.terms);
+  const conditions = details ? '<section class="q-conditions"><h3>Modalités du chantier</h3>'+details+'</section>' : '';
+  return '<article class="sheet couture quote-document '+(e.font==='Contemporain'?'sans-titres ':'')+'tone-'+(colors.includes(e.color)?e.color:'ambre')+(e.layout==='Compact'?' condensed':'')+'">'+
+    '<header class="q-head"><div class="q-brand"><img src="'+esc(e.logo||'/ma-logo.png')+'" alt=""><b>'+esc(c.name)+'</b></div><p class="quote-reference">Devis <strong>'+esc(d.number||'Brouillon')+'</strong></p></header>'+
+    '<section class="q-title"><small>'+esc(e.trade)+'</small><h2>'+esc(d.title)+'</h2>'+(d.site?'<p>Chantier · '+esc(d.site)+'</p>':'')+'</section>'+
     '<div class="q-meta"><span>Émis le '+(d.issued?dateLabel(d.issued):'…')+'</span><span>Valable jusqu’au '+(d.valid?dateLabel(d.valid):'…')+'</span></div>'+
     '<div class="q-parties"><section><small>Entreprise</small><strong>'+esc(c.name)+'</strong>'+safeLines([c.address,c.phone,c.email,c.identity].filter(Boolean).join('\n'))+'</section><section><small>Destinataire</small><strong>'+esc(d.client.name||'Client à renseigner')+'</strong>'+safeLines([d.client.address,d.client.phone,d.client.email].filter(Boolean).join('\n'))+'</section></div>'+
-    '<section class="q-title"><small>'+esc(e.trade)+'</small><h2>'+esc(d.title)+'</h2>'+(d.site?'<p>Chantier · '+esc(d.site)+'</p>':'')+'</section>'+
     fact('Objet des travaux',e.intro)+fact('Spécifications',e.spec)+fact('Fournitures',e.supply)+
     quoteItems(d.lines,d.discount)+
     '<section class="q-sum">'+(d.discount?sum('Brut HT',m.gross)+sum('Remise '+pct(d.discount),-m.discount):'')+sum('Total HT',m.net)+m.taxes.map(t=>sum('TVA '+pct(t.rate),t.amount)).join('')+'<div class="q-grand"><span>Total TTC</span><strong>'+euros(m.total)+'</strong></div></section>'+
-    '<section class="q-pay"><h3>Échéancier de règlement</h3><div>'+schedule+'</div></section>'+
-    '<section class="q-conditions"><h3>Modalités du chantier</h3>'+fact('Paiement',e.payment)+fact('Intervention',e.timing)+fact('Déplacement et devis',[e.travel,e.fee].filter(Boolean).join(' '))+fact('Gestion des déchets',e.waste)+fact('Assurance professionnelle',c.insurance)+fact('Médiation de la consommation',c.mediator)+fact('Précisions',d.notes)+fact('Conditions particulières',d.terms)+'</section>'+
+    (e.order==='Modalités puis échéancier' ? conditions+payment : payment+conditions)+
     '<footer class="q-sign"><b>Bon pour accord</b><span>Nom, date et signature du client</span></footer>'+photosPaper(d.photos)+'</article>';
-  if(e.order==='Modalités puis échéancier'){
-    const pay=html.indexOf('<section class="q-pay">'),conditions=html.indexOf('<section class="q-conditions">'),signature=html.indexOf('<footer class="q-sign">');
-    return html.slice(0,pay)+html.slice(conditions,signature)+html.slice(pay,conditions)+html.slice(signature);
-  }
-  return html;
 }
 export function editionDialog(d,state,done){
   const e=structuredClone(d.edition||newEdition());

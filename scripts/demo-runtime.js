@@ -60,7 +60,7 @@ function createDemoApi({
     valid: today(30),
     discount: 0,
     deposit: 4000,
-    edition:{...modules.edition.newEdition(i===3?'Peinture':'Carrelage'),intro:'Réfection des revêtements selon les prestations détaillées ci-dessous.'},
+    edition:{...modules.edition.newEdition(i===3?'Peinture':'Carrelage'),...(i===1?{color:'prune'}:{}),intro:'Réfection des revêtements selon les prestations détaillées ci-dessous.'},
     version: 1,
     site: client.address,
     terms: company.terms,

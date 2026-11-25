@@ -56,53 +56,137 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
 
 /* La même grille sert à la feuille éditable, au portail et au PDF. */
 .quote-document {
-  --quote-accent: var(--accent, #30224a);
-  --quote-tint: var(--tint, #eaf1eb);
-  --quote-rule: #dce2dc;
+  --quote-accent: var(--accent, var(--plum));
+  --quote-tint: var(--tint, #f1ebf5);
+  --quote-rule: var(--rule);
+  color: var(--ink);
   background: #fff;
 }
+.quote-document.tone-prune {
+  --accent: var(--plum);
+  --tint: #f1ebf5;
+}
+.quote-document .q-head { padding-bottom: 0; }
 .quote-document .q-brand b {
   white-space: normal;
   overflow-wrap: anywhere;
 }
-.quote-document .q-parties > section { min-width: 0; overflow-wrap: anywhere; }
-.quote-items { font-variant-numeric: tabular-nums; font-size: 12px; }
-.quote-items thead th {
-  padding: 9px 6px;
-  background: #edf1ed;
-  color: #213e36;
-  font-size: .85em;
-  letter-spacing: 0;
-  border-block: 1px solid var(--quote-rule);
+.quote-document .q-brand img { flex: 0 0 auto; }
+.quote-document .quote-reference {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-align: end;
+  text-transform: uppercase;
 }
-.quote-items td { padding: 9px 6px; border-bottom-color: var(--quote-rule); }
+.quote-document .quote-reference strong { white-space: nowrap; }
+.quote-document .q-title {
+  border: 0;
+  padding: 0;
+}
+.quote-document .q-title h2 {
+  color: var(--quote-accent);
+  font-size: clamp(24px, 6cqi, 40px);
+  line-height: 1.12;
+}
+.quote-document .q-meta {
+  justify-content: flex-start;
+  column-gap: 16px;
+  padding: 0 0 10px;
+  border: 0;
+  border-bottom: 1px solid var(--quote-rule);
+  color: var(--muted);
+  font-size: 12px;
+}
+.quote-document .q-parties > section {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+.quote-items { font-variant-numeric: tabular-nums; font-size: 13px; }
+.quote-items thead th {
+  padding: 8px;
+  background: #fff;
+  color: var(--muted);
+  font-size: .9em;
+  letter-spacing: 0;
+  text-transform: none;
+  border-top: 0;
+  border-bottom: 1px solid var(--quote-rule);
+}
+.quote-items thead th:first-child { width: 46%; }
+.quote-items td {
+  padding: 9px 8px;
+  vertical-align: top;
+  border: 0;
+  border-bottom: 1px solid var(--quote-rule);
+}
+.quote-items .quote-cell { text-align: end; }
 .quote-items .quote-description { overflow-wrap: anywhere; }
-.quote-items .quote-description small { margin-top: 3px; font-size: .85em; }
-.quote-items .quote-total { font-weight: 700; }
+.quote-items .quote-description small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .85em;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.quote-items .quote-total { color: var(--ink); font-weight: 700; }
 .quote-items .q-lot th {
   width: auto;
-  padding: 7px 6px;
+  padding: 7px 8px;
   background: var(--quote-tint);
   color: var(--quote-accent);
-  border-bottom: 0;
+  border: 0;
   text-align: start;
+  text-transform: none;
+  letter-spacing: 0;
   font-size: .95em;
 }
-.quote-items .quote-subtotal td {
-  background: #f7f8f5;
-  color: #30463e;
+.quote-items .quote-subtotal > * {
+  padding: 5px 8px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
   font-size: .9em;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
-.quote-subtotal strong { float: inline-end; margin-inline-start: .5em; }
+.quote-items .quote-subtotal td { text-align: end; color: var(--quote-accent); }
 .quote-cell-label { display: none; }
-.quote-document .q-sum, .quote-document .totals { font-variant-numeric: tabular-nums; }
-.quote-document .q-grand {
-  padding: 10px 12px;
+.quote-document .q-sum,
+.quote-document .totals,
+.quote-document .q-pay { font-variant-numeric: tabular-nums; }
+.quote-document .q-sum { width: min(100%, max(250px, 50%)); }
+.quote-document .q-sum > div { padding-inline: 10px; font-size: 12px; }
+.quote-document .q-grand,
+.quote-document .totals .grand {
+  padding: 9px 11px;
   border-radius: 6px;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px 10px;
+  background: var(--quote-accent);
+  color: #fff;
 }
-.quote-document .q-grand strong { white-space: nowrap; }
+.quote-document .q-grand strong,
+.quote-document .totals .grand strong {
+  font-size: 20px;
+  text-align: end;
+}
+.quote-document.tone-prune .q-grand,
+.quote-document .totals .grand { color: #fff4e5; }
+.quote-document .q-pay h3 { color: var(--quote-accent); font-size: 17px; }
+.quote-document .q-pay > div > div {
+  border: 1px solid var(--quote-rule);
+  border-radius: 4px;
+  background: #fff;
+  padding: 7px 9px;
+}
+.quote-document .q-pay span { color: var(--muted); font-size: 11px; }
+.quote-document .q-pay b { display: inline; color: inherit; font: inherit; }
+.quote-document .q-pay strong { color: var(--quote-accent); font-size: 13px; }
 .client-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .client-toolbar .primary { margin-inline-start: auto; }
 .client-status { padding: 10px 12px; border-inline-start: 3px solid var(--plum); background: #eaf1eb; }
@@ -116,7 +200,8 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
 @media screen {
   .quote-document { container: quote-sheet / inline-size; }
 }
-@container quote-sheet (max-width: 374px) {
+@container quote-sheet (max-width: 440px) {
+  .quote-document .q-title h2 { font-size: clamp(24px, 7cqi, 32px); }
   .quote-items, .quote-items tbody { display: block; }
   .quote-items thead {
     position: absolute;
@@ -128,9 +213,9 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
   .quote-items tr { display: block; }
   .quote-items .quote-line {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px 8px;
-    padding: 10px 6px;
+    grid-template-columns: minmax(0, 1.15fr) repeat(2, minmax(0, 1fr));
+    gap: 5px 8px;
+    padding: 8px 6px;
     border-bottom: 1px solid var(--quote-rule);
   }
   .quote-items .quote-description {
@@ -138,39 +223,62 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
     grid-row: 1;
     font-weight: 650;
   }
-  .quote-items .quote-description small { font-weight: 400; }
   .quote-items .quote-total { grid-column: 3; grid-row: 1; }
   .quote-items .quote-line td {
     padding: 0;
     border: 0;
     text-align: start;
     overflow-wrap: anywhere;
+    font-size: 12px;
   }
+  .quote-items .quote-line .quote-description { width: auto; font-size: 13px; }
   .quote-items .quote-line .quote-total,
   .quote-items .quote-line .quote-tax { text-align: end; }
   .quote-items .quote-cell-label {
     display: block;
-    color: #4b6057;
+    color: var(--muted);
     font-size: .83em;
     font-weight: 400;
   }
-  .quote-items .q-lot th, .quote-items .quote-subtotal td,
+  .quote-items .quote-subtotal {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .quote-items .q-lot th, .quote-items .quote-subtotal > *,
   .quote-items .quote-empty td { display: block; }
+  .quote-document .q-sum, .quote-document .totals { width: 100%; }
+  .quote-document .q-pay > div { display: block; }
+  .quote-document .q-pay > div > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: baseline;
+    border: 0;
+    border-bottom: 1px solid var(--quote-rule);
+    border-radius: 0;
+    padding: 5px 0;
+  }
+  .quote-document .q-pay strong { text-align: end; }
 }
 @media screen and (prefers-reduced-motion: no-preference) {
-  .quote-line-updated { animation: quote-line-update .45s ease-out; }
+  .quote-line-updated { animation: quote-line-update .4s ease-out; }
   .quote-total-updated strong { animation: quote-total-update .2s ease-out; }
-  @keyframes quote-line-update { from { background: #e0eddf; } }
+  @keyframes quote-line-update { from { background: #ffeadc; } }
   @keyframes quote-total-update {
-    from { opacity: .65; transform: translateY(2px); }
+    from { opacity: .85; transform: translateY(2px); }
   }
 }
 @media print {
+  .quote-document .q-title h2 { font-size: 23pt; }
+  .quote-document .q-meta { font-size: 9pt; padding-bottom: 5pt; }
   .quote-items { font-size: 9pt; }
   .quote-items thead { display: table-header-group; }
-  .quote-items td, .quote-items th { padding: 4pt; }
+  .quote-items td, .quote-items th,
+  .quote-items thead th, .quote-items .q-lot th,
+  .quote-items .quote-subtotal > * { padding: 4pt; }
   .quote-items tr { break-inside: avoid; }
   .quote-items .q-lot { break-after: avoid; }
+  .quote-items .quote-line:has(+ .quote-subtotal) { break-after: avoid; }
 }
 
 /* L’ouverture assemble le symbole sans retarder le chargement de l’espace de travail. */

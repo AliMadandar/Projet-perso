@@ -93,11 +93,13 @@ export function mountEditor(ctx, d) {
       wireSheet();
     }
     if (changedLine >= 0) {
-      const row = sheetMode ? main.querySelectorAll('.quote-line')[changedLine] : main.querySelectorAll('.linebox')[changedLine];
-      row?.classList.add('quote-line-updated');
+      const paperRow = main.querySelectorAll('.quote-line')[changedLine];
+      const formRow = main.querySelectorAll('.linebox')[changedLine];
+      paperRow?.classList.add('quote-line-updated');
+      formRow?.classList.add('quote-line-updated');
       if (changedTotal) main.querySelector('.q-grand, .totals .grand')?.classList.add('quote-total-updated');
-      row?.querySelector('button')?.focus({ preventScroll: true });
-      if (sheetMode) row?.focus();
+      if (sheetMode) paperRow?.focus();
+      else formRow?.querySelector('button')?.focus({ preventScroll: true });
     }
     const next = {
       Brouillon: ['Validé', 'Archivé'],

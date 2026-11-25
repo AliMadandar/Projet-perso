@@ -9,7 +9,7 @@ export function courrier(state,d,isReminder,update){
  onForm('#mailForm',async()=>{if(isReminder){await save(false);$('#modal').close();toast('Rappel enregistré.');}});
  const finish=f.querySelector('[data-act=finishReminder]');if(finish)finish.onclick=async()=>{try{await save(true);$('#modal').close();toast('Rappel classé.');}catch(e){toast(e.message);}};
  send.onclick=async()=>{if(!f.reportValidity()||!confirm('Envoyer maintenant '+d.number+' avec son PDF à '+d.client.email+' ?'))return;send.disabled=true;
-   try{if(isReminder)await save(false);const result=await api('mail',{id:d.id,kind:isReminder?'relance':'devis',message:f.elements.message.value,confirm:true,version:r?.version});state.reminders=result.reminders;$('#modal').close();update(result.document);toast('Message envoyé avec le PDF.');}
+   try{if(isReminder)await save(false);const result=await api('mail',{id:d.id,kind:isReminder?'relance':'devis',message:f.elements.message.value,confirm:true,version:r?.version});state.reminders=result.reminders;$('#modal').close();update(result.document);toast(isReminder?'Relance envoyée avec le PDF.':'Devis envoyé par Gmail avec le PDF.',isReminder?undefined:'sent');}
    catch(e){toast(e.message);}finally{send.disabled=false;}
  };
 }

@@ -10,7 +10,8 @@ let state,
   poll,
   epoch = 0;
 const root = $('#root'),
-  modal = $('#modal');
+  modal = $('#modal'),
+  replyNotice = $('#reply-notice');
 const canEdit = () => state.me.role !== 'Lecture',
   admin = () => state.me.role === 'Administrateur';
 const navs = {
@@ -42,8 +43,11 @@ function login() {
   epoch++;
   state = null;
   dirty = () => false;
+  replyNotice.hidden = true;
+  replyNotice.innerHTML = '';
+  $('#reply-announcement').textContent = '';
   if (modal.open) modal.close();
-  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">Espace professionnel</p><h1>L’atelier<br>des devis.</h1></div></section><section class="signform"><div><p class="eyebrow">Rivqo</p><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
+  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><h1>Devis et<br>facturation.</h1></div></section><section class="signform"><div><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
   onForm('#login', async o => {
     await api('login', o);
     await start();
@@ -198,7 +202,10 @@ async function navigate(destination){
   if(dirty()&&!confirm('Quitter sans enregistrer les modifications du devis ?'))return;
   const data=await api('state');
   if(ticket!==navigation||page!==from||session!==epoch)return;
+  if ((state.events[0]?.id || 0) > (data.events[0]?.id || 0)) data.events = state.events;
+  data.lastRead = Math.max(data.lastRead, state.lastRead);
   state=data;go(destination,null,true);
+  return true;
 }
 root.onclick = safe(async e => {
   const a = e.target.closest('[data-act]')?.dataset.act;
@@ -249,25 +256,52 @@ root.onclick = safe(async e => {
     toast(p === 'granted' ? 'Notifications activées pendant l’ouverture de l’application.' : 'Notifications système désactivées.');
   }
 });
+function showClientReplies(replies) {
+  const latest = replies[0];
+  const title = replies.length > 1 ? replies.length + ' nouvelles réponses client'
+    : latest.action === 'Réponse client · Accepté' ? 'Devis accepté' : 'Devis refusé';
+  const quote = state.documents.find(d => d.id === latest.target);
+  const detail = replies.length > 1 ? 'Retrouvez les réponses dans l’activité.' : [quote?.number, quote?.title || latest.quoteTitle].filter(Boolean).join(' · ');
+  replyNotice.hidden = false;
+  replyNotice.innerHTML = '<div class="reply-card"><span class="reply-glyph">' + icon('bell') + '</span>' +
+    '<div><strong>' + title + '</strong>' + (detail ? '<small>' + esc(detail) + '</small>' : '') + '</div>' +
+    '<div class="reply-actions">' + button('reply-activity', 'Voir l’activité', 'arrow', 'subtle') +
+    '<button type="button" class="icononly subtle" data-act="reply-dismiss" aria-label="Fermer la notification">' + icon('x') + '</button></div></div>';
+  $('#reply-announcement').textContent = [title, detail].filter(Boolean).join('. ');
+  replyNotice.querySelector('[data-act=reply-dismiss]').onclick = () => {
+    replyNotice.hidden = true;
+    $('.bar [data-act="nav-Activité"]')?.focus();
+  };
+  replyNotice.querySelector('[data-act=reply-activity]').onclick = safe(async () => {
+    if (await navigate('Activité')) {
+      replyNotice.hidden = true;
+      $('#main').focus();
+    }
+  });
+}
 async function start() {
   state = await api('state');
   const current = ++epoch;
+  let lastEvent = state.events[0]?.id || 0;
   go('Accueil', null, true);
   clearInterval(poll);
   poll = setInterval(async () => {
     try {
       const events = await api('events');
-      if (current !== epoch) return;
-      const last = state.events[0]?.id || 0;
-      if (events.length && events[0].id > last) {
-        state.events = events;
-        const b = $('.bar [data-act="nav-Activité"]');
-        if (b) b.innerHTML = icon('bell') + 'Activité (' + events.filter(e => e.id > state.lastRead).length + ')';
-        if (page === 'Activité') activity($('#main'));
-        if ('Notification' in window && Notification.permission === 'granted' && document.hidden) new Notification('Rivqo', {
-          body: events[0].action
-        });
-      }
+      if (current !== epoch || !events.length || events[0].id <= lastEvent) return;
+      const newEvents = events.filter(e => e.id > lastEvent);
+      lastEvent = events[0].id;
+      if (lastEvent >= (state.events[0]?.id || 0)) state.events = events;
+      const b = $('.bar [data-act="nav-Activité"]');
+      const unread = state.events.filter(e => e.id > state.lastRead).length;
+      if (b) b.innerHTML = icon('bell') + 'Activité' + (unread ? ' (' + unread + ')' : '');
+      if (page === 'Activité') activity($('#main'));
+      const replies = newEvents.filter(e => e.id > state.lastRead &&
+        ['Réponse client · Accepté', 'Réponse client · Refusé'].includes(e.action));
+      if (replies.length) showClientReplies(replies);
+      if ('Notification' in window && Notification.permission === 'granted' && document.hidden) new Notification('Rivqo', {
+        body: (replies[0] || newEvents[0]).action
+      });
     } catch {}
   }, 20000);
 }

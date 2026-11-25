@@ -50,7 +50,7 @@ export const status = s => '<span class="badge b' + ({
   'Brouillon': 4
 }[s] || 0) + '">' + esc(s) + '</span>';
 let timer;
-export function toast(msg) {
+export function toast(msg, feedback) {
   const modal = document.querySelector('dialog[open]');
   if (modal) {
     let note = modal.querySelector('[role="status"]');
@@ -65,10 +65,14 @@ export function toast(msg) {
       block: 'nearest'
     });
   }
-  $('#toast').textContent = msg;
-  $('#toast').classList.add('on');
+  const banner = $('#toast');
+  banner.innerHTML = feedback === 'sent'
+    ? '<span class="sent-glyph" aria-hidden="true">' + icon('arrow') + '</span><span>' + esc(msg) + '</span>'
+    : esc(msg);
+  banner.classList.toggle('send-feedback', feedback === 'sent');
+  banner.classList.add('on');
   clearTimeout(timer);
-  timer = setTimeout(() => $('#toast').classList.remove('on'), 5000);
+  timer = setTimeout(() => banner.classList.remove('on'), 5000);
 }
 export async function api(path, body, method = body ? 'POST' : 'GET') {
   const r = await fetch('/api/' + path, {

@@ -104,7 +104,12 @@ const server = http.createServer(async (req, res) => {
         ok: true
       });
     }
-    const events = () => w.all('SELECT * FROM events ORDER BY id DESC LIMIT 100');
+    const events = () => w.all(`
+      SELECT e.*, json_extract(d.data, '$.title') AS quoteTitle
+      FROM events e
+      LEFT JOIN documents d ON d.id=e.target AND e.action IN ('Réponse client · Accepté', 'Réponse client · Refusé')
+      ORDER BY e.id DESC LIMIT 100
+    `);
     if (path === '/api/state' && method === 'GET') return json(200, {
       me,
       tiers,

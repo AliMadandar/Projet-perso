@@ -298,6 +298,7 @@ export function mountEditor(ctx, d) {
         dirty = false;
         done(updated);
         go('editor', updated);
+        if (updated.status === 'Envoyé') toast('Devis marqué comme envoyé.', 'sent');
       }
     } catch (err) {
       toast(err.message);

@@ -14,7 +14,7 @@
     const nighttime = hour < dayStart || hour >= nightStart;
     const dark = preference === 'dark' || (preference === 'auto' && nighttime);
     root.dataset.theme = dark ? 'dark' : 'light';
-    if (themeColor) themeColor.content = dark ? '#181917' : '#f7f5ef';
+    if (themeColor) themeColor.content = dark ? '#17181c' : '#f5f6f8';
 
     if (preference !== 'auto') return;
     const next = new Date(now);

@@ -14,7 +14,7 @@ Prérequis local : **Node.js 24.x**. Aucun paquet npm à télécharger. Depuis l
 node --env-file-if-exists=.env src/server.js
 ```
 
-Sous Windows, **DEMARRER-WINDOWS.cmd** lance cette commande par double-clic, y compris lorsque PowerShell bloque les scripts npm. Sur Mac, utilisez **DEMARRER-MAC.command** ou le terminal dans le dossier du projet. Ouvrez http://localhost:3000. Au premier lancement local, le terminal affiche le mot de passe du compte **admin**. Conservez-le. Pour choisir le mot de passe initial, copiez .env.example vers .env avant le premier lancement et renseignez ADMIN_PASSWORD avec au moins 12 caractères. Les comptes existants se gèrent dans **Paramètres → Ouvrir l’administration**. La base persistante est créée dans data/atelier.sqlite.
+Sous Windows, **DEMARRER-WINDOWS.cmd** lance cette commande par double-clic, y compris lorsque PowerShell bloque les scripts npm. Sur Mac, utilisez **DEMARRER-MAC.command** ou le terminal dans le dossier du projet. Ouvrez http://localhost:3000 pour la vitrine publique. **Essayer la démo** ouvre un dossier fictif sans compte. **Se connecter** ouvre votre atelier à l’adresse http://localhost:3000/atelier. Au premier lancement local, le terminal affiche le mot de passe du compte **admin**. Conservez-le. Pour choisir le mot de passe initial, copiez .env.example vers .env avant le premier lancement et renseignez ADMIN_PASSWORD avec au moins 12 caractères. Les comptes existants se gèrent dans **Paramètres → Ouvrir l’administration**. La base persistante est créée dans data/atelier.sqlite.
 
 ### Les trois réglages pour MA RENOVATION
 

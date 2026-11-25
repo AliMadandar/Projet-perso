@@ -1,5 +1,6 @@
 import {billing} from './billing.js';
 import http from 'node:http';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { openStore } from './store.js';
 import { workspace, edition, customer, service, company, fail, uuid, num, str } from './workspace.js';
@@ -19,17 +20,38 @@ const w = workspace(store.db),
 const prod = process.env.NODE_ENV === 'production',
   origin = process.env.APP_ORIGIN;
 if (prod && (!origin || !origin.startsWith('https://'))) throw Error('APP_ORIGIN doit être une origine HTTPS en production.');
-const assets = new Set(['index.html','theme.js','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js','fonts/inter-latin.woff2','fonts/OFL-Inter.txt']);
+const pages = new Map([['/', 'vitrine.html'], ['/atelier', 'index.html'], ['/client', 'client.html']]);
+const assets = new Set([
+  'index.html','theme.js','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js','fonts/inter-latin.woff2','fonts/OFL-Inter.txt',
+  'vitrine.html', 'vitrine.css', 'vitrine.js', 'vitrine/atelier.webp', 'vitrine/devis.webp',
+  'vitrine/signature.webp', 'vitrine/reglements.webp', 'vitrine/chantier.webp', 'vitrine/mobile.webp'
+]);
 const types = {
   html: 'text/html',
   css: 'text/css',
   js: 'text/javascript',
   svg: 'image/svg+xml',
   png: 'image/png',
+  webp: 'image/webp',
   webmanifest: 'application/manifest+json',
   woff2: 'font/woff2',
   txt: 'text/plain; charset=utf-8'
 };
+async function serveDemo(res) {
+  const content = (await readFile(new URL('../APERCU.html', import.meta.url), 'utf8')).replace(/\r\n?/g, '\n');
+  const hashes = pattern => [...content.matchAll(pattern)].map(([, source]) =>
+    "'sha256-" + createHash('sha256').update(source).digest('base64') + "'").join(' ');
+  res.setHeader('Content-Security-Policy', [
+    "sandbox allow-scripts allow-downloads allow-modals",
+    "default-src 'none'",
+    "script-src " + hashes(/<script(?: type="module")?>([\s\S]*?)<\/script>/g),
+    "style-src " + hashes(/<style>([\s\S]*?)<\/style>/g),
+    "img-src data: blob:", "font-src data:", "media-src data: blob:",
+    "base-uri 'none'", "frame-ancestors 'none'", "form-action 'none'"
+  ].join('; '));
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(content);
+}
 async function body(req) {
   if (!req.headers['content-type']?.startsWith('application/json')) fail('Format JSON requis.', 415);
   let size = 0;
@@ -66,9 +88,11 @@ const server = http.createServer(async (req, res) => {
     if (!prod && !origin && !['localhost', '127.0.0.1'].includes((req.headers.host || '').split(':')[0])) fail('Configurez APP_ORIGIN pour cet hôte.', 403);
     if (origin && req.headers.host !== new URL(origin).host) fail('Hôte non autorisé.', 403);
     if (req.headers.origin && req.headers.origin !== (origin || 'http://' + req.headers.host)) fail('Origine incorrecte.', 403);
-    const file = path === '/' ? 'index.html' : path === '/client' ? 'client.html' : path.slice(1);
+    if (method === 'GET' && path === '/demo') return await serveDemo(res);
+    const file = pages.get(path) ?? path.slice(1);
     if (method === 'GET' && assets.has(file)) {
       const data = await readFile(new URL('../web/' + file, import.meta.url));
+      if (file.startsWith('vitrine/')) res.setHeader('Cache-Control', 'public, max-age=3600');
       res.writeHead(200, {
         'Content-Type': types[file.split('.').pop()]
       });

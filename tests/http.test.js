@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 test('authentification, révocation, isolation des rôles et des origines', async () => {
   const password = randomBytes(20).toString('hex');
   const proc = spawn(process.execPath, ['src/server.js'], {
@@ -21,7 +21,8 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
   try {
     const [startup] = await once(proc.stdout, 'data');
     const port = startup.toString().match(/port (\d+)/)[1],
-      base = 'http://127.0.0.1:' + port + '/api/';
+      origin = 'http://127.0.0.1:' + port,
+      base = origin + '/api/';
     const call = (path, body, cookie = '', method = body ? 'POST' : 'GET', extra = {}) => fetch(base + path, {
       method,
       headers: {
@@ -31,6 +32,28 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
       },
       body: body ? JSON.stringify(body) : undefined
     });
+    const landing = await fetch(origin + '/');
+    assert.equal(landing.status, 200);
+    const landingHtml = await landing.text();
+    assert.match(landingHtml, /href="\/demo"/);
+    assert.match(landingHtml, /href="\/atelier"/);
+    assert.match(landingHtml, /id="facturer"/);
+    assert.match(await (await fetch(origin + '/atelier')).text(), /src="\/app\.js"/);
+    assert.match(await (await fetch(origin + '/client')).text(), /src="\/client\.js"/);
+    assert.equal((await (await fetch(origin + '/manifest.webmanifest')).json()).start_url, '/atelier');
+
+    const demo = await fetch(origin + '/demo');
+    assert.equal(demo.status, 200);
+    const policy = demo.headers.get('content-security-policy');
+    assert.match(policy, /sandbox allow-scripts allow-downloads/);
+    assert.doesNotMatch(policy, /allow-same-origin|unsafe-inline/);
+    const demoHtml = await demo.text();
+    const inlineScripts = [...demoHtml.matchAll(/<script(?: type="module")?>([\s\S]*?)<\/script>/g)];
+    assert.equal(inlineScripts.length, 2);
+    for (const [, script] of inlineScripts) {
+      const hash = createHash('sha256').update(script).digest('base64');
+      assert.ok(policy.includes("'sha256-" + hash + "'"));
+    }
     assert.equal((await call('state')).status, 401);
     const a = await call('login', {
       login: 'admin',

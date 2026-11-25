@@ -20,7 +20,7 @@ const navs = {
   Clients: 'users',
   Catalogue: 'book',
   Activité: 'bell',
-  Administration: 'gear'
+  Paramètres: 'gear'
 };
 const actions = (...buttons) => '<div class="actions">' + buttons.join('') + '</div>';
 const head = (title, sub, buttons = '') => '<div class="pagehead"><div><h1>' + esc(title) + '</h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '</div>' + buttons + '</div>';
@@ -54,7 +54,8 @@ function login() {
   });
 }
 function nav() {
-  return Object.entries(navs).filter(([p]) => p !== 'Administration' || admin()).map(([p, i]) => button('nav-' + p, p, i, 'nav ' + (p === (page === 'editor' ? 'Devis' : page) ? 'active' : ''))).join('');
+  const current = page === 'Administration' ? 'Paramètres' : page === 'editor' ? 'Devis' : page;
+  return Object.entries(navs).map(([p, i]) => button('nav-' + p, p, i, 'nav ' + (p === current ? 'active' : ''))).join('');
 }
 function shell() {
   const unread = state.events.filter(e => e.id > state.lastRead).length;
@@ -62,6 +63,7 @@ function shell() {
 }
 function go(p, d, force = false) {
   if (!force && dirty() && !confirm('Quitter sans enregistrer les modifications du devis ?')) return;
+  if (p === 'Administration' && !admin()) p = 'Paramètres';
   dirty = () => false;
   page = p;
   shell();
@@ -74,7 +76,7 @@ function go(p, d, force = false) {
       go,
       done: v => replace(state.documents, v)
     }, structuredClone(d));
-  } else if(p==='Plus')main.innerHTML=mobileMore(state);else if (p === 'Accueil') home(main);else if (p === 'Devis') docs(main);else if (p === 'Clients') clients(main);else if (p === 'Catalogue') catalogue(main);else if (p === 'Activité') activity(main);else settings(main);
+  } else if(p==='Plus')main.innerHTML=mobileMore(state);else if (p === 'Accueil') home(main);else if (p === 'Devis') docs(main);else if (p === 'Clients') clients(main);else if (p === 'Catalogue') catalogue(main);else if (p === 'Activité') activity(main);else if (p === 'Administration') administration(main);else if (p === 'Paramètres') preferences(main);
   bindPageSwipe(main,p,next=>safe(navigate)(next));
   window.scrollTo(0, 0);
 }
@@ -170,9 +172,60 @@ function catalogue(main) {
 function activity(main) {
   main.innerHTML = head('Activité de l’équipe', 'Les 100 derniers événements enregistrés.', actions(button('notify', 'Notifications navigateur', 'bell'), button('read', 'Marquer comme lu', 'check'))) + '<section class="card timeline">' + state.events.map(e => '<div><span class="mark"></span><section><b>' + esc(e.action) + '</b><small>' + esc(e.actor) + ' · ' + esc(new Date(e.time).toLocaleString('fr-FR')) + '</small>' + (state.documents.some(d => d.id === e.target) ? button('open-' + e.target, 'Voir le devis', 'arrow', 'subtle') : '') + '</section>' + (e.id > state.lastRead ? '<span class="badge b4">Nouveau</span>' : '') + '</div>').join('') + '</section>';
 }
-function settings(main) {
+function updateNotificationPreference() {
+  const status = $('#notification-permission');
+  if (!status) return;
+  const permission = 'Notification' in window ? Notification.permission : 'unsupported';
+  status.textContent = {
+    granted: 'Les notifications sont autorisées pendant que Rivqo est ouvert.',
+    denied: 'Les notifications sont bloquées. Vous pouvez les autoriser dans les réglages du site de votre navigateur.',
+    default: 'Autorisez les notifications pour les recevoir lorsque Rivqo est ouvert dans un autre onglet.',
+    unsupported: 'Ce navigateur ne propose pas les notifications système.'
+  }[permission];
+  status.parentElement.querySelector('[data-act="notify"]').hidden = permission !== 'default';
+}
+function preferences(main) {
+  const theme = window.rivqoTheme;
+  const choices = [['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']];
+  const themeOptions = choices.map(([value, label]) =>
+    '<label class="theme-option"><input type="radio" name="theme" value="' + value + '"' +
+    (theme.preference === value ? ' checked' : '') + '><span>' + label + '</span></label>'
+  ).join('');
+  const integrations = [
+    ['Gmail', state.gmail],
+    ['Gemini', state.ai],
+    ['Notifications ntfy', state.mobileNotifications]
+  ].map(([name, configured]) =>
+    '<div><dt>' + name + '</dt><dd class="badge' + (configured ? ' b1' : '') + '">' +
+    (configured ? 'Configuré' : 'À configurer') + '</dd></div>'
+  ).join('');
+
+  main.innerHTML = head('Paramètres') + '<div class="preference-grid">' +
+    '<section class="card pad preference-card preference-appearance"><h2>Apparence</h2>' +
+    '<fieldset class="theme-options" aria-describedby="theme-schedule"><legend>Mode d’affichage</legend>' + themeOptions + '</fieldset>' +
+    '<p id="theme-schedule">En automatique, Rivqo est clair de 7 h à 20 h, selon l’heure de l’appareil. Ce choix est enregistré dans ce navigateur.</p>' +
+    '<p id="theme-feedback" role="status"></p></section>' +
+    '<section class="card pad preference-card"><h2>Notifications du navigateur</h2>' +
+    '<p id="notification-permission" role="status"></p>' + button('notify', 'Activer les notifications', 'bell') + '</section>' +
+    '<section class="card pad preference-card"><h2>Mon compte</h2><div><strong>' + esc(state.me.name) + '</strong>' +
+    '<small>' + esc(state.me.login) + ' · ' + esc(state.me.role) + '</small></div>' +
+    button('logout', 'Déconnexion', 'logout', 'subtle') + '</section>' +
+    (admin() ? '<section class="card pad preference-card"><h2>Entreprise et équipe</h2>' +
+      '<p>Coordonnées et mentions des devis, comptes et droits d’accès.</p>' +
+      button('nav-Administration', 'Ouvrir l’administration', 'arrow') + '</section>' +
+      '<section class="card pad preference-card"><h2>Intégrations</h2>' +
+      '<p>État des services configurés sur le serveur.</p><dl class="integration-list">' + integrations + '</dl></section>' : '') +
+    '</div>';
+
+  main.querySelector('.theme-options').onchange = e => {
+    const saved = theme.setPreference(e.target.value);
+    $('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' : 'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
+  };
+  updateNotificationPreference();
+}
+function administration(main) {
   const c = state.company;
-  main.innerHTML = head('Administration', 'Identité de l’entreprise et accès de l’équipe.') + '<div class="admincols"><form class="card pad" id="company"><h2>Entreprise</h2>' + input('Raison sociale', 'name', c.name, 'text', 'required') + area('Adresse', 'address', c.address) + input('Téléphone', 'phone', c.phone) + input('E-mail', 'email', c.email, 'email') + area('Identifiants et mentions professionnelles', 'identity', c.identity) + area('Assurance : assureur, coordonnées, police et couverture géographique','insurance',c.insurance) + area('Médiateur de la consommation : nom et coordonnées','mediator',c.mediator) + area('Conditions par défaut des nouveaux devis', 'terms', c.terms) + '<button class="primary">Enregistrer</button></form><section class="card pad"><header><h2>Équipe</h2>' + button('user', 'Ajouter', 'plus') + '</header>' + state.members.map(m => '<div class="member"><div><b>' + esc(m.name) + '</b><small>' + esc(m.login) + ' · ' + esc(m.role) + ' · ' + (m.active ? 'Actif' : 'Suspendu') + '</small></div>' + button('user-' + m.id, 'Gérer', 'gear', 'subtle') + '</div>').join('') + '<h3>Assistant Gemini</h3><p>' + (state.ai ? 'Clé configurée sur le serveur.' : 'En attente de la clé GEMINI_API_KEY dans le fichier .env du serveur.') + '</p><h3>Notifications sur téléphone</h3><p>' + (state.mobileNotifications ? 'Envoi ntfy configuré.' : 'Le journal intégré est actif. Le serveur peut aussi prévenir un téléphone via un sujet ntfy privé.') + '</p></section></div>';
+  main.innerHTML = head('Administration', 'Identité de l’entreprise et accès de l’équipe.', button('nav-Paramètres', 'Retour aux paramètres', 'back', 'subtle')) + '<div class="admincols"><form class="card pad" id="company"><h2>Entreprise</h2>' + input('Raison sociale', 'name', c.name, 'text', 'required') + area('Adresse', 'address', c.address) + input('Téléphone', 'phone', c.phone) + input('E-mail', 'email', c.email, 'email') + area('Identifiants et mentions professionnelles', 'identity', c.identity) + area('Assurance : assureur, coordonnées, police et couverture géographique','insurance',c.insurance) + area('Médiateur de la consommation : nom et coordonnées','mediator',c.mediator) + area('Conditions par défaut des nouveaux devis', 'terms', c.terms) + '<button class="primary">Enregistrer</button></form><section class="card pad"><header><h2>Équipe</h2>' + button('user', 'Ajouter', 'plus') + '</header>' + state.members.map(m => '<div class="member"><div><b>' + esc(m.name) + '</b><small>' + esc(m.login) + ' · ' + esc(m.role) + ' · ' + (m.active ? 'Actif' : 'Suspendu') + '</small></div>' + button('user-' + m.id, 'Gérer', 'gear', 'subtle') + '</div>').join('') + '</section></div>';
   onForm('#company', async o => {
     state.company = await api('company', {
       ...o,
@@ -253,6 +306,7 @@ root.onclick = safe(async e => {
   } else if (a === 'notify') {
     if (!('Notification' in window)) return toast('Ce navigateur ne propose pas les notifications système.');
     const p = await Notification.requestPermission();
+    updateNotificationPreference();
     toast(p === 'granted' ? 'Notifications activées pendant l’ouverture de l’application.' : 'Notifications système désactivées.');
   }
 });
@@ -306,6 +360,11 @@ async function start() {
   }, 20000);
 }
 window.addEventListener('sessionexpired', login);
+window.addEventListener('focus', updateNotificationPreference);
+window.addEventListener('rivqo:appearance', () => {
+  const selected = $('.theme-options input[value="' + window.rivqoTheme.preference + '"]');
+  if (selected) selected.checked = true;
+});
 window.addEventListener('beforeunload', e => {
   if (dirty()) {
     e.preventDefault();

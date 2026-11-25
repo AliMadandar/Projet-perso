@@ -22,6 +22,6 @@ for (const name of names) {
   }
   js += 'modules.' + name + '=(()=>{\n' + source + '\nreturn {' + exports.join(',') + '};})();\n';
 }
-const css = read('web/style.css') + read('web/mobile.css') + '\n.demoband{background:#f5e8cc;color:#58491d;text-align:center;padding:6px;font:12px Arial,sans-serif}@media print{.demoband{display:none}}';
+const css = read('web/style.css') + read('web/mobile.css') + '\n.demoband{background:var(--surface-tint);color:var(--muted);border-bottom:1px solid var(--rule);text-align:center;padding:6px;font:12px Arial,sans-serif}@media print{.demoband{display:none}}';
 const html = read('web/index.html').replace('<script src="/theme.js"></script>', () => '<script>' + read('web/theme.js') + '</script>').replace('<link rel="stylesheet" href="/mobile.css">','').replace('<link rel="apple-touch-icon" href="/icon-192.png">','').replace('<link rel="manifest" href="/manifest.webmanifest">', '').replace('<link rel="stylesheet" href="/style.css">', '<style>' + css + '</style>').replace('<body>', '<body><div class="demoband">Aperçu interactif · Données fictives · Les modifications disparaissent à la fermeture ou au rechargement.</div>').replace('<script type="module" src="/app.js"></script>', () => '<script type="module">' + js + '</script>').replaceAll('/icon.svg', logo).replaceAll('/ma-logo.png','data:image/png;base64,'+readFileSync(new URL('../web/ma-logo.png',import.meta.url)).toString('base64'));
 writeFileSync(new URL('../APERCU.html', import.meta.url), html);

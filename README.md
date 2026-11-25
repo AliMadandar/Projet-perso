@@ -14,13 +14,19 @@ Prérequis local : **Node.js 24.x**. Aucun paquet npm à télécharger. Depuis l
 node --env-file-if-exists=.env src/server.js
 ```
 
-Sous Windows, **DEMARRER-WINDOWS.cmd** lance cette commande par double-clic, y compris lorsque PowerShell bloque les scripts npm. Sur Mac, utilisez **DEMARRER-MAC.command** ou le terminal dans le dossier du projet. Ouvrez http://localhost:3000. Au premier lancement local, le terminal affiche le mot de passe du compte **admin**. Conservez-le. Pour choisir le mot de passe initial, copiez .env.example vers .env avant le premier lancement et renseignez ADMIN_PASSWORD avec au moins 12 caractères. Les comptes existants se gèrent dans Administration. La base persistante est créée dans data/atelier.sqlite.
+Sous Windows, **DEMARRER-WINDOWS.cmd** lance cette commande par double-clic, y compris lorsque PowerShell bloque les scripts npm. Sur Mac, utilisez **DEMARRER-MAC.command** ou le terminal dans le dossier du projet. Ouvrez http://localhost:3000. Au premier lancement local, le terminal affiche le mot de passe du compte **admin**. Conservez-le. Pour choisir le mot de passe initial, copiez .env.example vers .env avant le premier lancement et renseignez ADMIN_PASSWORD avec au moins 12 caractères. Les comptes existants se gèrent dans **Paramètres → Ouvrir l’administration**. La base persistante est créée dans data/atelier.sqlite.
 
 ### Les trois réglages pour MA RENOVATION
 
-1. Dans **Administration → Entreprise**, complétez l’adresse, les coordonnées, les identifiants professionnels, les mentions et les conditions qui figurent sur vos devis. Ces champs alimentent le document client. Faites valider vos mentions et conditions avant la première émission réelle.
+1. Dans **Paramètres → Ouvrir l’administration → Entreprise**, complétez l’adresse, les coordonnées, les identifiants professionnels, les mentions et les conditions qui figurent sur vos devis. Ces champs alimentent le document client. Faites valider vos mentions et conditions avant la première émission réelle.
 2. Dans **Catalogue**, ouvrez une prestation pour modifier chacun des quatre prix HT. « Pose seule » correspond à la main-d’œuvre. Les trois autres colonnes sont les forfaits fourniture et pose Essentiel, Confort et Premium. Les 110 prestations initiales constituent un barème de départ à adapter aux achats, aux formats et aux conditions du chantier. Les services de préparation ont aussi leurs propres prix. Chaque ligne de devis peut recevoir un libellé et un prix négociés.
-3. Dans **Administration → Équipe**, créez un compte Terrain pour la prise de cotes et un compte Bureau pour préparer les devis. La validation, le partage et l’envoi sont réservés aux administrateurs. Le rôle Lecture consulte les dossiers. Les comptes de cette installation partagent les clients et chantiers d’une même entreprise.
+3. Dans **Paramètres → Ouvrir l’administration → Équipe**, créez un compte Terrain pour la prise de cotes et un compte Bureau pour préparer les devis. La validation, le partage et l’envoi sont réservés aux administrateurs. Le rôle Lecture consulte les dossiers. Les comptes de cette installation partagent les clients et chantiers d’une même entreprise.
+
+## Paramètres d’affichage et de compte
+
+Ouvrez **Paramètres** dans le menu ou **Plus → Paramètres** sur téléphone. Dans **Apparence**, choisissez **Automatique**, **Clair** ou **Sombre**. Le mode automatique utilise l’heure de l’appareil et affiche le thème clair de 7 h à 20 h. Le navigateur conserve votre choix.
+
+Cette page donne aussi accès aux notifications du navigateur et aux informations de votre compte. Les administrateurs y retrouvent l’accès aux réglages de l’entreprise et de l’équipe ainsi que l’état de Gmail, Gemini et ntfy.
 
 ## Personnaliser le document client
 

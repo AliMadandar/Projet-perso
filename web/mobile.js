@@ -10,8 +10,7 @@ export function mobileHome(documents,canEdit){
  return '<section class="mobile-home"><h1>Mes chantiers</h1>'+(canEdit?button('new','Créer un devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
 }
 export function mobileMore(state){
- const links=[['terrain','Saisie chantier · فارسی','users'],['nav-Catalogue','Catalogue des prix','book'],['nav-Activité','Activité de l’équipe','bell']];
- if(state.me.role==='Administrateur')links.push(['nav-Administration','Administration','gear']);
+ const links=[['terrain','Saisie chantier · فارسی','users'],['nav-Catalogue','Catalogue des prix','book'],['nav-Activité','Activité de l’équipe','bell'],['nav-Paramètres','Paramètres','gear']];
  return '<div class="pagehead"><h1>Plus</h1></div><section class="mobile-account"><span class="avatar">'+esc(state.me.name.slice(0,1))+'</span><div><strong>'+esc(state.me.name)+'</strong><small>'+esc(state.me.role)+'</small></div></section><div class="mobile-menu-list">'+links.map(([action,label,mark])=>button(action,label,mark)).join('')+'</div>'+button('logout','Déconnexion','logout','subtle');
 }
 export function bindPageSwipe(root,page,navigate){

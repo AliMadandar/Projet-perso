@@ -23,10 +23,8 @@ for (const name of names) {
   js += 'modules.' + name + '=(()=>{\n' + source + '\nreturn {' + exports.join(',') + '};})();\n';
 }
 const inter = readFileSync(new URL('../web/fonts/inter-latin.woff2', import.meta.url)).toString('base64');
-const materials = readFileSync(new URL('../web/rivqo-materiaux.webp', import.meta.url)).toString('base64');
 const css = '/*\n' + read('web/fonts/OFL-Inter.txt').trimEnd() + '\n*/\n' +
-  read('web/style.css').replace('/fonts/inter-latin.woff2', 'data:font/woff2;base64,' + inter)
-    .replace('/rivqo-materiaux.webp', 'data:image/webp;base64,' + materials) +
+  read('web/style.css').replace('/fonts/inter-latin.woff2', 'data:font/woff2;base64,' + inter) +
   read('web/mobile.css') + '\n.demoband{background:var(--surface-tint);color:var(--muted);border-bottom:1px solid var(--rule);text-align:center;padding:6px;font-size:12px}@media print{.demoband{display:none}}';
 const html = read('web/index.html').replace('<script src="/theme.js"></script>', () => '<script>' + read('web/theme.js') + '</script>').replace('<link rel="stylesheet" href="/mobile.css">','').replace('<link rel="apple-touch-icon" href="/icon-192.png">','').replace('<link rel="manifest" href="/manifest.webmanifest">', '').replace('<link rel="stylesheet" href="/style.css">', '<style>' + css + '</style>').replace('<body>', '<body><div class="demoband">Aperçu interactif · Données fictives · Les modifications disparaissent à la fermeture ou au rechargement.</div>').replace('<script type="module" src="/app.js"></script>', () => '<script type="module">' + js + '</script>').replaceAll('/icon.svg', logo).replaceAll('/ma-logo.png','data:image/png;base64,'+readFileSync(new URL('../web/ma-logo.png',import.meta.url)).toString('base64'));
 writeFileSync(new URL('../APERCU.html', import.meta.url), html);

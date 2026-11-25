@@ -21,6 +21,8 @@
   dialog[open]{width:min(100%,640px);max-height:90dvh;margin:auto auto 0;border-radius:20px 20px 0 0;padding:20px 18px max(18px,env(safe-area-inset-bottom));overscroll-behavior:contain}
   #toast{bottom:calc(78px + env(safe-area-inset-bottom))}
 }
-@media(prefers-reduced-motion:no-preference) and (max-width:900px){
+@media screen and (prefers-reduced-motion:no-preference) and (max-width:900px){
   .workspace main{animation:enter-mobile .16s ease-out}@keyframes enter-mobile{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
+  .mobile-tabs [aria-current=page] span{animation:tab-selected 260ms cubic-bezier(.2,.78,.29,1.15)}
+  @keyframes tab-selected{from{opacity:.65;transform:translateY(3px) scale(.86)}}
 }

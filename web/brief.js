@@ -13,6 +13,7 @@ export function brief(state, apply) {
     stop = null,
     recording = false,
     message = '',
+    feedback = '',
     playUrl = '';
   const modal = $('#modal');
   modal.addEventListener('close', () => {
@@ -24,7 +25,14 @@ export function brief(state, apply) {
   });
   function show() {
     if (!active) return;
-    dialog('Dicter un chantier', '<p>Décrivez les pièces, les surfaces et les travaux. Relisez les lignes avant de les ajouter au devis.</p>' + proposal.questions.map(q => '<p class="hint">' + esc(q) + '</p>').join('') + '<label>Votre demande ou votre réponse<textarea id="briefText" rows="3">' + esc(message) + '</textarea></label><div class="actions">' + button('mic', recording ? 'Terminer' : 'Dicter', 'mic') + (blob || recording ? button('discard', 'Annuler la dictée') : '') + button('send', busy ? 'Analyse en cours…' : 'Analyser', 'arrow', 'primary') + '</div>' + (blob ? '<audio controls id="briefAudio"></audio>' : '') + (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide">Ajouter la sélection au devis</button></form>' : ''));
+    dialog('Assistant chantier', '<p>Écrivez ou dictez les pièces, les surfaces et les travaux. Relisez les lignes avant de les ajouter au devis.</p>' +
+      proposal.questions.map(q => '<p class="hint">' + esc(q) + '</p>').join('') +
+      '<label>Votre demande ou votre réponse<textarea id="briefText" rows="3" maxlength="8000"' + (busy ? ' disabled' : '') + '>' + esc(message) + '</textarea></label>' +
+      '<div class="actions">' + button('mic', recording ? 'Terminer' : 'Dicter', 'mic') + (blob || recording ? button('discard', 'Annuler la dictée') : '') +
+      button('send', busy ? 'Analyse en cours…' : 'Analyser avec Gemini', 'arrow', 'primary') + '</div>' +
+      (feedback ? '<p class="hint" role="status">' + esc(feedback) + '</p>' : '') +
+      (blob ? '<audio controls id="briefAudio"></audio>' : '') +
+      (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide"' + (busy ? ' disabled' : '') + '>Ajouter la sélection au devis</button></form>' : ''));
     $('#briefText').oninput = e => message = e.target.value;
     const b = a => modal.querySelector('[data-act="' + a + '"]');
     if (playUrl) URL.revokeObjectURL(playUrl);
@@ -50,18 +58,22 @@ export function brief(state, apply) {
         recording = true;
         show();
       } catch {
-        toast('Micro indisponible. Vous pouvez saisir la demande.');
+        feedback = 'Micro indisponible. Vous pouvez saisir la demande.';
         show();
       }
     };
-    if (b('discard')) b('discard').onclick = () => {
-      stop?.(true);
-      blob = null;
-      show();
-    };
+    if (b('discard')) {
+      b('discard').disabled = busy;
+      b('discard').onclick = () => {
+        stop?.(true);
+        blob = null;
+        show();
+      };
+    }
     b('send').onclick = async () => {
       if (!message.trim() && !blob) return toast('Saisissez ou dictez une demande.');
       busy = true;
+      feedback = '';
       show();
       try {
         const p = await api('brief', {
@@ -77,7 +89,7 @@ export function brief(state, apply) {
         message = '';
         blob = null;
       } catch (e) {
-        toast(e.message);
+        feedback = e.message;
       } finally {
         busy = false;
         show();

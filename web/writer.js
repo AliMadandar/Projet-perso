@@ -13,9 +13,25 @@ export function writer(state,d,apply){
   const targets=[['title','Objet du devis'],['notes','Précisions'],['terms','Conditions particulières'],...(d.edition?[['intro','Présentation du chantier'],['spec','Détail technique']]:[]),...d.lines.map((l,i)=>['line'+i,l.label])];
   const get=k=>k.startsWith('line')?d.lines[Number(k.slice(4))].label:(d.edition?.[k]??d[k]??'');
   let target=d.edition?'intro':'notes',history=[],source=get(target),candidate='',busy=false,generation=0;
-  dialog('Assistant de rédaction','<div class="writing-chat">'+select('Texte à modifier','target',targets,target)+'<div id="messages" aria-live="polite"></div><label>Texte à reformuler<textarea id="writerText" rows="4"></textarea></label>'+input('Consigne pour Gemini (facultative)','instruction','','text','maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"')+select('Style','tone',[['Professionnel','Professionnel'],['Plus lisible','Plus lisible']],'Professionnel')+'<div class="actions">'+button('local','Reformuler sur cet appareil','edit')+(state.ai?button('gem','Reformuler avec Gemini','arrow','primary'):'')+'</div><label>Proposition à relire<textarea id="suggestion" rows="4"></textarea></label>'+button('apply','Appliquer au champ choisi','check','primary wide')+'</div>');
+  const gemini = state.ai ? input('Consigne pour Gemini (facultative)', 'instruction', '', 'text',
+    'maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"') : '';
+  const hint = !state.ai && state.geminiModel ? '<p class="hint">Gemini est désactivé. Retrouvez sa configuration dans Paramètres → Intégrations.</p>' : '';
+  dialog('Assistant de rédaction', '<div class="writing-chat">' + select('Texte à modifier', 'target', targets, target) +
+    '<div id="messages" aria-live="polite"></div><label>Texte à reformuler<textarea id="writerText" rows="4" maxlength="4000"></textarea></label>' +
+    gemini + select('Style', 'tone', [['Professionnel', 'Professionnel'], ['Plus lisible', 'Plus lisible']], 'Professionnel') +
+    '<div class="actions">' + button('local', 'Reformuler sur cet appareil', 'edit') +
+    (state.ai ? button('gem', 'Reformuler avec Gemini', 'arrow', 'primary') : '') + '</div>' + hint +
+    '<label>Proposition à relire<textarea id="suggestion" rows="4"></textarea></label>' +
+    button('apply', 'Appliquer au champ choisi', 'check', 'primary wide') + '</div>');
   const root=$('#modal'),b=k=>root.querySelector('[data-act="'+k+'"]'),msg=$('#messages'),src=$('#writerText'),out=$('#suggestion');
-  const refresh=()=>{msg.innerHTML=history.map(([who,t])=>'<p><b>'+esc(who)+'</b> '+esc(t)+'</p>').join('');b('apply').disabled=busy||!out.value.trim();};
+  const refresh=()=>{
+    msg.innerHTML=history.map(([who,t])=>'<p><b>'+esc(who)+'</b> '+esc(t)+'</p>').join('')+
+      (busy?'<p>Reformulation en cours…</p>':'');
+    msg.scrollTop=msg.scrollHeight;
+    b('local').disabled=busy;
+    if(b('gem'))b('gem').disabled=busy;
+    b('apply').disabled=busy||!out.value.trim();
+  };
   src.value=source;out.oninput=refresh;refresh();
   root.addEventListener('close',()=>generation++,{once:true});
   root.querySelector('[name=target]').onchange=e=>{generation++;target=e.target.value;source=get(target);candidate='';history=[];src.value=source;out.value='';busy=false;refresh();};
@@ -23,7 +39,7 @@ export function writer(state,d,apply){
     const raw=src.value.trim();if(busy)return;
     if(!raw){history.push(['Assistant','Saisissez le texte à reformuler.']);refresh();return;}
     const job=++generation;
-    busy=true;const tone=root.querySelector('[name=tone]').value;const instruction=root.querySelector('[name=instruction]').value.trim();history.push(['Vous',remote&&instruction?instruction+' — '+raw:raw]);refresh();
+    busy=true;const tone=root.querySelector('[name=tone]').value;const instruction=root.querySelector('[name=instruction]')?.value.trim() ?? '';history.push(['Vous',remote&&instruction?instruction+' — '+raw:raw]);refresh();
     try{
       const next=remote?(await api('rewrite',{text:raw,tone,instruction})).text:localRewrite(raw,tone);
       if(job!==generation)return;

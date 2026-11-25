@@ -207,6 +207,9 @@ function preferences(main) {
     '<div><dt>' + name + '</dt><dd class="badge' + (configured ? ' b1' : '') + '">' +
     (configured ? 'Configuré' : 'À configurer') + '</dd></div>'
   ).join('');
+  const geminiSettings = state.geminiModel ? '<p>Modèle Gemini <strong>' + esc(state.geminiModel) + '</strong></p>' +
+    (state.ai ? button('gemini-check', 'Tester la connexion Gemini', 'arrow') + '<p id="gemini-feedback" role="status"></p>'
+      : '<p>Renseignez <code>GEMINI_API_KEY</code> sur le serveur, puis redémarrez Rivqo.</p>') : '';
 
   main.innerHTML = head('Paramètres') + '<div class="preference-grid">' +
     '<section class="card pad preference-card preference-appearance"><h2>Apparence</h2>' +
@@ -222,12 +225,27 @@ function preferences(main) {
       '<p>Coordonnées et mentions des devis, comptes et droits d’accès.</p>' +
       button('nav-Administration', 'Ouvrir l’administration', 'arrow') + '</section>' +
       '<section class="card pad preference-card"><h2>Intégrations</h2>' +
-      '<p>État des services configurés sur le serveur.</p><dl class="integration-list">' + integrations + '</dl></section>' : '') +
+      '<p>État des services configurés sur le serveur.</p><dl class="integration-list">' + integrations + '</dl>' +
+      geminiSettings + '</section>' : '') +
     '</div>';
 
   main.querySelector('.theme-options').onchange = e => {
     const saved = theme.setPreference(e.target.value);
     $('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' : 'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
+  };
+  const check = main.querySelector('[data-act="gemini-check"]');
+  if (check) check.onclick = async () => {
+    const feedback = main.querySelector('#gemini-feedback');
+    check.disabled = true;
+    feedback.textContent = 'Test de connexion en cours…';
+    try {
+      await api('gemini/check', {});
+      feedback.textContent = 'Gemini a répondu au message de test.';
+    } catch (error) {
+      feedback.textContent = error.message;
+    } finally {
+      check.disabled = false;
+    }
   };
   updateNotificationPreference();
 }

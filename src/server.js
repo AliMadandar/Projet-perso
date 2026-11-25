@@ -8,6 +8,7 @@ import { notifications } from './notifications.js';
 import { portal } from './portal.js';
 import { auth } from './auth.js';
 import { extract, projectBrief } from './gemini.js';
+import { defaultGeminiModel, generateGemini } from './gemini-api.js';
 import {correspondence,gmailReady} from './correspondance.js';
 import {rewriteText} from './rewrite.js';
 import { fields, conditions, validate } from './domain.js';
@@ -70,7 +71,18 @@ async function body(req) {
   }
 }
 const cookie = (token, seconds) => 'ma_session=' + token + '; HttpOnly; SameSite=Strict; Path=/; Max-Age=' + seconds + (prod ? '; Secure' : '');
+const geminiKey = process.env.GEMINI_API_KEY?.trim();
+const geminiModel = process.env.GEMINI_MODEL?.trim().replace(/^models\//, '') || defaultGeminiModel;
 const ongoing = new Set();
+async function withGemini(userId, request) {
+  if (ongoing.has(userId)) fail('Une demande Gemini est déjà en cours.', 429);
+  ongoing.add(userId);
+  try {
+    return await request();
+  } finally {
+    ongoing.delete(userId);
+  }
+}
 const server = http.createServer(async (req, res) => {
   const path = (req.url || '/').split('?')[0],
     method = req.method;
@@ -142,7 +154,8 @@ const server = http.createServer(async (req, res) => {
       units,
       mobileNotifications: delivery.enabled,
       roles: access.roles, gmail:gmailReady(process.env), reminders:me.role==='Administrateur'?mail.reminders():[],
-      ai: !!process.env.GEMINI_API_KEY,
+      ai: Boolean(geminiKey),
+      geminiModel: me.role === 'Administrateur' ? geminiModel : undefined,
       fields,
       conditions,
       profiles: Object.fromEntries(w.all('SELECT * FROM quote_profiles').map(r=>[r.trade,{...JSON.parse(r.data),version:r.version}])),
@@ -192,13 +205,20 @@ const server = http.createServer(async (req, res) => {
     edit();
     if(path==='/api/reminder'&&method==='POST'){admin();return json(200,mail.reminder(o,me.name));}
     if(path==='/api/mail'&&method==='POST'){admin();return json(200,await mail.send(o,me.name));}
+    if (path === '/api/gemini/check' && method === 'POST') {
+      admin();
+      await withGemini(me.id, () => generateGemini({
+        key: geminiKey, model: geminiModel,
+        parts: [{ text: 'Réponds uniquement par OK.' }],
+        timeout: 30000
+      }));
+      return json(200, { model: geminiModel });
+    }
     if(path==='/api/rewrite'&&method==='POST'){
       const text=str(o.text,4000);
       if(!text||!['Professionnel','Plus lisible'].includes(o.tone))fail('Texte ou style incorrect.');
-      if(ongoing.has(me.id))fail('Une demande est déjà en cours.',429);
-      ongoing.add(me.id);
-      try { return json(200,await rewriteText(text,o.tone,process.env.GEMINI_API_KEY,process.env.GEMINI_MODEL||'gemini-3.8-flash',str(o.instruction||'',600))); }
-      catch(error){ fail(error.message,502); } finally {ongoing.delete(me.id);}
+      const instruction = str(o.instruction || '', 600);
+      return json(200, await withGemini(me.id, () => rewriteText(text, o.tone, geminiKey, geminiModel, instruction)));
     }
     if (path === '/api/documents' && method === 'POST') {
       if(me.role!=='Administrateur' && Array.isArray(o.lines)){
@@ -222,29 +242,22 @@ const server = http.createServer(async (req, res) => {
     }
     if (path === '/api/customers' && method === 'POST') return json(200, w.change('customers', uuid(o.id), customer(o), o.version, me.name));
     if (['/api/extract', '/api/brief'].includes(path) && method === 'POST') {
-      const current = validate(o.current || {}),
-        description = str(o.description || '', 8000),
+      let current;
+      try {
+        current = validate(o.current || {});
+      } catch (error) {
+        fail(error.message);
+      }
+      const description = str(o.description || '', 8000),
         audio = o.audio || '';
       if (typeof audio !== 'string' || audio.length > 5900000 || !description && !audio) fail('Description ou enregistrement requis.');
-      if (ongoing.has(me.id)) fail('Analyse déjà en cours.', 429);
-      ongoing.add(me.id);
-      try {
-        if (path === '/api/brief') {
-          if (!Array.isArray(o.history) || JSON.stringify(o.history).length > 60000) fail('Dialogue trop long. Ajoutez les lignes puis ouvrez une nouvelle demande.');
-          return json(200, await projectBrief({
-            description,
-            audio,
-            history: o.history
-          }, w.list('services'), process.env.GEMINI_API_KEY, process.env.GEMINI_MODEL || 'gemini-3.8-flash'));
-        }
-        return json(200, await extract({
-          current,
-          description,
-          audio
-        }, process.env.GEMINI_API_KEY, process.env.GEMINI_MODEL || 'gemini-3.8-flash'));
-      } finally {
-        ongoing.delete(me.id);
+      if (path === '/api/brief') {
+        if (!Array.isArray(o.history) || JSON.stringify(o.history).length > 60000) fail('Dialogue trop long. Ajoutez les lignes puis ouvrez une nouvelle demande.');
+        return json(200, await withGemini(me.id, () => projectBrief({
+          description, audio, history: o.history
+        }, w.list('services'), geminiKey, geminiModel)));
       }
+      return json(200, await withGemini(me.id, () => extract({ current, description, audio }, geminiKey, geminiModel)));
     }
     admin();
     if(path==='/api/profile'&&method==='POST'){
@@ -268,7 +281,7 @@ const server = http.createServer(async (req, res) => {
     if (path === '/api/users' && method === 'PUT') return json(200, await access.manage(o, me));
     fail('Route introuvable.', 404);
   } catch (e) {
-    const status = e.status || (['/api/extract', '/api/brief'].includes(path) ? 400 : 500);
+    const status = e.status || 500;
     if (status === 500) console.error(e);
     json(status, {
       error: status === 500 ? 'Erreur interne. Consultez le journal du serveur.' : e.message

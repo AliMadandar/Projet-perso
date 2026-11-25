@@ -1409,22 +1409,24 @@ function assistant(state, apply) {
         if (!audio && !text.trim()) return toast('Dictez ou écrivez votre demande.');
         pending = true;
         render();
+        let feedback = '';
         try {
           const facts = await api('extract', {
             current: f,
             description: text,
             audio: audio ? await wavBase64(audio) : undefined
           });
-          if (facts.multiple) toast('Traitez chaque zone de carrelage séparément. Les autres travaux se chiffrent dans le catalogue.');else {
+          if (facts.multiple) feedback = 'Traitez chaque zone de carrelage séparément. Les autres travaux se chiffrent dans le catalogue.';else {
             Object.assign(f, facts);
             audio = null;
             text = '';
           }
         } catch (e) {
-          toast(e.message);
+          feedback = e.message;
         } finally {
           pending = false;
           render();
+          if (active && feedback) toast(feedback);
         }
       };
     }
@@ -1449,6 +1451,7 @@ function brief(state, apply) {
     stop = null,
     recording = false,
     message = '',
+    feedback = '',
     playUrl = '';
   const modal = $('#modal');
   modal.addEventListener('close', () => {
@@ -1460,7 +1463,14 @@ function brief(state, apply) {
   });
   function show() {
     if (!active) return;
-    dialog('Dicter un chantier', '<p>Décrivez les pièces, les surfaces et les travaux. Relisez les lignes avant de les ajouter au devis.</p>' + proposal.questions.map(q => '<p class="hint">' + esc(q) + '</p>').join('') + '<label>Votre demande ou votre réponse<textarea id="briefText" rows="3">' + esc(message) + '</textarea></label><div class="actions">' + button('mic', recording ? 'Terminer' : 'Dicter', 'mic') + (blob || recording ? button('discard', 'Annuler la dictée') : '') + button('send', busy ? 'Analyse en cours…' : 'Analyser', 'arrow', 'primary') + '</div>' + (blob ? '<audio controls id="briefAudio"></audio>' : '') + (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide">Ajouter la sélection au devis</button></form>' : ''));
+    dialog('Assistant chantier', '<p>Écrivez ou dictez les pièces, les surfaces et les travaux. Relisez les lignes avant de les ajouter au devis.</p>' +
+      proposal.questions.map(q => '<p class="hint">' + esc(q) + '</p>').join('') +
+      '<label>Votre demande ou votre réponse<textarea id="briefText" rows="3" maxlength="8000"' + (busy ? ' disabled' : '') + '>' + esc(message) + '</textarea></label>' +
+      '<div class="actions">' + button('mic', recording ? 'Terminer' : 'Dicter', 'mic') + (blob || recording ? button('discard', 'Annuler la dictée') : '') +
+      button('send', busy ? 'Analyse en cours…' : 'Analyser avec Gemini', 'arrow', 'primary') + '</div>' +
+      (feedback ? '<p class="hint" role="status">' + esc(feedback) + '</p>' : '') +
+      (blob ? '<audio controls id="briefAudio"></audio>' : '') +
+      (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide"' + (busy ? ' disabled' : '') + '>Ajouter la sélection au devis</button></form>' : ''));
     $('#briefText').oninput = e => message = e.target.value;
     const b = a => modal.querySelector('[data-act="' + a + '"]');
     if (playUrl) URL.revokeObjectURL(playUrl);
@@ -1486,18 +1496,22 @@ function brief(state, apply) {
         recording = true;
         show();
       } catch {
-        toast('Micro indisponible. Vous pouvez saisir la demande.');
+        feedback = 'Micro indisponible. Vous pouvez saisir la demande.';
         show();
       }
     };
-    if (b('discard')) b('discard').onclick = () => {
-      stop?.(true);
-      blob = null;
-      show();
-    };
+    if (b('discard')) {
+      b('discard').disabled = busy;
+      b('discard').onclick = () => {
+        stop?.(true);
+        blob = null;
+        show();
+      };
+    }
     b('send').onclick = async () => {
       if (!message.trim() && !blob) return toast('Saisissez ou dictez une demande.');
       busy = true;
+      feedback = '';
       show();
       try {
         const p = await api('brief', {
@@ -1513,7 +1527,7 @@ function brief(state, apply) {
         message = '';
         blob = null;
       } catch (e) {
-        toast(e.message);
+        feedback = e.message;
       } finally {
         busy = false;
         show();
@@ -1737,9 +1751,25 @@ function writer(state,d,apply){
   const targets=[['title','Objet du devis'],['notes','Précisions'],['terms','Conditions particulières'],...(d.edition?[['intro','Présentation du chantier'],['spec','Détail technique']]:[]),...d.lines.map((l,i)=>['line'+i,l.label])];
   const get=k=>k.startsWith('line')?d.lines[Number(k.slice(4))].label:(d.edition?.[k]??d[k]??'');
   let target=d.edition?'intro':'notes',history=[],source=get(target),candidate='',busy=false,generation=0;
-  dialog('Assistant de rédaction','<div class="writing-chat">'+select('Texte à modifier','target',targets,target)+'<div id="messages" aria-live="polite"></div><label>Texte à reformuler<textarea id="writerText" rows="4"></textarea></label>'+input('Consigne pour Gemini (facultative)','instruction','','text','maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"')+select('Style','tone',[['Professionnel','Professionnel'],['Plus lisible','Plus lisible']],'Professionnel')+'<div class="actions">'+button('local','Reformuler sur cet appareil','edit')+(state.ai?button('gem','Reformuler avec Gemini','arrow','primary'):'')+'</div><label>Proposition à relire<textarea id="suggestion" rows="4"></textarea></label>'+button('apply','Appliquer au champ choisi','check','primary wide')+'</div>');
+  const gemini = state.ai ? input('Consigne pour Gemini (facultative)', 'instruction', '', 'text',
+    'maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"') : '';
+  const hint = !state.ai && state.geminiModel ? '<p class="hint">Gemini est désactivé. Retrouvez sa configuration dans Paramètres → Intégrations.</p>' : '';
+  dialog('Assistant de rédaction', '<div class="writing-chat">' + select('Texte à modifier', 'target', targets, target) +
+    '<div id="messages" aria-live="polite"></div><label>Texte à reformuler<textarea id="writerText" rows="4" maxlength="4000"></textarea></label>' +
+    gemini + select('Style', 'tone', [['Professionnel', 'Professionnel'], ['Plus lisible', 'Plus lisible']], 'Professionnel') +
+    '<div class="actions">' + button('local', 'Reformuler sur cet appareil', 'edit') +
+    (state.ai ? button('gem', 'Reformuler avec Gemini', 'arrow', 'primary') : '') + '</div>' + hint +
+    '<label>Proposition à relire<textarea id="suggestion" rows="4"></textarea></label>' +
+    button('apply', 'Appliquer au champ choisi', 'check', 'primary wide') + '</div>');
   const root=$('#modal'),b=k=>root.querySelector('[data-act="'+k+'"]'),msg=$('#messages'),src=$('#writerText'),out=$('#suggestion');
-  const refresh=()=>{msg.innerHTML=history.map(([who,t])=>'<p><b>'+esc(who)+'</b> '+esc(t)+'</p>').join('');b('apply').disabled=busy||!out.value.trim();};
+  const refresh=()=>{
+    msg.innerHTML=history.map(([who,t])=>'<p><b>'+esc(who)+'</b> '+esc(t)+'</p>').join('')+
+      (busy?'<p>Reformulation en cours…</p>':'');
+    msg.scrollTop=msg.scrollHeight;
+    b('local').disabled=busy;
+    if(b('gem'))b('gem').disabled=busy;
+    b('apply').disabled=busy||!out.value.trim();
+  };
   src.value=source;out.oninput=refresh;refresh();
   root.addEventListener('close',()=>generation++,{once:true});
   root.querySelector('[name=target]').onchange=e=>{generation++;target=e.target.value;source=get(target);candidate='';history=[];src.value=source;out.value='';busy=false;refresh();};
@@ -1747,7 +1777,7 @@ function writer(state,d,apply){
     const raw=src.value.trim();if(busy)return;
     if(!raw){history.push(['Assistant','Saisissez le texte à reformuler.']);refresh();return;}
     const job=++generation;
-    busy=true;const tone=root.querySelector('[name=tone]').value;const instruction=root.querySelector('[name=instruction]').value.trim();history.push(['Vous',remote&&instruction?instruction+' — '+raw:raw]);refresh();
+    busy=true;const tone=root.querySelector('[name=tone]').value;const instruction=root.querySelector('[name=instruction]')?.value.trim() ?? '';history.push(['Vous',remote&&instruction?instruction+' — '+raw:raw]);refresh();
     try{
       const next=remote?(await api('rewrite',{text:raw,tone,instruction})).text:localRewrite(raw,tone);
       if(job!==generation)return;
@@ -2040,7 +2070,7 @@ function mountEditor(ctx, d) {
   }
   function draw(changedLine = -1, changedTotal = false) {
     const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
-    main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar"><div><b>Assistant chantier</b><small>Décrire ou dicter une zone à chiffrer</small></div>' + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Dicter un chantier', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
+    main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar"><div><b>Assistant chantier</b><small>' + (state.ai ? 'À l’écrit ou à la voix, avec Gemini' : 'Chiffrer une pièce à partir du catalogue') + '</small></div>' + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Décrire ou dicter', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
     if(editable&&d.edition){
       const grid=main.querySelector('.edgrid');grid.classList.toggle('sheet-mode',sheetMode);
       const bar=main.querySelector('.previewtitle');bar.insertAdjacentHTML('beforeend',button('sheet',sheetMode?'Revenir au formulaire':'Modifier sur la feuille','edit',sheetMode?'':'primary'));
@@ -2479,6 +2509,9 @@ function preferences(main) {
     '<div><dt>' + name + '</dt><dd class="badge' + (configured ? ' b1' : '') + '">' +
     (configured ? 'Configuré' : 'À configurer') + '</dd></div>'
   ).join('');
+  const geminiSettings = state.geminiModel ? '<p>Modèle Gemini <strong>' + esc(state.geminiModel) + '</strong></p>' +
+    (state.ai ? button('gemini-check', 'Tester la connexion Gemini', 'arrow') + '<p id="gemini-feedback" role="status"></p>'
+      : '<p>Renseignez <code>GEMINI_API_KEY</code> sur le serveur, puis redémarrez Rivqo.</p>') : '';
 
   main.innerHTML = head('Paramètres') + '<div class="preference-grid">' +
     '<section class="card pad preference-card preference-appearance"><h2>Apparence</h2>' +
@@ -2494,12 +2527,27 @@ function preferences(main) {
       '<p>Coordonnées et mentions des devis, comptes et droits d’accès.</p>' +
       button('nav-Administration', 'Ouvrir l’administration', 'arrow') + '</section>' +
       '<section class="card pad preference-card"><h2>Intégrations</h2>' +
-      '<p>État des services configurés sur le serveur.</p><dl class="integration-list">' + integrations + '</dl></section>' : '') +
+      '<p>État des services configurés sur le serveur.</p><dl class="integration-list">' + integrations + '</dl>' +
+      geminiSettings + '</section>' : '') +
     '</div>';
 
   main.querySelector('.theme-options').onchange = e => {
     const saved = theme.setPreference(e.target.value);
     $('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' : 'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
+  };
+  const check = main.querySelector('[data-act="gemini-check"]');
+  if (check) check.onclick = async () => {
+    const feedback = main.querySelector('#gemini-feedback');
+    check.disabled = true;
+    feedback.textContent = 'Test de connexion en cours…';
+    try {
+      await api('gemini/check', {});
+      feedback.textContent = 'Gemini a répondu au message de test.';
+    } catch (error) {
+      feedback.textContent = error.message;
+    } finally {
+      check.disabled = false;
+    }
   };
   updateNotificationPreference();
 }

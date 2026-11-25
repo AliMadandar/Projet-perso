@@ -44,7 +44,7 @@ Les nouveaux devis proposent 30 jours de validité et une répartition 40 % à l
 
 1. Choisissez **Nouveau devis**, indiquez l’objet, le client et l’adresse de chantier. Le carnet clients permet de réutiliser des coordonnées. Le devis en conserve une copie.
 2. Sélectionnez **Carrelage guidé** pour une pièce. Le questionnaire fonctionne sans clé. Il précise la surface, le sol ou le mur, le fournisseur des carreaux, la dépose et le primaire. La pièce et le support déterminent les questions sur l’étanchéité et le ragréage.
-3. Avec Gemini activé, **Dicter un chantier** accepte aussi plusieurs pièces et métiers. Appuyez une fois sur Dicter pour enregistrer, puis sur Terminer. Réécoutez, annulez ou appuyez sur Analyser. Un enregistrement dure au maximum deux minutes. Le microphone exige un contexte sécurisé (HTTPS ou localhost) et l’autorisation du navigateur.
+3. Avec Gemini activé, **Décrire ou dicter** accepte aussi plusieurs pièces et métiers. Écrivez votre demande ou appuyez une fois sur Dicter pour enregistrer, puis sur Terminer. Réécoutez, annulez ou appuyez sur **Analyser avec Gemini**. Un enregistrement dure au maximum deux minutes. Le microphone exige un contexte sécurisé (HTTPS ou localhost) et l’autorisation du navigateur.
 4. L’assistant affiche ses questions et les postes identifiés dans le catalogue. Répondez, vérifiez les quantités, la gamme et la TVA, cochez les postes retenus puis ajoutez-les. Pour une prestation spécifique, sélectionnez **Ajouter une prestation → Ligne libre**.
 5. Ajustez les quantités, les prix unitaires et les lots. Dans **Modifier**, « Position dans le devis » réordonne une ligne. Dans **Dates et conditions**, réglez la remise, l’acompte, la validité et les précisions. Le taux de TVA est un paramètre du chiffrage que l’utilisateur choisit pour chaque ligne.
 6. **Photos du chantier** permet de joindre jusqu’à quatre photos légendées qui apparaissent dans l’aperçu et le document client. Le navigateur les réduit avant enregistrement.
@@ -59,16 +59,18 @@ Les nouveaux devis proposent 30 jours de validité et une répartition 40 % à l
 - **Mes devis** recherche par client, chantier, adresse ou numéro, filtre par statut et exporte la sélection en CSV. **Activité** suit les dernières opérations et les nouvelles réponses.
 - **Archiver** conserve les montants et ferme l’accès public du dossier. Le bouton de désactivation révoque également un lien actif.
 
-## Activer Gemini quand vous serez prête
+## Activer et tester Gemini
 
-Copiez .env.example en .env, puis complétez la variable suivante **sur le serveur**. Conservez le modèle prérempli ou indiquez un modèle accessible à votre projet Google acceptant l’audio et les réponses JSON.
+Ajoutez ces variables à votre fichier `.env` **sur le serveur**. Si le fichier n’existe pas, créez-le à partir de `.env.example`. Utilisez une clé de Google AI Studio et un modèle accessible à son projet. Le modèle par défaut accepte le texte, l’audio et les réponses JSON.
 
 ```dotenv
 GEMINI_API_KEY=votre_cle
 GEMINI_MODEL=gemini-3.8-flash
 ```
 
-Redémarrez le processus Node. Avec Docker, relancez `docker compose up -d app` pour reprendre la configuration. La clé reste côté serveur. L’enregistrement et le texte du chantier sont envoyés à Google lorsque l’utilisateur choisit Analyser. Le dialogue actif reste dans la fenêtre de l’assistant. Fermer cette fenêtre libère l’enregistrement local. Les prix des suggestions proviennent du catalogue de l’entreprise. Une erreur de quota ou de modèle laisse accessibles le questionnaire et l’éditeur manuel.
+Redémarrez le processus Node. Avec Docker, relancez `docker compose up -d app` pour reprendre la configuration. Connectez-vous en administrateur et ouvrez **Paramètres → Intégrations → Tester la connexion Gemini**. Rivqo envoie un court message de test et affiche le résultat. La clé reste côté serveur.
+
+L’enregistrement et le texte du chantier sont envoyés à Google lorsque l’utilisateur choisit **Analyser avec Gemini**. Le dialogue actif reste dans la fenêtre de l’assistant. Fermer cette fenêtre libère l’enregistrement local. Les prix des suggestions proviennent du catalogue de l’entreprise. Le questionnaire, l’éditeur manuel et la reformulation locale restent disponibles en cas d’erreur Gemini.
 
 ## Installer sur téléphone et héberger
 

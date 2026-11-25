@@ -125,22 +125,24 @@ export function assistant(state, apply) {
         if (!audio && !text.trim()) return toast('Dictez ou écrivez votre demande.');
         pending = true;
         render();
+        let feedback = '';
         try {
           const facts = await api('extract', {
             current: f,
             description: text,
             audio: audio ? await wavBase64(audio) : undefined
           });
-          if (facts.multiple) toast('Traitez chaque zone de carrelage séparément. Les autres travaux se chiffrent dans le catalogue.');else {
+          if (facts.multiple) feedback = 'Traitez chaque zone de carrelage séparément. Les autres travaux se chiffrent dans le catalogue.';else {
             Object.assign(f, facts);
             audio = null;
             text = '';
           }
         } catch (e) {
-          toast(e.message);
+          feedback = e.message;
         } finally {
           pending = false;
           render();
+          if (active && feedback) toast(feedback);
         }
       };
     }

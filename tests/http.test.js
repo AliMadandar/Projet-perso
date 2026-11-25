@@ -11,6 +11,7 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
       DB_PATH: ':memory:',
       ADMIN_PASSWORD: password,
       ADMIN_LOGIN: 'admin',
+      GEMINI_API_KEY: '',
       PORT: '0',
       APP_ORIGIN: '',
       NODE_ENV: 'test',
@@ -55,6 +56,7 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
       assert.ok(policy.includes("'sha256-" + hash + "'"));
     }
     assert.equal((await call('state')).status, 401);
+    assert.equal((await call('gemini/check', {})).status, 401);
     const a = await call('login', {
       login: 'admin',
       password
@@ -63,6 +65,10 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
     const ac = a.headers.get('set-cookie').split(';')[0];
     const state = await (await call('state', null, ac)).json();
     assert.equal(state.services.length, 110);
+    assert.equal(state.ai, false);
+    const gemini = await call('gemini/check', {}, ac);
+    assert.equal(gemini.status, 503);
+    assert.match((await gemini.json()).error, /GEMINI_API_KEY/);
     assert.equal((await call('company', {
       ...state.company,
       name: 'Entreprise'
@@ -81,6 +87,7 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
       }),
       lc = l.headers.get('set-cookie').split(';')[0];
     assert.equal((await call('state', null, lc)).status, 200);
+    assert.equal((await call('gemini/check', {}, lc)).status, 403);
     assert.equal((await call('documents', {}, lc)).status, 403);
     assert.equal((await call('billing/00000000-0000-4000-8000-000000000000',null,lc)).status,403);
     assert.equal((await call('invoice',{},lc)).status,403);

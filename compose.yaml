@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      PORT: 3000
+      DB_PATH: /app/data/atelier.sqlite
+      APP_ORIGIN: https://${DOMAIN:?Renseigner DOMAIN dans .env}
+    volumes:
+      - atelier:/app/data
+      - backups:/app/backups
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health',{headers:{host:new URL(process.env.APP_ORIGIN).host}}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [app]
+    environment:
+      DOMAIN: ${DOMAIN:?Renseigner DOMAIN dans .env}
+    ports: ["80:80","443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - tls:/data
+      - proxyconfig:/config
+volumes:
+  atelier: {}
+  backups: {}
+  tls: {}
+  proxyconfig: {}

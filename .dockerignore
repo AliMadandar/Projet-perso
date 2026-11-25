@@ -1,0 +1,7 @@
+.env
+data/
+backups/
+.git/
+node_modules/
+tests/
+APERCU.html

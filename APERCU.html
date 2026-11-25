@@ -1,0 +1,1703 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#163d35"><title>MA RENOVATION · Atelier des devis</title><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNjNkMzUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNlNWJjNzkiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTExIDQ2VjI3bDEyLTEwIDEyIDEwdjE5TTIzIDQ2VjI5bDEzLTExIDE2IDEzdjE1Ii8+PC9zdmc+Cg=="><style>:root{color-scheme:light;--ink:#172f29;--muted:#5d6b64;--pine:#163d35;--dark:#112f29;--mint:#dcf0df;--brass:#e3bd80;--bg:#f5f5ef;--rule:#d9dfd5;--white:#fff;--radius:14px;font:15px/1.5 "Inter","Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--rule);border-radius:8px;background:white;color:var(--ink);padding:9px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;line-height:1.35}button:hover{background:#edf2eb;border-color:#94a69a}button:disabled{opacity:.6;cursor:default}button svg{flex-shrink:0}button.primary{background:var(--pine);border-color:var(--pine);color:white}button.primary:hover{background:#245748}button.subtle,.link{border-color:transparent;background:transparent;padding:6px;color:#285b49}.link{padding:2px 0;text-align:left;justify-content:flex-start}.wide{width:100%;margin-top:10px}.icononly{width:34px;height:34px;padding:6px;font-size:0;gap:0}.skip{position:fixed;top:-100px;background:white;padding:10px;z-index:20}.skip:focus{top:0}:focus-visible{outline:3px solid #b7771d;outline-offset:3px}
+h1,h2,h3,p{margin:0}h1{font-family:"Baskervville",Georgia,serif;font-weight:500;font-size:clamp(32px,4vw,54px);letter-spacing:-.055em;line-height:1.14}h2{font-size:22px;letter-spacing:-.04em;line-height:1.25}h3{font-size:17px;letter-spacing:-.02em}p{color:var(--muted)}small{display:block;color:var(--muted);line-height:1.45}.eyebrow,.sheet small,.previewtitle{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.12em}
+.shell{display:grid;grid-template-columns:222px minmax(0,1fr);min-height:100vh}aside{height:100dvh;position:sticky;top:0;padding:30px 16px 16px;background:var(--dark);color:#f8fbf3;display:flex;flex-direction:column}.brand{display:inline-flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.055em;white-space:nowrap}.brand img{width:41px;height:41px}.brand b{font-weight:760}.brand>span{font-weight:400}nav{margin-top:45px;display:grid;gap:5px}.nav{justify-content:flex-start;color:#d5e2d8;background:none;border:0;padding:12px 15px;font-size:14px}.nav:hover,.nav.active{background:#284a40;color:#fff}.nav.active{box-shadow:inset 3px 0 var(--brass)}.profile{margin-top:auto;display:flex;align-items:center;gap:8px;border-top:1px solid #416051;padding-top:19px;font-size:12px}.avatar{width:38px;height:38px;border-radius:50%;background:#e3e9d7;color:var(--pine);display:inline-grid;place-items:center;font-weight:750}.profile small{color:#b8c9bd}.profile button{margin-left:auto;background:transparent;border:none;color:white}.workspace{min-width:0}.bar{height:67px;border-bottom:1px solid var(--rule);background:#fafbf7;display:flex;align-items:center;gap:12px;padding:0 clamp(18px,3vw,48px);font-size:13px;color:var(--muted)}.bar i{font-style:normal;margin:0 8px;color:#a1aa9e}.bar>button:last-child{margin-left:auto}.mobilemenu{display:none}main#main{max-width:1750px;margin:auto;padding:30px clamp(16px,3vw,48px) 70px}.hero,.signart{background:#204a3d;color:#fff;position:relative;overflow:hidden}.hero{padding:35px clamp(22px,3vw,44px);border-radius:var(--radius);isolation:isolate}.hero>div:last-child{position:relative}.hero h1{font-size:clamp(38px,4.6vw,68px);margin:12px 0}.hero p,.signart .eyebrow{color:#d9e8d9}.hero .eyebrow{color:var(--brass)}.hero .primary{margin-top:24px;background:#edd09b;color:#263729;border:0}.drafting{position:absolute;right:-8%;top:-45%;width:48%;height:200%;opacity:.5;transform:rotate(29deg);background:repeating-linear-gradient(90deg,transparent 0 40px,#84a18b60 41px 42px,transparent 43px 60px),repeating-linear-gradient(0deg,transparent 0 69px,#a0b59d59 70px 72px,transparent 73px 97px);border:2px solid #8da68f}.drafting:after,.drafting:before{content:"";position:absolute;inset:20% 14% 30% 24%;border:5px double #aac0a9}.drafting:after{inset:40% 60% 20% 0;border-radius:0 100% 0 0;border-width:2px}
+.kpis,.cards,.admincols{display:grid;gap:16px}.kpis{grid-template-columns:repeat(3,minmax(0,1fr));margin:20px 0 26px}.kpis>div,.tile,.card,.panel,details{background:white;border:1px solid var(--rule);border-radius:var(--radius)}.kpis>div{padding:20px 24px}.kpis strong{display:block;font-family:Georgia,serif;font-size:clamp(27px,3vw,40px);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.045em}.kpis small{font-weight:650;color:var(--ink)}.kpis span{font-size:12px;color:var(--muted)}.card>header,.previewtitle,dialog header,.assistbar,.pagehead,.topline,.member{display:flex;align-items:center;justify-content:space-between;gap:12px}.card>header{padding:21px 23px}.card.pad>header{padding:0 0 16px}.pagehead{margin:7px 0 25px;flex-wrap:wrap}.pagehead p{margin-top:7px}.actions,.quick,.chips,.choices{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.quick{margin-top:18px}.quick button{background:transparent}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:13px 18px;text-align:left;border-top:1px solid var(--rule)}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.045em;background:#f9faf6}td small{font-size:12px}.num{text-align:right;white-space:nowrap}.badge{display:inline-block;white-space:nowrap;border-radius:100px;font-size:12px;font-weight:650;padding:4px 10px;background:#ebeee9;color:#46524a}.b1{background:#deefdc;color:#30623c}.b2{background:#e4edf4;color:#34556b}.b3{background:#f5e3df;color:#7d483d}.b4{background:#f7ead0;color:#75571d}.empty{padding:26px;text-align:center;color:var(--muted)}.empty p{margin-top:5px}.filters{display:flex;gap:16px;align-items:end;padding:18px 22px;flex-wrap:wrap}.filters label{margin:0;min-width:160px}.filters label:first-child{flex:1}.cards{grid-template-columns:repeat(auto-fill,minmax(235px,1fr))}.tile,.pad,details,.panel{padding:20px}.tile p{white-space:pre-line;font-size:13px;margin:6px 0}.tile h3{margin-top:10px}.admincols{grid-template-columns:1.1fr 1fr;align-items:start}.member{padding:12px 0;border-top:1px solid var(--rule)}.member+h3{margin-top:30px}.timeline>div{display:flex;gap:13px;align-items:flex-start;border-bottom:1px solid var(--rule);padding:18px 22px}.timeline .badge{margin-left:auto}.mark,.dot{width:9px;height:9px;border-radius:50%;background:#5a8e65;display:inline-block}.mark{margin-top:6px}
+label{display:grid;gap:5px;font-size:12px;font-weight:650;color:#475a4e;margin:12px 0}input,select,textarea{width:100%;min-width:0;background:#fff;border:1px solid #c9d2c8;border-radius:7px;padding:9px 10px;color:var(--ink);font-weight:400;font-size:14px}textarea{resize:vertical}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}fieldset{border:0;min-width:0;padding:0;margin:0}.topline{justify-content:flex-start}.edgrid{display:grid;grid-template-columns:minmax(290px,.9fr) minmax(365px,1.12fr);gap:20px;align-items:start}.editor{min-width:0}.editor details,.editor .panel,.assistbar{margin-bottom:13px}summary{font-weight:700;cursor:pointer}details[open]>summary{margin-bottom:12px}.assistbar{background:#e5eddf;border:1px solid #cfddca;border-radius:12px;padding:15px}.assistbar small,.linebox small{font-size:12px}.preview{position:sticky;top:12px;padding:14px;background:#e6e9e0;border:1px solid #d6dbd0;border-radius:12px}.previewtitle{justify-content:flex-start;margin:0 3px 12px}.previewtitle small{margin-left:auto;font-size:10px}.sheet{background:#fff;color:#213a31;padding:clamp(18px,2.1vw,36px);box-shadow:0 3px 12px #223c2512;font:12px/1.5 Arial,sans-serif;overflow-wrap:anywhere}.sheet>header{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:2px solid var(--pine);padding-bottom:14px}.sheet>header>div:last-child{text-align:right}.sheet>header b{letter-spacing:.15em}.paperbrand{font-size:12px;font-weight:800;letter-spacing:.035em;display:flex;align-items:center;gap:8px}.paperbrand img{width:34px}.letter{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:22px 0}.letter>div{white-space:pre-line}.letter small{font-size:8px;margin-bottom:5px}.letter strong{display:block}.sheet h2{font-size:22px;font-family:Georgia,serif;font-weight:500}.sheet p{font-size:11px;white-space:pre-line}.paperlines{font-size:10px;margin:19px 0 13px}.paperlines td,.paperlines th{padding:6px 4px}.paperlines th{font-size:8px;background:#edf1ea}.paperlines td:not(:first-child),.paperlines th:not(:first-child){text-align:right}.paperlines td:first-child{width:36%}.paperlines .lot td{background:#f6f7f3;font-weight:bold;text-align:left}.totals{margin-left:auto;width:min(100%,255px)}.totals>div{display:flex;justify-content:space-between;gap:10px;padding:4px 2px}.totals .grand{background:var(--pine);color:white;padding:8px 10px;margin:5px 0}.sheet section,.sheet footer{margin-top:16px}.sheet footer{border-top:1px solid var(--rule);padding:13px 0 20px}.linebox{display:flex;align-items:center;gap:5px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:12px}.lineinfo{flex:1;min-width:0}.linebox strong{white-space:nowrap}.panel h3{margin:0 0 8px}
+dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(--rule);border-radius:16px;color:var(--ink);box-shadow:0 16px 65px #122c2b35}dialog::backdrop{background:#10282070}dialog header{margin-bottom:18px}dialog form button.primary{margin-top:10px}.choices,.chips{margin-top:14px}.chip{font-size:12px;background:#eff3ec}.hint{background:#eef3eb;padding:12px;border-radius:8px;font-size:13px;margin:12px 0}#answer,#finish{margin-top:20px}#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#183c30;color:white;padding:12px 20px;border-radius:10px;z-index:100;opacity:0;pointer-events:none;max-width:95vw}#toast.on{opacity:1}.signin{display:grid;grid-template-columns:1fr 1fr;min-height:100dvh}.signart{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:clamp(28px,5vw,80px)}.signart>div:last-child{position:relative}.signart h1{font-size:clamp(60px,8vw,130px)}.signform{display:grid;place-items:center;padding:28px}.signform>div{width:min(100%,350px)}.signform h2{font-family:Georgia,serif;font-weight:500;font-size:44px;margin:10px 0}.signform form{margin-top:26px}.signform .eyebrow{color:#59745f}
+@media(max-width:1180px){.shell{grid-template-columns:185px minmax(0,1fr)}aside{padding-left:10px;padding-right:10px}main#main{padding-left:18px;padding-right:18px}.edgrid{grid-template-columns:minmax(260px,.9fr) minmax(320px,1fr);gap:12px}.preview{padding:10px}.sheet{padding:16px}}
+@media(max-width:900px){.shell{display:block}.mobilemenu{display:flex;font-size:0;padding:8px;gap:0}aside{display:none;position:fixed;top:62px;left:0;z-index:10;width:215px;height:calc(100dvh - 62px);box-shadow:8px 4px 20px #19332430}aside.show{display:flex}.bar{height:62px}.kpis>div{padding:15px}.bar{padding:0 16px}.hero{padding:26px}.edgrid{grid-template-columns:minmax(240px,.9fr) minmax(300px,1fr)}}
+@media(max-width:660px){.edgrid,.admincols,.signin{display:block}.preview{position:static;margin-top:20px}.signart{min-height:220px;padding:22px}.signart h1{font-size:42px}.signart h1 br{display:none}.signform{padding-top:40px}.kpis{gap:6px;margin:12px 0 18px}.kpis>div{padding:9px}.kpis strong{font-size:21px}.kpis small{font-size:10px}.kpis span{font-size:10px}.bar{font-size:12px}.pagehead{gap:12px}.pagehead p{font-size:13px}.admincols>section{margin-top:14px}.hero p{max-width:80%}.card>header,.filters{padding:14px}.sheet{padding:20px 12px}.paperlines td,.paperlines th{padding:5px 2px}th,td{padding:10px}.tablewrap table{min-width:480px}.edgrid .fields{gap:0 8px}.actions button{font-size:13px}main#main{padding:18px 12px 50px}input,select,textarea{font-size:16px}}
+@page{size:A4;margin:15mm}
+@media print{html,body,.shell,.workspace,main#main,.edgrid,.preview,.sheet,#paper{display:block!important;background:white!important;border:0!important;padding:0!important;margin:0!important;box-shadow:none!important;max-width:none!important}.preview{position:static}.shell aside,.bar,.pagehead,.editor,.topline,.previewtitle,#toast,.skip,dialog{display:none!important}.sheet{font-size:10pt!important;color:#151e17;print-color-adjust:exact}.sheet h2{font-size:20pt}.sheet p,.paperlines{font-size:9pt}.paperlines th{font-size:8pt}.paperlines tr,.sheet section,.sheet footer,.totals{break-inside:avoid}.paperlines thead{display:table-header-group}.letter{margin:22pt 0}.sheet footer{min-height:55pt}.paperbrand img{width:36pt}}
+.clientpage{max-width:790px;margin:20px auto;padding:15px}.clienttools{margin:16px 0}.clienttools>button{margin-left:8px}.agree{display:flex;align-items:center;gap:10px}.agree input{width:auto}@media print{.clienttools,.clientpage>.card{display:none!important}.clientpage{max-width:none;margin:0;padding:0}}
+.hero+.assistbar{margin-top:15px}.paperlines td small{font-size:8px}.assistbar{flex-wrap:wrap}.assistbar>div:first-child{flex:1;min-width:125px}.admincols h3{margin-top:22px}
+.annex{break-before:page}.annex figure{margin:12px 0;break-inside:avoid}.annex img{display:block;max-height:230px;max-width:100%;object-fit:contain}.annex figcaption{margin-top:5px}.thumb{max-width:90px;max-height:60px;vertical-align:middle;margin-right:12px}
+
+/* Feuille de devis, partagée par l’atelier, la consultation client et l’impression. */
+.couture{--accent:#a65016;--tint:#f6ece1;--graphite:#242b2c;--soft:#f6f5f1;color:var(--graphite);background:#fffefa;padding:clamp(15px,2.4vw,40px);font:12px/1.5 "Inter","Segoe UI",Arial,sans-serif;letter-spacing:0;border-top:4px solid var(--accent)}
+.couture.tone-sauge{--accent:#3f6557;--tint:#eaf1eb}.couture.tone-terre{--accent:#98492e;--tint:#f6eae3}.couture.tone-ardoise{--accent:#405e74;--tint:#e9eff3}
+.couture .q-head{display:flex;justify-content:space-between;align-items:center;border:0;padding:0 0 12px;gap:14px}.q-brand{display:flex;align-items:center;gap:10px}.q-brand img{width:46px;height:44px;object-fit:contain}.couture .q-brand b{font-size:13px;letter-spacing:.05em}.couture .q-head>div:last-child b{display:block;font:normal 30px/1 Georgia,serif;letter-spacing:-.055em}.q-head span{display:block;color:var(--accent);font:600 10px/1.5 monospace;margin-top:5px}
+.q-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding:6px 0;border-block:1px solid #d8d7cf;color:#505852;font-size:10px}
+.q-parties{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}.couture .q-parties section{margin:0;font-size:10px}.q-parties strong{display:block;font-size:13px;margin-bottom:3px}.couture small{font-size:8px;letter-spacing:.09em;color:var(--accent);text-transform:uppercase}.q-title{margin:14px 0!important;border-left:3px solid var(--accent);padding-left:12px}.couture .q-title h2{font:500 clamp(22px,2.4vw,38px)/1.07 Georgia,serif;color:var(--graphite);margin:5px 0 4px}.q-title p{color:#4a534e}.q-title small{font-weight:bold}
+.quote-fact{margin:6px 0}.quote-fact b{font-size:10px}.couture .quote-fact p{font-size:10px;line-height:1.45;color:#414a45;margin:1px 0 4px}.q-items{width:100%;font-size:10px;margin:14px 0;border-collapse:collapse}.q-items th,.q-items td{border:0;border-bottom:1px solid #dedfd7;padding:7px 4px;vertical-align:top}.q-items th{font-size:8px;letter-spacing:.02em;color:white;background:var(--graphite)}.q-items th:not(:first-child),.q-items td:not(:first-child){text-align:right}.q-items td small{display:block;text-transform:none;letter-spacing:0;color:#616b63}.q-items .q-lot td{background:var(--tint);color:var(--accent);font-weight:700;padding-block:5px}.q-items th:first-child{width:41%}
+.couture .q-sum{width:min(100%,250px);margin:10px 0 12px auto}.q-sum>div{display:flex;justify-content:space-between;padding:3px 5px;font-size:11px}.q-sum .q-grand{background:var(--accent);color:white;padding:9px 10px;margin-top:4px}.q-grand strong{font-size:17px}.couture .q-pay,.couture .q-conditions{margin:14px 0 0}.couture h3{font:600 14px/1.25 Georgia,serif}.q-pay>div{display:grid;grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:8px;margin:7px 0}.q-pay>div>div{border-top:2px solid var(--accent);background:var(--soft);padding:7px}.q-pay b,.q-pay span,.q-pay strong{display:block}.q-pay b{color:var(--accent);font-size:12px}.q-pay span{font-size:9px;margin:1px 0}.q-pay strong{font-size:11px}.q-conditions .quote-fact{margin:4px 0}.q-conditions h3{margin-bottom:6px}
+.couture .q-sign{border-top:1px solid #c8c8bf;margin:16px 0 0;padding:8px 0 22px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}.q-sign span{font-size:9px;color:#586159}.couture.condensed .q-items td{padding-block:3px}.couture.condensed .q-parties{margin:7px 0}
+.doc-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.doc-controls button:first-child{border-color:#a59477}.writing-chat #messages{max-height:190px;overflow:auto}.writing-chat #messages p{margin:7px 0;padding:8px 12px;border-radius:8px;background:#f3f3eb}.writing-chat #messages p:nth-child(even){background:#ebf1eb}.writing-chat #messages b{display:block;font-size:11px}.ecs-reference{margin:15px 0}.ecs-reference p{margin:12px 0}.ecs-reference a{color:var(--pine);font-size:13px}
+@media(prefers-reduced-motion:no-preference){dialog[open]{animation:ma-dialog .15s ease-out}.doc-controls button{transition:background-color .16s,border-color .16s}@keyframes ma-dialog{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}}
+@media print{.couture{font-size:10pt!important;border-top:3pt solid var(--accent)!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.couture .q-head{padding-top:7pt}.q-brand img{width:48pt;height:38pt}.couture .q-title h2{font-size:23pt}.q-items{font-size:9pt}.q-items th{font-size:8pt}.q-items td{padding:5pt}.q-items thead{display:table-header-group}.q-items tr,.q-pay,.q-sum,.q-sign,.quote-fact{break-inside:avoid}.q-items .q-lot{break-after:avoid}.couture .q-conditions{break-inside:auto}.q-title,.q-conditions h3{break-after:avoid}.couture .q-sign{padding-bottom:30pt}.couture .q-head{border-bottom:0}}
+.q-pay>div{display:flex;align-items:stretch}.q-pay>div>div{flex:1;min-width:0}.q-brand b{white-space:nowrap}
+@media print{.q-head>div:first-child{flex:1}.couture .q-conditions .quote-fact{display:block}.q-conditions .quote-fact>b,.q-conditions .quote-fact>p{display:inline}.q-conditions .quote-fact>b{margin-right:5pt}.q-pay>div>div{padding:5pt}.couture .q-pay,.couture .q-conditions,.couture .q-sign{margin-top:7pt}.q-meta,.q-items th,.q-items td small,.q-pay span,.q-sign span{font-size:8pt}.couture .quote-fact p,.couture .quote-fact b{font-size:8.5pt}}
+@media print{
+ @page{size:A4;margin:12mm 14mm}
+ .couture .q-sign{min-height:28pt;padding:6pt 0 14pt}
+ .couture .q-parties{margin:8pt 0}
+ .couture .q-title{margin:8pt 0!important}
+ .couture .q-items{margin:8pt 0}.couture .q-items td{padding:3.5pt}
+ .couture .q-sum{margin-top:4pt;margin-bottom:4pt}
+}
+.terrain{max-width:760px;margin:auto;font:16px/1.8 Tahoma,"Segoe UI",sans-serif}.terrain>header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.terrain h1,.terrain h2{font-family:inherit;letter-spacing:0}.terrain .card{margin:12px 0}.terrain label{font-family:inherit;letter-spacing:0}.terrain .primary{min-height:46px}.terrain .quick{display:grid}.bar>button[data-act=terrain]{margin-inline-start:auto}.bar>button:last-child{margin-left:0}
+.couture.sans-titres h2,.couture.sans-titres h3,.couture.sans-titres .q-head>div:last-child b{font-family:"Inter","Segoe UI",Arial,sans-serif;letter-spacing:-.035em}
+
+.edgrid.sheet-mode{display:block}.sheet-mode .editor{display:none}.sheet-mode .preview{position:static;max-width:900px;margin:0 auto}.previewtitle button{margin-left:auto}.sheet-tools{display:flex;gap:.6rem;flex-wrap:wrap;padding:.7rem 1rem;background:#f4f2ea;border-block:1px solid #d8d7c9}.sheet-mode [contenteditable],.sheet-mode .sheet-target{outline:1px dashed transparent;outline-offset:2px;border-radius:3px}.sheet-mode [contenteditable]:hover,.sheet-mode .sheet-target:hover{outline-color:#7d987d;background:#eef4eb;cursor:text}.sheet-mode .sheet-target:hover{cursor:pointer}.sheet-mode [contenteditable]:focus,.sheet-mode .sheet-target:focus-visible{outline:2px solid #51795b;background:#f3f7ef}.sheet-mode [contenteditable]:empty:before{content:attr(data-hint);color:#65736a}.signed-proof{margin:1.2rem 0 0;padding:1rem;border-left:4px solid #436b58;background:#edf3ed;overflow-wrap:anywhere;break-inside:avoid}.signed-proof small{display:block}.bill-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#dce3da;margin:1rem 0}.bill-stats div{background:#f3f5ee;padding:.85rem}.bill-stats strong,.bill-stats small{display:block}.bill-stats strong{font-size:1.25rem}.bill-entry{padding:.9rem 0;border-top:1px solid #dce3da}.bill-entry p{margin:.3rem 0}.bill-entry button{margin-right:.4rem}.invoice-print{display:none}.preserve{white-space:pre-line}
+@media print{.sheet-tools,.sheet-mode [contenteditable]:empty:before{display:none!important}.sheet-mode [contenteditable],.sheet-mode .sheet-target{outline:0!important;background:transparent!important}.signed-proof{display:block!important}.printing-invoice> *:not(.invoice-print){display:none!important}.printing-invoice .invoice-print{display:block!important}.printing-invoice dialog,.printing-invoice dialog::backdrop{display:none!important;background:transparent!important}}
+#ink,.signature-ink{display:block;width:min(100%,480px);height:auto;color:#203d34}.signature-ink{max-height:90px;width:auto;max-width:100%}#ink{background:#fff;border:1px dashed #839589;touch-action:none;border-radius:8px}#inkArea{margin-block:1rem}
+.sheet-mode .drop-line{box-shadow:inset 0 -3px #38765b}.sheet-mode .previewtitle{position:sticky;top:0;z-index:2;background:#f2f2e9;border-bottom:1px solid #d8d7c9}.sheet-mode .sheet{margin:clamp(.4rem,2vw,1.5rem) auto;box-shadow:0 12px 32px #25352612}.sheet-mode .q-title h2:focus{caret-color:#365f4e}
+.mobile-home,.mobile-tabs,.bar .mobile-brand,.quote-switch{display:none}
+@media screen and (max-width:900px){
+  .mobile-home{display:grid;grid-template-columns:1fr auto;gap:14px 6px;align-items:center}.mobile-home h1{font-size:clamp(26px,6vw,38px)}.mobile-home>.primary{font-size:13px}
+  .mobile-home+.hero{display:none}.resume-card{grid-column:1/-1;background:linear-gradient(125deg,#183d32,#235440);color:#fff;padding:19px;border-radius:18px}.resume-card small{color:#d7e7c8}.resume-card strong{display:block;margin-top:8px;font:500 25px/1.18 Georgia,serif;overflow-wrap:anywhere}.resume-card p{margin:5px 0 13px;color:#e1ebe0}.resume-card button{background:#e2ead7;border:0;color:#153e30}
+  .shell #sidebar{display:none}.shell{min-height:100dvh}
+  .workspace .bar{height:auto;min-height:56px;padding:calc(6px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left));gap:5px;background:#fafbf6;border-bottom:1px solid var(--rule)}
+  .bar .mobile-brand{display:inline-flex;align-items:center}.bar .mobile-brand .brand{color:var(--pine);font-size:11px}.bar .mobile-brand .brand img{width:30px;height:30px}.bar>span:not(.mobile-brand){display:none}
+  .bar button{min-height:44px}.bar button[data-act="nav-Activité"]{font-size:0;gap:0;min-width:44px}.bar button[data-act=terrain]{margin-inline-start:auto}
+  .mobile-tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;z-index:20;bottom:0;inset-inline:0;background:#fafbf7;border-top:1px solid #d3dcd4;padding:4px max(6px,env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left));box-shadow:0 -3px 18px #203a2b0c}
+  .mobile-tabs button{min-height:54px;display:grid;justify-items:center;align-content:center;gap:2px;padding:0;border:0;background:transparent;color:#53675c;font-size:12px;font-weight:600}
+  .mobile-tabs button span{display:grid;place-items:center;width:53px;height:27px;border-radius:20px}.mobile-tabs svg{width:20px;height:20px}.mobile-tabs [aria-current=page]{color:#163d35}.mobile-tabs [aria-current=page] span{background:#dceadd}
+  .workspace main#main{padding:17px max(14px,env(safe-area-inset-right)) calc(88px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));min-width:0}
+  .workspace button,.terrain button{min-height:44px}input,textarea,select{font-size:16px}.workspace .pagehead h1{font-size:32px}.workspace .pagehead{gap:12px}.workspace .hero{padding:22px;border-radius:18px}
+  .mobile-account{display:flex;align-items:center;gap:12px;padding:18px;background:var(--pine);color:white;border-radius:16px}.mobile-account small{color:#d0e1d5}
+  .mobile-menu-list{margin:16px 0;background:white;border:1px solid var(--rule);border-radius:15px;overflow:hidden}.mobile-menu-list button{display:flex;justify-content:flex-start;width:100%;gap:16px;padding:13px 16px;border:0;border-radius:0;border-bottom:1px solid var(--rule)}.mobile-menu-list button:last-child{border:0}
+  .quote-list{overflow:visible}.quote-list table,.quote-list tbody{display:block;min-width:0}.quote-list thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}.quote-list tr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;border-top:1px solid var(--rule);gap:3px 8px;padding:10px 12px}.quote-list td{padding:0;border:0;white-space:normal}.quote-list td:first-child{grid-column:1;grid-row:1}.quote-list td:nth-child(2){grid-column:1;grid-row:2;font-size:12px}.quote-list td:nth-child(3){grid-column:2;grid-row:2;text-align:right}.quote-list td:last-child{grid-column:2;grid-row:1}.quote-list .link{padding:0;text-align:left;min-height:32px}
+  .quote-switch{display:flex;gap:3px;padding:3px;background:#e4ebe3;border-radius:12px;margin:8px 0 15px}.quote-switch button{flex:1;border:0;background:transparent;color:#496052}.quote-switch [aria-pressed=true]{background:#fff;box-shadow:0 1px 4px #163d3520;color:#193e32}
+  .edgrid[data-pane]{display:block}.edgrid[data-pane=saisie]>.preview,.edgrid[data-pane=saisie] #workflow,.edgrid[data-pane=apercu]>.editor,.edgrid[data-pane=suivi]>.preview,.edgrid[data-pane=suivi]>.editor>:not(#workflow){display:none}
+  .edgrid[data-pane=suivi] #workflow{display:grid;gap:9px}.edgrid[data-pane=suivi] #workflow button{justify-content:flex-start;padding-inline:16px}
+  .edgrid[data-pane] .preview{position:static;margin:0;padding:6px}.previewtitle{flex-wrap:wrap}.edgrid .sheet{min-width:0}.sheet .q-items td:first-child{overflow-wrap:anywhere}
+  dialog[open]{width:min(100%,640px);max-height:90dvh;margin:auto auto 0;border-radius:20px 20px 0 0;padding:20px 18px max(18px,env(safe-area-inset-bottom));overscroll-behavior:contain}
+  #toast{bottom:calc(78px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:no-preference) and (max-width:900px){
+  .workspace main{animation:enter-mobile .16s ease-out}@keyframes enter-mobile{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
+
+.demoband{background:#f5e8cc;color:#58491d;text-align:center;padding:6px;font:12px Arial,sans-serif}@media print{.demoband{display:none}}</style></head><body><div class="demoband">Aperçu interactif · Données fictives · Les modifications disparaissent à la fermeture ou au rechargement.</div><a class="skip" href="#main">Aller au contenu</a><div id="root"></div><div id="toast" role="status"></div><dialog id="modal"><div id="modalContent"></div></dialog><script type="module">const modules={};let demoApi;
+// Ce module est injecté uniquement dans APERCU.html. Tous les exemples restent en mémoire.
+function createDemoApi({
+  catalog,
+  tiers,
+  units,
+  fields,
+  conditions,
+  today
+}) {
+  const company = {
+    id: 1,
+    version: 1,
+    name: 'MA RENOVATION',
+    address: 'Marseille',
+    email: '',
+    phone: '',
+    identity: '',
+    terms: ''
+  };
+  const me = {
+    id: 1,
+    name: 'Atelier démo',
+    role: 'Administrateur',
+    login: 'demo'
+  };
+  const clients = [{
+    id: crypto.randomUUID(),
+    name: 'Camille Martin (exemple)',
+    address: 'Marseille 8ᵉ',
+    email: '',
+    phone: '',
+    version: 1
+  }, {
+    id: crypto.randomUUID(),
+    name: 'Atelier du Parc (exemple)',
+    address: 'Marseille 6ᵉ',
+    phone: '',
+    email: '',
+    version: 1
+  }];
+  const line = (i, quantity, lot, tier) => ({
+    serviceId: catalog[i].id,
+    unit: catalog[i].unit,
+    label: catalog[i].label,
+    quantity: quantity * 100,
+    lot,
+    tier,
+    price: catalog[i].prices[tier],
+    tax: 1000
+  });
+  const doc = (i, title, status, client, lines) => ({
+    id: crypto.randomUUID(),
+    number: 'DEV-' + String(i).padStart(5, '0'),
+    title,
+    status,
+    client,
+    lines,
+    company,
+    issued: today(),
+    valid: today(30),
+    discount: 0,
+    deposit: 4000,
+    edition:{...modules.edition.newEdition(i===3?'Peinture':'Carrelage'),intro:'Réfection des revêtements selon les prestations détaillées ci-dessous.'},
+    version: 1,
+    site: client.address,
+    terms: company.terms,
+    notes: '',
+    updated: new Date().toISOString()
+  });
+  const documents = [doc(1, 'Rénovation de la cuisine', 'Brouillon', clients[0], [line(5, 30, 'Cuisine', 1), line(7, 30, 'Cuisine', 1), line(0, 30, 'Cuisine', 2)]), doc(2, 'Parquet de la boutique', 'Envoyé', clients[1], [line(1, 50, 'Boutique', 0)]), doc(3, 'Peinture du séjour', 'Accepté', clients[0], [line(16, 42, 'Séjour', 1)])];
+  const data = {
+    me,
+    profiles:{},reminders:[],gmail:false,
+    company,
+    services: catalog.map(s => ({
+      ...s,
+      version: 1
+    })),
+    tiers,
+    units,
+    fields,
+    conditions,
+    customers: clients,
+    documents,
+    roles: ['Administrateur', 'Bureau', 'Terrain', 'Lecture'],
+    members: [{
+      ...me,
+      active: 1
+    }],
+    events: [],
+    lastRead: 0,
+    ai: false
+  };
+  function event(action, target) {
+    data.events.unshift({
+      id: (data.events[0]?.id || 0) + 1,
+      actor: me.name,
+      time: new Date().toISOString(),
+      action,
+      target
+    });
+  }
+  event('Exemple de devis préparé', documents[0].id);
+  return async (path, o) => {
+    if (path.startsWith('document/')) return structuredClone(documents.find(d => d.id === path.slice(9)));
+    if(path==='reminder'){const r={...o,version:o.version+1};data.reminders=[...data.reminders.filter(x=>x.id!==r.id),r];return structuredClone(r);}
+    if(path==='profile'){data.profiles[o.edition.trade]={...o,version:o.version+1};return structuredClone(data.profiles[o.edition.trade]);}
+    if (path === 'state') return structuredClone(data);
+    if (path === 'events') return structuredClone(data.events);
+    if (path === 'read') {
+      data.lastRead = o.id;
+      return {};
+    }
+    if (path === 'company') {
+      data.company = {
+        ...o,
+        version: o.version + 1
+      };
+      return structuredClone(data.company);
+    }
+    if (['services', 'customers', 'documents'].includes(path)) {
+      const items = data[path],
+        i = items.findIndex(x => x.id === o.id);
+      const v = {
+        ...structuredClone(o),
+        version: (o.version || 0) + 1
+      };
+      if (path === 'documents') {
+        v.number = v.number || 'DEV-' + String(items.length + 1).padStart(5, '0');
+        v.updated = new Date().toISOString();
+      }
+      if (i < 0) items.unshift(v);else items[i] = v;
+      event('Enregistré dans l’aperçu', v.id);
+      return structuredClone(v);
+    }
+    if (path === 'status') {
+      const d = documents.find(d => d.id === o.id);
+      if (o.status === 'Validé' && (!d.client.name || !d.lines.length)) throw Error('Renseignez le client et les prestations.');
+      d.status = o.status;
+      d.version++;
+      event('Devis · ' + d.status, d.id);
+      return structuredClone(d);
+    }
+    throw Error('Cette action nécessite l’application serveur incluse dans le ZIP.');
+  };
+}
+
+modules.ui=(()=>{
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+})[c]);
+const paths = {
+  home: 'M3 10l9-7 9 7v10h-6v-6H9v6H3z',
+  doc: 'M6 3h9l4 4v14H6z M14 3v5h5 M9 12h7 M9 16h5',
+  users: 'M15 20v-2a5 5 0 0 0-10 0v2 M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M16 5a3 3 0 0 1 0 6 M18 14c2 0 3 2 3 5',
+  book: 'M4 5h7l1 2 1-2h7v14h-7l-1 2-1-2H4z M12 7v13',
+  gear: 'M4 6h16 M4 12h16 M4 18h16 M8 3v6 M16 9v6 M10 15v6',
+  bell: 'M5 17h14l-2-4V9a5 5 0 0 0-10 0v4z M10 20h4',
+  plus: 'M12 5v14 M5 12h14',
+  arrow: 'M5 12h14 M14 7l5 5-5 5',
+  back: 'M19 12H5l5-5 M5 12l5 5',
+  mic: 'M9 5a3 3 0 0 1 6 0v6a3 3 0 0 1-6 0z M5 11a7 7 0 0 0 14 0 M12 18v4 M9 22h6',
+  logout: 'M9 4H4v16h5 M9 12h12l-4-4 M21 12l-4 4',
+  print: 'M7 8V3h10v5 M7 17H3V9h18v8h-4 M7 14h10v7H7z',
+  copy: 'M8 8h12v13H8z M5 16H3V3h12v2',
+  trash: 'M4 6h16 M9 6V3h6v3 M6 6l1 15h10l1-15',
+  menu: 'M3 6h18 M3 12h18 M3 18h18',
+  check: 'M4 12l5 5L20 6',
+  grid: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',
+  edit: 'M4 20l5-1L20 8l-4-4L5 15z',
+  download: 'M12 3v12l5-5 M12 15l-5-5 M4 16v5h16v-5',
+  x: 'M5 5l14 14 M19 5L5 19'
+};
+const icon = k => '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="' + paths[k] + '"/></svg>';
+const button = (action, label, k = '', cls = '') => '<button type="button" class="' + cls + '" data-act="' + esc(action) + '">' + (k ? icon(k) : '') + esc(label) + '</button>';
+const input = (label, name, value = '', type = 'text', attr = '') => '<label>' + esc(label) + '<input name="' + esc(name) + '" type="' + type + '" value="' + esc(value) + '" ' + attr + '></label>';
+const area = (label, name, value = '') => '<label>' + esc(label) + '<textarea name="' + name + '" rows="3">' + esc(value) + '</textarea></label>';
+const options = (arr, value) => arr.map(([v, l]) => '<option value="' + esc(v) + '" ' + (String(v) === String(value) ? 'selected' : '') + '>' + esc(l) + '</option>').join('');
+const select = (label, name, opts, value) => '<label>' + esc(label) + '<select name="' + name + '">' + options(opts, value) + '</select></label>';
+const dateLabel = d => new Intl.DateTimeFormat('fr-FR', {
+  dateStyle: 'medium'
+}).format(new Date(d.length === 10 ? d + 'T12:00:00' : d));
+const today = (offset = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+};
+const status = s => '<span class="badge b' + ({
+  'Accepté': 1,
+  'Validé': 1,
+  'Envoyé': 2,
+  'Refusé': 3,
+  'Brouillon': 4
+}[s] || 0) + '">' + esc(s) + '</span>';
+let timer;
+function toast(msg) {
+  const modal = document.querySelector('dialog[open]');
+  if (modal) {
+    let note = modal.querySelector('[role="status"]');
+    if (!note) {
+      note = document.createElement('p');
+      note.className = 'hint';
+      note.setAttribute('role', 'status');
+      modal.prepend(note);
+    }
+    note.textContent = msg;
+    note.scrollIntoView({
+      block: 'nearest'
+    });
+  }
+  $('#toast').textContent = msg;
+  $('#toast').classList.add('on');
+  clearTimeout(timer);
+  timer = setTimeout(() => $('#toast').classList.remove('on'), 5000);
+}
+async function api(path,body){return demoApi(path,body);
+}
+function dialog(title, html) {
+  const d = $('#modal');
+  d.querySelector(':scope > [role=status]')?.remove();
+  $('#modalContent').innerHTML = '<header><h2>' + esc(title) + '</h2>' + button('close', 'Fermer', 'x', 'subtle') + '</header>' + html;
+  d.setAttribute('aria-label', title);
+  if (!d.open) d.showModal();
+  d.querySelector('[data-act="close"]').onclick = () => d.close();
+}
+function onForm(id, fn) {
+  $(id).onsubmit = async e => {
+    e.preventDefault();
+    const b = e.submitter;
+    if (b) b.disabled = true;
+    try {
+      await fn(Object.fromEntries(new FormData(e.target)), e.target);
+    } catch (err) {
+      toast(err.message);
+    } finally {
+      if (b) b.disabled = false;
+    }
+  };
+}
+function csv(name, rows) {
+  const cell = v => {
+    let t = String(v ?? '');
+    if (/^[=+@\-\t\r]/.test(t)) t = "'" + t;
+    return '"' + t.replaceAll('"', '""') + '"';
+  };
+  const url = URL.createObjectURL(new Blob(['\ufeff' + rows.map(r => r.map(cell).join(';')).join('\r\n')], {
+    type: 'text/csv;charset=utf-8'
+  }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+
+return {$,esc,paths,icon,button,input,area,options,select,dateLabel,today,status,toast,api,dialog,onForm,csv};})();
+modules.mobile=(()=>{
+const {esc,icon,button}=modules.ui;
+const tabs=[['Accueil','home','خانه'],['Devis','doc','پیش‌فاکتورها'],['Clients','users','مشتریان'],['Plus','grid','بیشتر']];
+function mobileNav(page){
+ const current=page==='editor'?'Devis':tabs.some(([name])=>name===page)?page:'Plus';
+ const fa=page==='Terrain فارسی';
+ return '<nav class="mobile-tabs" aria-label="Navigation mobile">'+tabs.map(([name,mark,translation])=>'<button type="button" data-act="tab-'+name+'"'+(current===name?' aria-current="page"':'')+'><span>'+icon(mark)+'</span>'+esc(fa?translation:name)+'</button>').join('')+'</nav>';
+}
+function mobileHome(documents,canEdit){
+ const draft=documents.find(d=>d.status==='Brouillon');
+ return '<section class="mobile-home"><h1>Mes chantiers</h1>'+(canEdit?button('new','Créer un devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
+}
+function mobileMore(state){
+ const links=[['terrain','Saisie chantier · فارسی','users'],['nav-Catalogue','Catalogue des prix','book'],['nav-Activité','Activité de l’équipe','bell']];
+ if(state.me.role==='Administrateur')links.push(['nav-Administration','Administration','gear']);
+ return '<div class="pagehead"><h1>Plus</h1></div><section class="mobile-account"><span class="avatar">'+esc(state.me.name.slice(0,1))+'</span><div><strong>'+esc(state.me.name)+'</strong><small>'+esc(state.me.role)+'</small></div></section><div class="mobile-menu-list">'+links.map(([action,label,mark])=>button(action,label,mark)).join('')+'</div>'+button('logout','Déconnexion','logout','subtle');
+}
+function bindPageSwipe(root,page,navigate){
+ const index=tabs.findIndex(([name])=>name===page);
+ if(index<0)return;
+ let start=null;
+ const excluded='input,textarea,select,button,a,canvas,dialog,[contenteditable],.tablewrap,.mobile-tabs';
+ root.addEventListener('touchstart',event=>{
+   start=null;
+   if(window.innerWidth>900||event.touches.length!==1||document.querySelector('dialog[open]')||(event.target.closest(excluded)&&!event.target.closest('.quote-list tbody td:not(:first-child)')))return;
+   const t=event.touches[0];if(t.clientX<24||t.clientX>window.innerWidth-24)return;
+   start={x:t.clientX,y:t.clientY};
+ },{passive:true});
+ root.addEventListener('touchmove',event=>{
+   if(!start)return;
+   if(event.touches.length!==1||Math.abs(event.touches[0].clientY-start.y)>40)start=null;
+ },{passive:true});
+ root.addEventListener('touchcancel',()=>{start=null;},{passive:true});
+ root.addEventListener('touchend',event=>{
+   if(!start||event.touches.length||!event.changedTouches.length)return;
+   const t=event.changedTouches[0],dx=t.clientX-start.x,dy=t.clientY-start.y;start=null;
+   if(Math.abs(dx)<65||Math.abs(dx)<2*Math.abs(dy))return;
+   const next=tabs[index+(dx<0?1:-1)];if(next)navigate(next[0]);
+ },{passive:true});
+}
+
+return {mobileNav,mobileHome,mobileMore,bindPageSwipe};})();
+modules.money=(()=>{
+const euros = cents => new Intl.NumberFormat('fr-FR', {
+  style: 'currency',
+  currency: 'EUR'
+}).format(cents / 100);
+function amounts(lines, discount = 0, deposit = 0) {
+  const taxGroups = new Map();
+  let gross = 0,
+    net = 0;
+  for (const l of lines) {
+    const raw = Math.round(l.quantity * l.price / 100);
+    const base = Math.round(raw * (10000 - discount) / 10000);
+    gross += raw;
+    net += base;
+    taxGroups.set(l.tax, (taxGroups.get(l.tax) || 0) + base);
+  }
+  const taxes = Array.from(taxGroups, ([rate, base]) => ({
+    rate,
+    base,
+    amount: Math.round(base * rate / 10000)
+  })).sort((a, b) => a.rate - b.rate);
+  const tax = taxes.reduce((s, t) => s + t.amount, 0),
+    total = net + tax;
+  return {
+    gross,
+    discount: gross - net,
+    net,
+    tax,
+    taxes,
+    total,
+    deposit: Math.round(total * deposit / 10000)
+  };
+}
+
+return {euros,amounts};})();
+modules.voice=(()=>{
+// Normalise le format du navigateur en PCM mono 16 kHz pour l’API.
+async function wavBase64(blob) {
+  const context = new AudioContext();
+  let source;
+  try {
+    source = await context.decodeAudioData(await blob.arrayBuffer());
+  } finally {
+    await context.close();
+  }
+  const render = new OfflineAudioContext(1, Math.ceil(source.duration * 16000), 16000);
+  const player = render.createBufferSource();
+  player.buffer = source;
+  player.connect(render.destination);
+  player.start();
+  const pcm = (await render.startRendering()).getChannelData(0);
+  const out = new ArrayBuffer(44 + pcm.length * 2),
+    view = new DataView(out);
+  function tag(offset, s) {
+    for (let i = 0; i < s.length; i++) view.setUint8(offset + i, s.charCodeAt(i));
+  }
+  tag(0, 'RIFF');
+  view.setUint32(4, out.byteLength - 8, true);
+  tag(8, 'WAVE');
+  tag(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, 16000, true);
+  view.setUint32(28, 32000, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  tag(36, 'data');
+  view.setUint32(40, pcm.length * 2, true);
+  pcm.forEach((n, i) => view.setInt16(44 + 2 * i, Math.round(Math.max(-1, Math.min(1, n)) * 32767), true));
+  const bytes = new Uint8Array(out);
+  let text = '';
+  for (let i = 0; i < bytes.length; i += 8192) text += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  return btoa(text);
+}
+async function startRecording(done) {
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: true
+  });
+  try {
+    const recorder = new MediaRecorder(stream),
+      chunks = [];
+    let discard = false;
+    recorder.ondataavailable = e => chunks.push(e.data);
+    const stop = (cancel = false) => {
+      discard = cancel;
+      if (recorder.state === 'recording') recorder.stop();
+    };
+    const timer = setTimeout(() => stop(), 120000);
+    recorder.onstop = () => {
+      clearTimeout(timer);
+      stream.getTracks().forEach(t => t.stop());
+      done(discard ? null : new Blob(chunks, {
+        type: recorder.mimeType
+      }));
+    };
+    recorder.start();
+    return stop;
+  } catch (e) {
+    stream.getTracks().forEach(t => t.stop());
+    throw e;
+  }
+}
+
+return {wavBase64,startRecording};})();
+modules.assistant=(()=>{
+const { $, esc, input, select, dialog, button, api, toast }=modules.ui;
+const { wavBase64, startRecording }=modules.voice;
+const { euros }=modules.money;
+function assistant(state, apply) {
+  const f = {},
+    tierIds = ['pose', 'eco', 'standard', 'premium'];
+  let audio = null,
+    stop = null,
+    pending = false,
+    active = true,
+    text = '';
+  const relevant = k => !state.conditions[k] || state.conditions[k][1].includes(f[state.conditions[k][0]]);
+  const missing = () => Object.keys(state.fields).filter(k => relevant(k) && f[k] == null);
+  const fieldLabel = (k, v) => k === 'range' ? state.tiers[tierIds.indexOf(v)] : v;
+  const names = {
+    area: 'Surface',
+    room: 'Pièce',
+    face: 'Support',
+    range: 'Gamme',
+    removal: 'Dépose',
+    level: 'Ragréage',
+    primer: 'Primaire',
+    sealing: 'Étanchéité'
+  };
+  let feedback = '';
+  const modal = $('#modal');
+  const cleanup = () => {
+    active = false;
+    if (stop) stop(true);
+    audio = null;
+  };
+  modal.addEventListener('close', cleanup, {
+    once: true
+  });
+  function makeLines(tax) {
+    const tier = tierIds.indexOf(f.range),
+      base = f.face === 'Mur' ? 's9' : 's1';
+    const ids = [base, ...[['removal', 's6'], ['primer', 's7'], ['level', 's8'], ['sealing', 's10']].filter(([k]) => relevant(k) && f[k] === 'Oui').map(x => x[1])];
+    return ids.map(id => {
+      const s = state.services.find(v => v.id === id);
+      const t = id === base ? tier : 1;
+      return {
+        label: s.label,
+        lot: f.room,
+        unit: s.unit,
+        tier: t,
+        price: s.prices[t],
+        quantity: Math.round(f.area * 100),
+        tax,
+        serviceId: id
+      };
+    });
+  }
+  function render() {
+    if (!active) return;
+    const k = missing()[0],
+      spec = state.fields[k];
+    const summary = Object.entries(f).filter(([k]) => relevant(k)).map(([k, v]) => '<button type="button" class="chip" data-reset="' + k + '">' + esc(names[k] + ' · ' + fieldLabel(k, v) + (k === 'area' ? ' m²' : '')) + ' ×</button>').join('');
+    const controls = state.ai ? '<label>Description ou réponse<textarea id="words" rows="2" placeholder="Ex. 30 m² de carrelage au sol dans la cuisine">' + esc(text) + '</textarea></label><div class="actions">' + button('record', stop ? 'Terminer la dictée' : 'Dicter', 'mic') + (stop || audio ? button('cancel', 'Annuler la dictée') : '') + button('analyze', pending ? 'Analyse en cours…' : 'Analyser avec Gemini', 'arrow') + '</div>' + (audio ? '<audio id="playback" controls></audio>' : '') : '<p class="hint">Le questionnaire fonctionne dès maintenant. La dictée sera disponible après activation de Gemini.</p>';
+    const manual = k ? '<form id="answer"><h3>' + esc(spec[0]) + '</h3>' + (spec[1] ? '<div class="choices">' + spec[1].map(v => '<button type="button" data-answer="' + esc(v) + '">' + esc(fieldLabel(k, v)) + '</button>').join('') + '</div>' : input('Surface en m²', 'value', '', 'number', 'step=".01" min=".01" max="10000" required') + '<button class="primary">Continuer</button>') + '</form>' : '<form id="finish"><h3>Prestations proposées</h3>' + makeLines(0).map(l => '<p>' + esc(l.label) + ' · ' + euros(l.price) + ' / ' + esc(l.unit) + '</p>').join('') + input('TVA à appliquer (%)', 'tax', 20, 'number', 'step=".01" min="0" max="100" required') + '<button class="primary wide">Ajouter ces lignes au devis</button></form>';
+    dialog('Assistant carrelage et faïence', '<p>Décrivez une pièce à la fois. Vous pourrez compléter le devis avec les autres métiers du catalogue.</p>' + (feedback ? '<p class="hint" role="status">' + esc(feedback) + '</p>' : '') + controls + '<div class="chips">' + summary + '</div>' + manual);
+    const words = $('#words');
+    if (words) words.oninput = () => text = words.value;
+    if (audio) {
+      const url = URL.createObjectURL(audio);
+      $('#playback').src = url;
+      modal.addEventListener('close', () => URL.revokeObjectURL(url), {
+        once: true
+      });
+    }
+    modal.querySelectorAll('[data-reset]').forEach(b => b.onclick = () => {
+      delete f[b.dataset.reset];
+      render();
+    });
+    modal.querySelectorAll('[data-answer]').forEach(b => b.onclick = () => {
+      f[k] = b.dataset.answer;
+      render();
+    });
+    if ($('#answer')) $('#answer').onsubmit = e => {
+      e.preventDefault();
+      if (k === 'area') {
+        f.area = Number(e.target.elements.value.value);
+        render();
+      }
+    };
+    if ($('#finish')) $('#finish').onsubmit = e => {
+      e.preventDefault();
+      const lines = makeLines(Math.round(Number(e.target.elements.tax.value) * 100));
+      modal.close();
+      apply(lines);
+    };
+    const b = a => modal.querySelector('[data-act="' + a + '"]');
+    if (b('record')) {
+      b('record').disabled = pending;
+      b('record').onclick = async () => {
+        if (stop) {
+          stop();
+          return;
+        }
+        try {
+          b('record').disabled = true;
+          audio = null;
+          const end = await startRecording(blob => {
+            stop = null;
+            audio = blob;
+            render();
+          });
+          if (!active) end(true);else {
+            stop = end;
+            render();
+          }
+        } catch {
+          feedback = 'Microphone indisponible. Vérifiez l’autorisation du navigateur.';
+          render();
+        }
+      };
+    }
+    if (b('cancel')) b('cancel').onclick = () => {
+      if (stop) stop(true);
+      audio = null;
+      render();
+    };
+    if (b('analyze')) {
+      b('analyze').disabled = pending || !!stop;
+      b('analyze').onclick = async () => {
+        if (!audio && !text.trim()) return toast('Dictez ou écrivez votre demande.');
+        feedback = 'Analyse en cours…';
+        pending = true;
+        render();
+        try {
+          const facts = await api('extract', {
+            current: f,
+            description: text,
+            audio: audio ? await wavBase64(audio) : undefined
+          });
+          if (facts.multiple) feedback = 'Plusieurs zones ou métiers détectés. Utilisez « Dicter un chantier » ou décrivez une seule zone.';
+          else if (!Object.keys(facts).some(key => facts[key] !== f[key])) feedback = 'Aucune nouvelle information reconnue. Réécoutez la dictée ou répondez à la question ci-dessous.';
+          else {
+            feedback = 'Analyse terminée. Les réponses reconnues figurent ci-dessous.';
+            Object.assign(f, facts);
+            audio = null;
+            text = '';
+          }
+        } catch (e) {
+          feedback = e.message || 'Analyse interrompue. Réessayez.';
+        } finally {
+          pending = false;
+          render();
+        }
+      };
+    }
+  }
+  render();
+}
+
+return {assistant};})();
+modules.brief=(()=>{
+const { $, esc, button, dialog, input, toast, api }=modules.ui;
+const { startRecording, wavBase64 }=modules.voice;
+const { euros }=modules.money;
+function brief(state, apply) {
+  const history = [];
+  let proposal = {
+      questions: [],
+      lines: []
+    },
+    busy = false,
+    active = true,
+    blob = null,
+    stop = null,
+    recording = false,
+    message = '',
+    playUrl = '';
+  let feedback = '';
+  const modal = $('#modal');
+  modal.addEventListener('close', () => {
+    active = false;
+    stop?.(true);
+    if (playUrl) URL.revokeObjectURL(playUrl);
+  }, {
+    once: true
+  });
+  function show() {
+    if (!active) return;
+    dialog('Dicter un chantier', '<p>Décrivez les pièces, les surfaces et les travaux. Relisez les lignes avant de les ajouter au devis.</p>' + (feedback ? '<p class="hint" role="status">' + esc(feedback) + '</p>' : '') + proposal.questions.map(q => '<p class="hint">' + esc(q) + '</p>').join('') + '<label>Votre demande ou votre réponse<textarea id="briefText" rows="3">' + esc(message) + '</textarea></label><div class="actions">' + button('mic', recording ? 'Terminer' : 'Dicter', 'mic') + (blob || recording ? button('discard', 'Annuler la dictée') : '') + button('send', busy ? 'Analyse en cours…' : 'Analyser', 'arrow', 'primary') + '</div>' + (blob ? '<audio controls id="briefAudio"></audio>' : '') + (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide">Ajouter la sélection au devis</button></form>' : ''));
+    $('#briefText').oninput = e => message = e.target.value;
+    const b = a => modal.querySelector('[data-act="' + a + '"]');
+    if (playUrl) URL.revokeObjectURL(playUrl);
+    if (blob) {
+      playUrl = URL.createObjectURL(blob);
+      $('#briefAudio').src = playUrl;
+    }
+    b('mic').disabled = busy;
+    b('send').disabled = busy || recording;
+    b('mic').onclick = async () => {
+      if (recording) return stop?.();
+      try {
+        b('mic').disabled = true;
+        blob = null;
+        const end = await startRecording(v => {
+          stop = null;
+          recording = false;
+          blob = v;
+          show();
+        });
+        if (!active) return end(true);
+        stop = end;
+        recording = true;
+        show();
+      } catch {
+        feedback = 'Micro indisponible. Vous pouvez saisir la demande.';
+        show();
+      }
+    };
+    if (b('discard')) b('discard').onclick = () => {
+      stop?.(true);
+      blob = null;
+      show();
+    };
+    b('send').onclick = async () => {
+      if (!message.trim() && !blob) return toast('Saisissez ou dictez une demande.');
+      feedback = 'Analyse en cours…';
+      busy = true;
+      show();
+      try {
+        const p = await api('brief', {
+          description: message,
+          audio: blob ? await wavBase64(blob) : undefined,
+          history
+        });
+        if (!p.questions.length && !p.lines.length) {
+          feedback = 'Gemini a répondu sans proposer de question ni de prestation. Réécoutez la dictée ou précisez votre demande.';
+          return;
+        }
+        feedback = p.transcription ? 'Demande comprise : ' + p.transcription : 'Analyse terminée. Consultez les questions ou les prestations ci-dessous.';
+        history.push({
+          demande: message || p.transcription || 'Demande vocale',
+          proposition: p
+        });
+        proposal = p;
+        message = '';
+        blob = null;
+      } catch (e) {
+        feedback = e.message || 'Analyse interrompue. Réessayez.';
+      } finally {
+        busy = false;
+        show();
+      }
+    };
+    if ($('#proposal')) $('#proposal').onsubmit = e => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const lines = data.getAll('line').map(i => ({
+        ...proposal.lines[i],
+        tax: Math.round(Number(data.get('tax')) * 100)
+      }));
+      if (!lines.length) return toast('Sélectionnez au moins une ligne.');
+      modal.close();
+      apply(lines);
+    };
+  }
+  show();
+}
+
+return {brief};})();
+modules.photos=(()=>{
+const { $, esc, input, dialog, onForm, button }=modules.ui;
+
+function photosPaper(photos = []) {
+  if (!photos.length) return '';
+  return '<section class="annex"><h3>Photos du chantier</h3>' + photos.map(photo =>
+    '<figure><img alt="' + esc(photo.caption || 'Vue du chantier') + '" src="data:image/jpeg;base64,' +
+    esc(photo.jpeg) + '"><figcaption>' + esc(photo.caption) + '</figcaption></figure>'
+  ).join('') + '</section>';
+}
+
+async function reducedImage(file) {
+  if (!file || !['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 15000000) {
+    throw Error('Choisissez un fichier JPEG, PNG ou WebP de moins de 15 Mo.');
+  }
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    const scale = Math.min(1, 1200 / Math.max(image.width, image.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(image.width * scale));
+    canvas.height = Math.max(1, Math.round(image.height * scale));
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    for (const quality of [.78, .60, .42, .25]) {
+      const jpeg = canvas.toDataURL('image/jpeg', quality).split(',')[1];
+      if (jpeg.length <= 320000) return jpeg;
+    }
+    throw Error('Cette photo reste trop volumineuse. Recadrez-la puis réessayez.');
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function photoDialog(current, apply) {
+  const photos = current.map(p => ({...p}));
+  function draw() {
+    dialog('Photos visibles par le client', photos.map((p, i) =>
+      '<div class="member"><div><img class="thumb" alt="" src="data:image/jpeg;base64,' + esc(p.jpeg) +
+      '"><b>' + esc(p.caption || 'Photo '+(i+1)) + '</b></div>' + button('remove-'+i,'Retirer','trash')+'</div>'
+    ).join('') + (photos.length < 4 ? '<form id="photoForm"><label>Photo du chantier<input type="file" name="image" accept="image/jpeg,image/png,image/webp" required></label>' +
+      input('Légende','caption','','text','maxlength="160"')+'<button>Ajouter la photo</button></form>' : '') +
+      button('applyPhotos','Appliquer au devis','check','primary wide'));
+    $('#modal').querySelectorAll('[data-act^="remove-"]').forEach(b => b.onclick=()=>{photos.splice(Number(b.dataset.act.slice(7)),1);draw();});
+    if ($('#photoForm')) onForm('#photoForm',async o=>{
+      const jpeg=await reducedImage(o.image);
+      if(!$('#modal').open || !$('#photoForm')) return;
+      photos.push({jpeg,caption:o.caption});draw();
+    });
+    $('[data-act="applyPhotos"]').onclick=()=>{$('#modal').close();apply(photos);};
+  }
+  draw();
+}
+
+return {photosPaper,photoDialog};})();
+modules.edition=(()=>{
+const { esc, dateLabel, $, select, input, area, dialog, onForm, button, api, toast }=modules.ui;
+const { amounts, euros }=modules.money;
+const { photosPaper }=modules.photos;
+
+const trades = {
+  'Tous corps d’état': ['ambre','Périmètre et coordination des différents lots'],
+  'Peinture': ['sauge','Supports, préparation, teinte, finition et nombre de couches'],
+  'Carrelage': ['terre','Format des carreaux, calepinage, joints et préparation du support'],
+  'Revêtements de sol': ['ambre','Type de pose, sous-couche, seuils et plinthes'],
+  'Salle de bains': ['ardoise','Zones humides, étanchéité, équipements et raccordements'],
+  'Plomberie et ECS': ['ardoise','Capacité, implantation, raccordements et mise en service'],
+  'Électricité': ['ambre','Circuits, appareillages et points de raccordement'],
+  'Isolation et plâtrerie': ['sauge','Épaisseur, résistance thermique et parement'],
+  'Maçonnerie et étanchéité': ['terre','Supports, épaisseurs, relevés et finitions'],
+  'Menuiseries': ['ambre','Dimensions, matériaux, sens d’ouverture et finition']
+};
+const lotIdeas = {
+ 'Tous corps d’état':['Installation du chantier','Dépose et préparation','Finitions'],
+ 'Peinture':['Protection du chantier','Préparation des supports','Murs','Plafonds','Boiseries','Finitions'],
+ 'Carrelage':['Dépose et préparation','Préparation du support','Carrelage au sol','Faïence murale','Joints et finitions'],
+ 'Revêtements de sol':['Dépose et préparation','Ragréage','Parquet','Plinthes et seuils'],
+ 'Salle de bains':['Dépose et préparation','Étanchéité','Équipement douche','Carrelage mural'],
+ 'Plomberie et ECS':['Dépose','Alimentations et évacuations','Production d’eau chaude','Raccordements'],
+ 'Électricité':['Distribution','Tableau électrique','Appareillage','Éclairage'],
+ 'Isolation et plâtrerie':['Isolation','Parements','Bandes et finitions'],
+ 'Maçonnerie et étanchéité':['Préparation','Maçonnerie','Étanchéité','Relevés et finitions'],
+ 'Menuiseries':['Dépose','Pose des menuiseries','Habillages et finitions']
+};
+const colors=['ambre','terre','sauge','ardoise'];
+const pairs=arr=>arr.map(v=>[v,v]);
+function newEdition(trade='Tous corps d’état'){
+  return {trade,color:trades[trade][0],layout:'Atelier',font:'Éditorial',order:'Échéancier puis modalités',logo:'',intro:'',spec:'',supply:'Les fournitures comprises sont précisées pour chaque prestation. Les postes en pose seule prévoient la fourniture du revêtement ou de l’équipement par le client.',timing:'Le calendrier d’intervention sera convenu avec le client après acceptation du devis.',travel:'Déplacement compris dans les prix indiqués.',fee:'Devis gratuit.',waste:'',payment:'Règlement par virement bancaire.',middle:5000};
+}
+const pct=v=>(v/100).toLocaleString('fr-FR')+' %';
+const safeLines=t=>esc(t||'').replaceAll('\n','<br>');
+const fact=(label,text)=>text?'<div class="quote-fact"><b>'+esc(label)+'</b><p>'+safeLines(text)+'</p></div>':'';
+function installments(total,deposit,middle){
+  const first=Math.round(total*deposit/10000);
+  const progress=Math.min(total-first,Math.round(total*middle/10000));
+  return [first,progress,total-first-progress];
+}
+function editionPaper(d){
+  const e=d.edition,c=d.company,m=amounts(d.lines,d.discount,d.deposit);
+  const t=d.lines.map((l,i)=>{
+    const lot=l.lot&&(!i||d.lines[i-1].lot!==l.lot)?'<tr class="q-lot"><td colspan="5">'+esc(l.lot)+'</td></tr>':'';
+    return lot+'<tr><td>'+(l.strong?'<strong>'+esc(l.label)+'</strong>':esc(l.label))+'<small>'+esc(['Pose seule','Fourniture et pose · Essentiel','Fourniture et pose · Confort','Fourniture et pose · Premium'][l.tier])+'</small></td><td>'+esc((l.quantity/100).toLocaleString('fr-FR')+' '+l.unit)+'</td><td>'+euros(l.price)+'</td><td>'+pct(l.tax)+'</td><td>'+euros(Math.round(l.quantity*l.price/100))+'</td></tr>';
+  }).join('');
+  const nums=installments(m.total,d.deposit,e.middle),rates=[d.deposit,e.middle,10000-d.deposit-e.middle];
+  const schedule=['À la signature','En cours de chantier','À la réception'].map((v,i)=>rates[i]?'<div><b>'+pct(rates[i])+'</b><span>'+v+'</span><strong>'+euros(nums[i])+'</strong></div>':'').join('');
+  const sum=(k,v)=>'<div><span>'+esc(k)+'</span><b>'+euros(v)+'</b></div>';
+  const html='<article class="sheet couture '+(e.font==='Contemporain'?'sans-titres ':'')+'tone-'+(colors.includes(e.color)?e.color:'ambre')+(e.layout==='Compact'?' condensed':'')+'">'+
+    '<header class="q-head"><div class="q-brand"><img src="'+esc(e.logo||'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMkAAACUCAYAAAA51g0sAAAxK0lEQVR4nO2dZ3gU17mA3zmzkpCQAIkmYxWqKmqsK8G9xL0luBEXjLtxuU6uW4pb7NhxiZM4Nu691+teAbe4rlhJICFM7010tELaOXN/jBZWoy0zu7OSDHqfZx6YmXPOHM3Od+pXoJeuZL/urkAv9lG6uwIAVVVV10kph+m6/tXWrVu/XrRo0ZrurlMCONc9kKfqN3GqT+Od7q5ML9bpdiEpLCwsTE9PrwOSgi7PBb5ua2v7cvPmzZ8uWbJkdTdVzynG/24M35yUDzNX4H+ogWJgfndXqhdrdLuQTJw4UZ0/f/6fgT8LIUSoNFLKhUKI9zRNe9fr9X4F7OjaWsZF9inDWXb2aFyBC8/PY/M7S8kDtnRjvXqxSLcLSQC3230Y8AKwV6R0Usotuq4/vHHjxruWLFmyqUsqFztJh2ez8pKxDAp+0ZoO99dQ9+N6KgHZTXXrxSIhW+7uwOPxzADcmqZNj5ROCNFPVdXrs7KyFlZVVU3tourFRHF/ZlxQ0lFAAFQFLiulbFQGj3ZLxXqxRY/pSYJQKioqrhNC3CGEUKMlbmtru6y2tnZaV1TMDtkp3HXzflw/MCV8mhXb4Y6fmLK+jSe7rma92KUnCgkAbrf7BuBvFpK2aZp2vNfr/TTRdbJKChx+k5vPizOjp/1+Dfp9dVQBNQmvWC8x0WOGW2aklMUWkyapqvpaUVHR2IRWyDp55xTymRUBAdh/KMrEEfwEDE5orXqJmR4pJOXl5ccAp9rI0j81NfX+RNXHBn1+vTf1R+fa66F/OwrXr4YwB3atgPXSc+hxQlJZWXm1qqrvCSEy7OQTQhzldrvHJapeVhjbnx/PK6Sv3XwKcEkpgwv78XkCqtVLnPQYIcnPz+9TVVX1jKqqD1iZsIfh945WygbZqTx6ZTljXTG+0T4qXFXOwUNTud3ZmvUSLz1i4j58+PD8zMzMt4QQVfGUI6X0+3y+7Llz5zY5VTcrpMMpf9yPt0b1i7+suZvgrp/4dTN8En9pvThBt/ckbrd7QmZm5vfxCgiAEMLVt2/fw52olw2GTyriTScEBKBoAEwcw0dAjjMl9hIv3SoklZWVlwPThRBDnSpT1/UjnSrLAukn5tF4RI6zPfLx+ShHDaMRSHWy3F5io7uERKmqqrpFVdX/0FGxMf6CFeUIJ8uL9KiqgdSdPYbkRBR+QTFpZVl4E1F2L/boDiFxVVVVPSaEuDlB5Y8qKCgYkaCyd5KbxutTxzJcTdCsTlXgqrEU5Pbt3Y3vbrpUSAoLCzOqqqo+EEJMcaI8KaWu6/pH5uvp6elHOVF+OAYKzrm6nNMyHO0DO9M/GaaOZXKG4JzEPqmXSHSZkOTn52enp6fPFEI48gFLKbdrmnZWdXX18VLKecH3NE2b4MQzwlB8binP5qUn8AlBjMiA80t4FhjTNU/sxUyXCInb7R6VlZX1JeDIZp+UcpmiKIfU1ta+AkhFUe4zJSly4jkhyDhtOLUHOrbMYI2DsuHEXOqB/l375F6gC4SksrJyXynlt0IIR1pCv9//xcqVK/eprq72BK5VV1c/A6wKnAshinB+D0hUDWT+6aO6R3XkdwW49hnIXHrAsv2eRkJfeGVl5VGKonwuhHBEeU/X9UdramqOXLNmzVrTrR2tra0PBk6EEBk5OTnDnHhmgOHpfHx1GUNEN22/KgpcWUb2qHQ6zcF6SSwJE5LKysopiqJ8YFcHKxRSyu1tbW1nVVdXXwL4wyR7WEq5rT29PnTo0FhVWzqR5eLqq8o4Mq2b1Q9TXXBlOUcNTub67q3JnkVChKSysvIviqI8JoSI+7OSUupSyhNqa2tfjpSurq5uo6ZpjwHouv69x+NZGu+z2xl30VgeyLGttpgYhqXBxaXclZaEu7vrsqfg+OChvLz87qSkpOucLFPTtK82btx49JIlS1oipXO73XkYXkiapZQ7FEWpUxTlHI/HsypSvghknTmSdaeN7HnzgDcXIl9eSDawrrvrsrvj6I9fUVFxvdMCAqCq6kEDBw58YeLEiRGHUB6PZ6nf738Z6C+EGKIoyhGapt0a62P3H8LPp/ZAAQE4dSRiwlAW0muDknAc+wDcbvd5Qggr5rYxoSjKaY2Njf+Jls7lct0jpdTbT5tVVf1rLM8r7MeMqaVk9Qg16RAowCUlpBf046fursvujiNC4na7T5FSPi5EYtd+kpKSLikrK7spUhqPx1MnpXzX7/c/19bWVhXL3GRQMjdNLeOgFMem/okhRYVryqkYksy/u7suuzNxf9Tty7zvCiEi+AVxDimlLoSY7PF4nomQTBC7P6sDbqzi26qBMeYOg6ZD/QZkaRaONyUNm+DOnzh2B73Lw4kgrp6koqJiP0VR3uwqAQFo760eKysrOzZCslgFZOjpI/jGaQGROjxRz+LbZ6E+Uk/dzsGgQxQPgMlFfECvDUpCiFlIiouLS4UQHwghukiLqQNJycnJrxcVFR3oZJn7Dqb+NwmYqD83j02frWIEwIxVlD85lyaH5YTDc1CO3psF9NqgOE5MH0RpaWluWlraB0IIh9tcW6T17dv3nfLy8oJQN4cOHTrETmF5aXx2eSlZisNDoRkr8L+/jKzga5+sYOjbC2lz9kkwuYjkikwanC53T8e2kIwePXpwcnLyp0BeAupjl0Gqqn44YsSIDiqHVVVVdwwbNsxTWFg43EohGS7+5+pyDu7r8GJqwyZ4o4EcwNxxaC8tZMjXqzpdjwtVgavKyR+exhtOlrunY0tIRo8e3a9///4fCSEKE1UhuwghRmZmZr4/ePDgdAC32/1nIcRNQoic1NTUT80CFILxU4q5P9fhQeNaH7w6j2PWQrhYK5teauSgBQ77lc9IgivKOC09CUdsdnqxsbrldrvTgI8BR201pJQa0CKEiEvxw+/3f+hyuT4H7g2+rmlaraZph9bV1W0MkW2vE3JZem6hsxtyPj/8y8t9nk38IVrakenc8L9V/C2Sz+BY+H4t3FdLEdDobMl7HuF6EqWiouLWkpKSEgC3250EvIrDAgK839LSUrF+/foCXddfiacgRVF+LaW8x3xdVdVyIcQ1IbKkjM3EO6nAWQGROjw+l++sCAjAwm3c9WAtH+7QnKwF7D8ETs1nDr02KHETsieprKy8UVXVO6WUfl3XH9Z1fbDL5TrTqYf6/f4fgetqampmmp57pKIoD8YynJNSylBBgHRdf7S6uvoKTNrDg/vw3l/35fhMh1vw5+ax8d2lHSfqVjhoKEumlpHn5LqBrsO9taz/cR1D6Y2DEjOhfpPkqqqqaiFEaSIe2NbW9mBtbe3VhP/RUqqqqv4ghLgJSLNSppTSb9Y4llJqQohrPR7Pv8zpBVx36z7cXTjAbu0jM30F2rQG+gHNMWRPmjiCrRNH4ajY+jT4q4cvft7CoU6WuycRarjV2tzcfKCU8v+cfpimaXfX1tZeSeRWbcesWbPuaG1tLQRei1ZmKAFp5+5QAgJMuLDYeQGZuwlebKCI2AQEoO21ReR8udLZFa9UFa4u45DsZP7kZLl7EpF6d1FVVXVfmPG8LaSUmqZpU2MJtlNWVnaSy+X6pxBieKhyw/kNllK26rp+utfrDRb2weOHsPiacms9lFXW+OAeD79b2sILoe4XFBSM6NOnz/5JSUlbm5ubt/p8viWLFy9eEiptpovx/zuOb0Y75BEyQE0T3D2Lff30KkTaJdISsGxubo47gpSUsrWtre3sWKNR1dXVvbNu3boSKeWtUsqdAUXbdbjCqiAKIZIVRXnV7XafEnR53bwtvLIuolWKPXx+eGgOT4UTEICUlJSypKSkl4D30tLSvujfv39Yc4KNfv77RAN/aHI4dGrFQDhzFN/TGwfFNhH3SVRVXRekdm4bKeXWlpaW42bPnv1qrGUALF++3Ddr1qxbmpubK3Rd/xx26nBFRAiRDLxaXl5+WuDa+ham/MPLj75wRsA20HT4Tx3zGjZxQZSk5t31iLvtC7Zy30Ozed/pFa+TRiAOzu61QbFLRCGpr6/fIISYLKW0/UlJKdc1Nzcf3tDQ4FjMjcbGxkYppd3hQpKqqq9WVFT8rv1cn7+NA/5ezaJ4P8JnGtn+QxPl0dKpqmpLSADqNnLCtDks0h1W8rqkhPTiXhsUW0Tdcfd4PM9omnaalNJntVAp5RpN0yY0NjY6+mO43e4LVVW17QRBCKEKIZ4uLy8PeEKUc7Yw5v4a1rTFuDD63mLkR8spxFpMedtCAvDNWkpeXYCDg0NIEnBNBRW5aUQ1YOvFwJJaSm1t7bs+n+9wKaWluB+6rt9WW1s7L3pK65SVlR0rpXw41vxCCFVV1afcbvd57Ze0WRvIe2g2W+wOKD3r4cX5TABWWMwSk5AALW8sZuQXK5xd8cpMgUtKuTxV5SQny91dsay7NXfu3O9aWloOkVJG/DA0TVvi9XqfiL9qu3C73eNcLter5qVeTdNWAmbvjWERQqhSyicrKiomt19q/WYt2Y814LP6FS7ZCtNqucEP31p9LrELCcCqF3/moHmbbeSwQEF/OHcMb9NrgxIVWwqODQ0Nc/x+/8HAglD3pZQtqqpeg7UhiGU0TVOBDp+JlHLbjh07TvB4PH/w+/2WPa8Lg8fLysouar/k+3wlgx6tpzWaoGzcAffX8MFmyd126t/a2hqPkLDRzzfT5nD9ekcHXnBEDsqxOb02KNGwrSpfV1e3cMOGDb+SUnqDr0sp57S2th7g8XjedqpyAbxe749CiEpgRvuzNL/fP6mhoWEWgMvlutTv939mtTwhhHC5XI+Ul5df2X6p+fOVDHm6MfzH2yrhvlpWrWrhlBj+hFbT81vDJQzH8mb+/q86PmxxeMXrvEKS3QN7lSAjEZPR1aJFi9Zs2LDhME3TvgLaNE27e9asWe45c+bUOFy/nXg8nvUej+cY4GFN06bW1dW9E3SvTUp5OjDXanlCCEVV1X8GCcrmD5cx7PlGOn2GUod/1tIybzMV2OwFAFpaWuLqSQLM3czxD89hqZMrXkKBy8eSm58WXbthTyUufbqcnJzU5OTknIULF/7sVIXioaCgYETfvn2/E0LYskpsbW39Y11d3Z3tp0NOyWPl2QWoYFhLTZuNnLGa/QBP2EIiUFhYODw9PX1R4FxKeemsWbMeiaUsIPXUfDaeNcZZHa+l2+B2DxdtbuNxJ8vdHYjLnnv58uW+niIgAPPmzVuk6/oJ2NSfSk5OvqOioiKg27T27aUMf6wev9ThuUb0GauZRIwCArB9+/YOPYeu6532ndxud5Lb7R6Um5sbzdG3760ljJzp8IpXXjpcVMxjQCQN7IEKfMAepn7fU32vxYXb7Z4opXzFrh8wTdNu9nq9t7Wf5mWnUrvax8PAjdHyVlRUvC6ECBn5t12Ff+eHJaWcoyhKi67r/YB+QD8hRCqAruue6urqfaI9bwAc/Id9+aLA4c/1tflory1mIKaFEiBpWB++urKc/f8+i883tvFr6Dw03R3pkS4848Xj8bym6/otdvOpqnprZWXlXe2nS1f7KAdr2rOKoqQLITJDHZhaXiFEqaIobiHEGCHE0ICAAOi6bskL/yb48sEa/rTG8havNX47GvWAwczH1ICmqzzyhyr2H9UPrq3giCSFmDxj/hLZLYUEwOv13i6lfNZuPlVVry8vLw8s8S6l61tLy/q/q1u548E5fO7kipcCTClmUIrg4sA1AVOvLGdywLN+4QC4Yiw3AGc79+Sey24rJIAuhLhQ07TpdjMmJSVdV1FR0ckUuIuwFc+lcRNH/7uOFU46vHtjAdt3SAINzITzC/in2WHf+KFwSj7PAPs69+SeyW45JwmmpKQkKyUl5VshREj/XJHQNO1+r9f7eytpBw8enJ6dnR0uHu/JycnJTwVO2trarkpKSlod5pm61+t93WZV00/Np+ksB2LKf7QE+eTPDMPw8pJ/bA6zJxcR0peMDjxYx8av1lCGdRWdXxy7vZAAlJWVjXS5XN/FEpZO07RpXq/3cjr7zrLM2LFjJ6WkpDwfOPf5fGPq6+vnx1peGIZfXMTCI3Ni/03rNsC91ezrMwyzUvfJoub3VYyJFKu+VcKds6ir38i+OKxp0VPYnYdbO6mrq1vY0tLym2CjLauoqnrpuHHjphHHu1IUJcER3wFY/PxcjqkP5TjJAquaYVoDU9sFRBnRlzeuKIssIADJAq4eS9leaeGNzn7p7BFCAtDQ0PCVpmnnx2JEpijKxW63+xFif19dISQ0wyeP1XObXcvL7W3w71peWecz1OezkrjzmgqO7Wux1pkpcE0Zv+kvds9YjnuMkADU1ta+LISIdenywoqKiseI4Z2pqtolQgKwwsfN99Uw06rlpabDg3XMm7+NMwFUOO2yUq7fy6YXgBEZcEEJfwNOsFnlHs8eJSQAHo/nZl3Xn4+esjMul+uCioqKF7Bv/tplQgKwcCtHPljHMit95tNz2ebZQFn7afHkQl6qGBTbvObAbJSzR/I6UBJL/p7KHickgN7U1HSR3+//byyZXS7XmePGjXseG4KiaVrcq0420X5sYuzL8yJbNb6/GO3jFeRhaClnHZ/HF0fnxrdCdspIUg7fi8+AAfGU05PYE4WEJUuWtOzYseMkTdNiWmFSFOUMt9v9Yrv7Vyt0aU/Szpa3l1HxydLQPs5qmuCl+YwFNgIudxafThrtjCeVKcXsNXYAHwE9PKCeNfZIIQGYO3duk6qqJ0opY1wPYqKmaW9CdG3cLlrdCsW8p+ZxYt2GjhcXbIHH5nJaa7tpQV5fnri8jHEuh76GJAFXlbN/3m5iR7/HCgmAx+OZ29LScoqU0rYRFICqqie43e438vPz+0RJ2l1CggYfPDSbG2vavRN4m+Ceam5Z6+MtgEzBJVeVcW6GwzUckAxXlHFJpuAyZ0vuevZoIQFoaGj4Ukp5aRxFHD9gwIA3owhKtwkJQFMrd90xi2mXfQV3zuKJDX4Cse1/dX4JD+UlKKDfiAw4v5R/A06G7ety4nVS9mvgIRvpjwEi2Z8kA3OwLrzPAbfYeH5IampqnqqsrCyMxV0RgMvlOjYzM/NtTdNOXb58eSe9XCnld5qmvSqEyJVS5quq2h0e3q9q2sFy4G/t58MmjeLDA7MT21AeOBR1yVY+fnMxJcDyRD4rUTiplnI3ENZ9ZzvHYAQCCkcxUB+ljFuJTzAEMDzEdb2qquoOIcRZsRbs9/u/WLly5Qnr1q3bFnPtuobUg7KpnTqW0V2hl6Tr8O9aFn69jjJidyjebXT1cCtanMWiLqhDEYa3l07HrFmz/kfTtO9iLdjlch2Sm5u7MzRdD0Up7c+bFxd3jYAAKApcPJaRBRm8zS9QX7CrhSQ/yv0CcNZjYQjGhbmuAAWqqp5IGJdJVlAU5eC8vLwPCwsLbam8dxVDU7j1srEck9LFi7N9VLi6nKOGpnJb9NQ9C6eFZH2U+1Z6Eqe1Y81URbhX6fF41vt8vpOklJvieMaEPn36fDR6tNMBFOJDheMvLeFPQ7rJy9bgVLiilD+lwqndU4PYcFpIQsbcCCJaT1JI5Im9E4TrSQAqAOrr6+uFEGfE4ig8gMvlGt+vX7/pJSUltkPDJYjCKUW8WTqwe4c7RQPg/GJeAcZ2Zz3s4LSQLI1yP1pPUkBihUQBKiPc33nP4/F8out6PEvDKIriTk1N/bSoqGhg9NQJpd/Jucw8Mid+oywnOGxvko7LYSYwqLvrYgWnhWQ5kR2v7U14VYXB7fWJNmSLh1FE1ikaS9CehtfrfULTtPvjfOa41NTUT91ud3d9EMI9kI/PGEN2Nz0/JOcUMtA9iOnQMwQ3Ek4LiQasjHA/CQjnV6q7h1pgqJh08Dvl9Xr/V9O0t+J5qBCiSkr5WXcIyvAMHrmslAOcUjlxClWBK0opG9mPx7q7LtFIxKuLNi8JN+TqCiGJNGkPUGk6l+vXr58kpfwhngcLISo0TfvS7XbvFU85duifxEVTS7mwXw9tq9OT4MpSzh3k4prurkskukNIwk3ee0JPAu2T92CWL1/uE0KcQvQ5V0RUVS0Gplvw0hg3SeCeXMjDiVI5cYq9+8KFpdyvQkjHfj2BRAhJrJP3ntqTAODxeFY1NzcfR2fPhnYpGjRo0IycnJy94ywnEtm/Hcn08dm/DFX1cYNRzhzFe8DI7q5LKHpaT+JodCwTeViLPBtWkBoaGua0tbWdGc/SMIAQomDw4MEzysrKEhFAp89he/HlKSOtO7mzyqpt6PM3MsfpcgFOHkHqkdnMAPomovx46ClzkiSMViSRG4lWhloAAzFW4UJSW1v7kaIoV8RbGSHEGFVVvy4oKBgRb1nBlGXy0gVFjHF6M8TnhxfmccvokVTUb2CWw8UDMLmEvLJM3qOHqa70lJ5kJIaF3CbHa7MLK0OtAJWRblZXVz+qadq/46sOqKqan5GRMdPtdo+KtyyA7GT+fHEJpzitcqLr8MLPvPPDBm47/TW0GdXs17DReWd0SQKuLOPQvDTudbrseEjUnCSSC4JQQtJVk3arEZ0qoyXwer3X+P3+d6Kls0CelHJGSUnJ6HgKUeHYS0q5dWgCVE7eXMjPn6zgN4HzL8D/qYeqhZtx2F33TmOtazME50RP3TUkQkh8wLoI99OBTNO1rhKSly2m7bTCFQK5cuXKSeaweLEghMhNSUn5qqSkJFYvIyMSpXLyzSq2vbKI8UCHedjXsG7mMg5Z2xzahj4eRmTAhaU8BUQNQdEVJGqLKdoKl7k3SbSQDMXYxHwFa17iK60Uum7dum3r168/XkoZtzGRECI7JSVlenFxcanNrBkn5fLNkTlEMyG2zbxNaK8u4lDCaEF8tJof31zAxdtjCm4XmQOHov52OJ8CtqKWJYJECYndeUmihWQfjPnOXKztdYzConf3ZcuWrWxpaTlJShm3oZUQYmifPn2mFxUVWVX+E/sM4uOzCnB8g7KpBZ6q57JVzZEjfE1fwxMvzedxzdG4WwYTRzFgwhBmYsHZRiLpLiExr3AVkdjl33HALIy5kpV5iYCdDtui0tDQMEvX9TOklHFHChFCDElNTf187Nix5dHSjujLfy4r5cBo/nrtskODJ+p5eEGzNZWRT1Zw8TsLqXa2Foax1kWlFBf24xWny7ZDTxCSLIxl15gNnSxQBTt/RMcm78F4vd4PNE2LZr5sCSHEkKSkpJmFhYVhx+QDBJOuKONSp72c6MDzjfz40wbsLHPrLy1iwherIs5FYyJVhavKOHnvNG5wumyr9IThViGGUmQi7cIDPQlYFxIrk/cO1NbW3i+ldMTXlBAiMy0t7dOKior9QtyuOr+EZxKhcvLeItZ8vJLDsB9qwvfcHA6s3xhb+O1IDE6Fi4q4M8VwPNLl9ISJe6LnI1kYPZddIamM5WGjR4++WtO092LJa0YIMUAI8bHb7d4/6PLQM0cyIxEqJz+uofW5BUwAtseSfwsseKGRM1ZvdzYyMEBJFso5BbwNxLVUHgs9YbiVaCFxYyxLB4TDqpCUEYPLpddee03btm3bJCnlbLt5QyGEGLBjx47Ah5F08BA+P3WE8yGiF29Gf7yeU4hT6+Hnbbz17Hz+sSMBkSaPzqPPsbl8RReHyE6UkGwAtka4PxR2LlkWkVghGQfUsGvp1+rQLhUYE8sD58+fv2XdunXHSCnj3pX2+/33zp49+wWAwv48f0EJpYrDE/WtbfBsIzdv1PjQifJ+Wsfvn/+Z6QlY8OLcArL3HcQndKGf4USa4kQacilAbvv/E92TVEEHXSMd6ytplbE+dPny5SsURTlZShnT0AVASvlpTU3NjQCD+3DdFaWcnhavO0ETmg6PN/Dh7C3cHimd2+3uX1ZWlhk4cnJyIu7tf7yc499bHNEALyZUBS4tZb9RfYlbLcgqiRQSK0MuFUNvqyuWf4NJ2OQ9mOrqao+maedJKW3vSkspFwkhzsbY6T5kSiF/y7YZWMcKLzSy4Nu1nGKhPrOSk5M3BI6hQ4f+JUqWlufmM/671c67iMpIgivKuSwriSlOlx2K7hSSfGAEhgbwwgTVoR/GxqB5DT/hPUmA2traN6SUN9nJI6Xc5vP5TvJ4POuB4eeP4cNxg53/rT5cwtb3ljMeIz6JLdra2qzMOpY808AJCzY5P5HP6QsXFPMIcIDTZZvpruEWGD1JYXu6RDmkq8Joic02EFZ7Ejuaw2Gpqam5W9O0aVbSSil1Xdcnz507dzaQfuRefHlcPo6rLdasR778M0cBa2PJr6qqJZuaJo3Pn27kts0x+e2PzH5DUM8YyadEMG1wgu7uSbpi0l5P59DJVoVkCDjjZURV1av8fv9n0dIJIW5uj+OulAzgzfOLd87dHGNlMzw1h4t88H2sZQghLK9fNW7llscaeK8tAW7CTxtJ+mHZTCeBqivdPSfpikl7KHWJRqxvllU6URGPx9O2ffv230RZGn7b4/H8FWDvVO69soyjkh3+hXx+eGIOj6xs48l4ytE0zZZ15g/rmPjcfOeH1QowpYSC8izedLrsAN3dkyRaSEJN2sHYLLO68lLpVGXmz5+/pbm5+UQpZachjqZpDZs3bz4P0FX47cWlXDvQ4bZR6vBYI566zbZUTkJiV0iAlo+WMuGTZbFtVEYiWcClJRw3rA83O102JFZIVhF5QphLYodbaRhCGE7xrktWuDo9tLFxsa7rJxAUgkBKuUFV1RPnz5+/BSi5sIgXiwc4+VSDl+az5utVHIE1c4GIuFyuWOz8Vz3dyDHV65y3QRnUBy4r45Z0oq/U2SWRQiKJHLQlGWPMn6jl3wqMv682zP2EqqdEwuv1/gicL6XUpZSapmmTPB7PAiDrxFy+OCLH+chYM1aw4/+WcBDxe3sBYupJAPDD1080cv0ax20aobA/TCriFcCuTU5EEu3XL9qQyw8sTtCzx2EIYLjddatCMgajV3IUj8fzmpTyL7qu/762tvYjwFWVxWdnFzjvH3fuRvSn53E6DvbadibuZta1cO8jc3gjEaorR+SQfFIe03EwRHaihSTaMvAiIvsOjodwk/YAVoVExYZtiR1qamru8Hq9/wTI7cuTV4ylymnbkPUt8OgcbvZpOGGPvxMhRFxulWZv4qzH66lPhOrK2WMY8qshTCf+cIfgVCERiNaTJHrS/mKE+1aFBIwhV8zLpRHQwYiAe3UZ5zjtjrRVwrR6PljeEl7lpKio6MC+ffuquq7vHAD5fD7pcrnMw7IOQ0ApZWpZWVkHXwVFRUVbXnvtNav9Q9sXazgiL4N5Jw63ZgVqFaHAlGKqVvuYtmArF8Zb3u4qJMkY49JI/qGWYGxiWrENd3TybuJX5xU7HwFXB56sZ1HtBn4bKV1qaurzwEglSGsyLS366FJV1QdUVX0g+NrChQtxu907z6WxM/qD1+sNF3139XPzOWZYGl+5hzg7qklPgqljmXL7j9Rs8Men59Xdc5JECUkZhqBEEhKJdbXwyngrFIa8M0by8fi9nP8d3l7EtumrORiiuv1JgEaYgRBCKIoSzZPkf59s5MrVCQg3undfuKSUB4BD4imnu4UkUStb4zAWBDZESWd1yFWO8+8qdcIQPj9thPNuPX9Yg3xpAUdjLSR0woTEKut28NCDc3jJF9csJzRVgxFnj+Z9iF1zIdFCsozIO9uJ6knM6vHhsCokfXHWIk4Zlc7rF5Yw2mnbkBXb4fEGrga+tZJeCNFNERQ7Mm8z5z1Rz5xETORPHk7fI/biS2JsEBI9J9kBrCG0/tMODCFKBOOA9y2ks9OTVdpMH5bMFG6/upzjnLYN2dYGD87miU1+HrSap6mpaUxGRsZOA6bk5ORkXdc79G5SyqGqqprf532apn0UrfyWlharO+xtX67liL0XMu9Uh519K8AFxQxf38K7NRs5Epv2+4kWEjCGXKGEZAEO7PyGwIUxJ1GIvnQ71Ea5FcCrsVYqgArHXVzETU7bhmg6PFKPZ8FWbMV5XLx4cbQhMaNHj+7Xv39Hi9nW1tbGurq6qAqbNlnz+jIOz83g+30GO2t5mCTg8rEcfvdP3LnQx4128naVkOwf4nqihlpFGN3qvRhOuCORDBxssdzKOOoUoGjSKN50D3beHenz82j6fh3HYHJH6gTJycmdvpNQ15ygrQ3P03O5Yu++TNvL4YYkMwWmjOWGv/7ITz54w2q+rhKSUCRKSNzAauA1i+nXYK1HqYy1Qu1kHpzNjBNGOK/SPWMFbe8v4xASFJS1qanJlZPTMZRKW1tbwr6dtTt45KHZTLhxHL9zekg6pj9MKeHlB+sZB9RZydMV4Sa7WkiqADvxDa0uAw8jdr+0amE/3rmo2PkIuI2b4OkGzqCzYZljhOo1VFVNaAPbuIXJj8+lTk/ATP7gYbhOyWMm1oI6dYmQhFNNSeTy74820ttxoRPTpuKAJB6cWsYEp+OGrGuBh+dwpw/iig4cjSFDhnQSCL/fn+hRiP/r1Rz29qLExKw5awxZBw5mBhZCZO9uPYnAGBbZERI77lUr7VSmnXMvG8ulTscNaZXw8Bymr/TxJ2dLDvGs1tYu70naaXppIYd/u8b5BR7F8LpSWpTJU9HSdoWQLA5xrRnrRk92KMWIf/KTjTyJ7EkOOHsUT1YNtJkrCjrweD2LZ2/kJOy7I7XN9u3bO/WBXSQkALOemcvFyxw31YJUF1xazNlDXPxPpHROCkkqobuuLXQO8/YziflxT8BwitdkI48dIam0kXav/Yfw/skjnHei9sYCfDNXczgxuiO1S2pqaieBkFJ2mXO4DW08Oa2Op7YnYEd+WBpMKeW+SCGynRSSPDpHsApgHnIlKoDoSRi743ZWkOzUpRBrCpF98tP46PISspxe6/1hDfLVRRyPYWbQJfTp06eTkGia1lU9CQA/b+OiR+r5SSagaa0ajDJpdPgQ2U4JSRZwFPArQi8rmyfviZi0H4vhg0kFjraRbyPWex4XEDXATkYyj/++kvLO7W98LN8OTzZwLTDD2ZIj4/P5NCnlxvZDBxBCdKmQANp3a/n1W4ui6uPFxAnDST1mb2YSIkS2E3/oQcADGBt4eRi70rdiOJwL+ANebMpjx5bDCqcBjwadP4IhLO9ibVd/AUaMFCtUEnnOc90VJUxyekd9axs8WMPzG/z809mSo1NfX1+P0RAG0x3Rpza8spDDh6Xx04HZzu/xnVNI7kof79du4HDYZYcf72jgOuCSCPdvB57G+Ijvab8mMVr64OHC32FXdFeLCIweIB/CmrxuAb4DrqRz7/VXdmkCVGBxzRyj3oEVsbuBYNWMo04fwce/HeXsjrqmw71e6jxN7EMM3hZ3NwYKJt20P8/nOq4/DRt3wM0/cM/qHewMyNSjgsrbRMFQYY/WokhgNp3NhIdjvfcIRz277DUU4PL9h7B/VjKpqS4y01z0SVZI9kOfVBWXgBRdR+2TRJImSVaAZJUUdAQKitRxpbpQAJcQxm+TLOCrVTR9soJiIkc17m5OBCZiLCY8hMXd7Fip6M81B+fYGlYbaLBN7rKx0XV0n2Z4EPX58S/dRpN3A2uBhzEa2V56OCrGYkiPUGePwDEYjZHefmzG0FDYLeiKfZJeYkfDWFhIgAMeR9mXjqOSfhiKpr30stviAsaDZY+IozEURQM9yTdYWyrvpZdfJP/BGC4FPnir9AOOwzA96B2h9LJb42WXgCRc5eWXQK/E99JLFHqFpJdeouBqP4K1W7fRcUe8DGP1Ig9jB/1jjH2HcKQCE4D9MIyU+rTnWwp8hREJ14pX8Tw6bvA10tGvbxlwBJADZGCsz88HPiU+Nfz+wIHs2mDMwDCJ3dBe/n8tlL83He36N2Iv5J1KR2VKnfAuW3Mx3nVRe31T29OvxzDEmonh4d9qXc26Am46s4SOVpBJGHtWAbZiT/VIAMUY7z0fY9k7qb2ctRimDz9gT6Gzgl17aG10dJyeBByJ8bcNwdAeWI/hYeczOivkMpCOY9Av269nAx+Y7unA38JUahDGDvTWEHmCjwZgkoU/8mFTvoParx+EIWjhypcYRkh2nDyAMeF8C0MgItVfx3jhkwkfJvlwU/pl2FMBOtmU/23T/X7AtUR+D4GjDXiZ8BG77rJQhvm4wFTGXqb7Vh1EZAI3ssv1VKSjGUPdaJTFspuC8gYaCRX4g+me+dgC/BHTKCuUkAwB5oYpJJSQHIRhH2LnRT8LEUMMhBKSGzD2DqyUvxhrgtIXeMxm3QPHDMLH65tlSnuyhboE+MSU1+wm9IUY6roCo5U2011CclR7new+extGAxUNs5D0xfi27XyfOwklJI+yS3pfxJD2PwPPYEhZMEdj6BMF8vsxPrrxGF2/gjEkmozRBQc/K5J/KLOQPNP+73bgH+3lD8UQ6PEYqhDmXuDtCOWDMbT4xpTHB0zDWM7Mx2jtcjGGdvfQcXlUb/+bQumOnWtK90GUugQoouPu9cwQaV5k17t4BqNnHoVhcEZ7nSfS+X1/HqKsQ4Hrgw5zY3d9iKPcVIZdITmDzo2dF7gcYxg9BGPoWApMofNvpEPUaF3BQrIeww+bjjHsndpedibGt3lamGfsHPGYhWQFxsdWSxj9+iDG0PGj2QwcFiF9BsaYPvh548OkNQuJjjGviaSqfpYpvcSwAQnH66b0NUT/m7MxvCMG5wvlpC2Zji2lhqEvFo1/mco+NkSapzAUNAdEKWsQnVvryih5vKb0VrAjJPtjOCYMblSvJboe4SUYQ8fgfJHCU4caUr1JeC+OKoaHneD0swI3zUKiY0yWrHj2eCsojyT0D2pmDB1b/LfDpDMLSRvWLAMDLUbguCpMuqNM6RYTXpvYzEAMgQ3Of2SIdDeZ0twRpdwMOjY6XkJ/PHZ0uW401eHaKOm9pvRWsCokCp0bmIimsyZuMOX9IkJas5BUE129fxDGSCI4XzaEFpIrLVS40JTHTpCYr4PybSX03MQsJM9bLNs8zHk0TLqPTOkmWiw/wMWm/KFioQzEGBIF0qwi8jzsclOZZ9usUygOMZX5QJT0XlN6K1gVkgmmdF7saaIn0XmSH24ibxaSky0+411TvqNC7ZPoGBPDaJxoOn/GYiWgo4+odKDAQp6ofmfbMatom42FwJjEHRp03oQNj37tvErHpeyj6PyDN9HxvWQT/sdS6DjOXkhsblWTMT6cwzAaDLPw94+hTKc43nT+ONYFEYzRhPl3+rWFfBJjMcQK5u2NzFDLkguJHrIADP9WwdwGln2s5pjOrQxzVlgse5PpPFQXW2K6/l+s7d2YnzOfXQI+CGOOsNGU7gGM8XSgQboEYy5k5rD2egW4j+guS8dgDHErMSb8+RiteqTWuTttiKpM51/HUIbHdG5lSXgj1jWpzb9fZwN/rLvKNC+vloRMZQ0r4cCs+sqwks7siXG1xbLNrKNjLziYzi95HsY8KdDzHoGhNWt2QDE16P9rIKI/KDeGr+NDLdRxB91jahsKs/VnLO99bZQyQ2EnLmcnc+9QQmLVPNQ8VJuDEV4tFhwJm2wD87zATpcfjLlV3hEm3T/YJSQKxnzmuqD7uXQcvv6L8C3fRIzhcPDfsAmjhZ2FYV68tP1YjtGzRNKQ6ErMLqdiee/m7y7h5szxGNObe5yLMYYtvwTMZrCxWtGZe9M1YdLNwPiAA8ON8zH2nQJCdSm7fostGHs+ocjH8BkQEJAdGMO3FwnfWvYkC0FzL7AX4d9ZOMzvPNZRgGXiUXA06y+ZN5h6MnPp2K2OJ7yKSTgG0XFPpY7IPek/gv4/GGMDC4yh0EVB9x4hhO5QOxfQcZ3/LxgLA5GGE1YdXHQF9abzg0Kmisx+pnM7Lm1jIh4hMe/eOrFc2VU00TFcWhbGLrAdfkfH4da7UdK/QkfXrhe3/3s6uz7kHUReojUvlliJ5hXWM6FFnHTd857pPHhBwwqpdPSq04x1PbGYiUdIvqSjs+mDMHa87dCdKy3/MJ3fS3g9LDPDMDYKA2zFmEdEopWOajiHACMwhl4BniWyj2SzSWy0wNbD6LggYAVzb+jkcO0zOmrjloIth98303HR5QG6yNVrOC1gK5xtyuvDWJuPRjKGLtdzEdKE0wKORq4pX6QW/kNT2vmEVg0PphBjkSI4n9UPMQtDQS+Q78/s0j7wYyzpRsL8Tt4kfEM3nNBawk9HecYbpvThNBaCsaOWcggd1UskhtJspBAILoyhZbBO2zwir4qG0gK2wu/p+LecC/EJCYTWsfoRuBrD7ekojBZzH4whysMYE2edyO46u0JI+mGoKwSn1zC0By7CmKuUYugInYMxQW41pb/PYr0C/Cco7/Kg/1vZODyQjh+KjrFYcgaGTttIjCXm+zAWAHTg/0zpn47yDLMmwXaMD/RQjPdwKZ1VcOwqOE4O8Xcsw1DbOQ7DFqQcQ3n2LxiNV3DaVUTXsetRQqJiKNtZVWEPPiLtoneFkIDRGj0bQ92303HCbZUCQr+raD1YgNts1PEJDOGxIySpdO4pzYcTqvLH0dHDitXjM6wNAR0TEifMdzWMceUBGF11tM08ieF6dCpwqgPPj5etGK3FoRg9SLSNp/UYblkLMEwC7DKPzhPYz+i8kxyOv2AMcxdFSLMQY344BeOHtoMPowWP1IA5EVTnAwxrxD9i9KiR0DBMBk5ur1siYtuERcHoCfKDrrXEWYm+GMOCAowxeBrGZmHA/LUWa17cB0GHeN4rsbZZ6cIw/Q3QjL219DQMde5CdtV/A4Zw/IRhWWn3wzPTn44uVjcQftk3HAJjCLsPu1bHVmDMQ4KXRZPpqAa0FevuUgsw3sUwjMZtPYYw15rSmb8hH/ZabzC0EPbHmJhnYaz0NWEI/LfYdzk6nF3zNY3wEdfMmH+btf8PfNPXoqESHq8AAAAASUVORK5CYII=')+'" alt=""><b>'+esc(c.name)+'</b></div><div><b>Devis</b><span>'+esc(d.number||'Brouillon')+'</span></div></header>'+
+    '<div class="q-meta"><span>Émis le '+(d.issued?dateLabel(d.issued):'…')+'</span><span>Valable jusqu’au '+(d.valid?dateLabel(d.valid):'…')+'</span></div>'+
+    '<div class="q-parties"><section><small>Entreprise</small><strong>'+esc(c.name)+'</strong>'+safeLines([c.address,c.phone,c.email,c.identity].filter(Boolean).join('\n'))+'</section><section><small>Destinataire</small><strong>'+esc(d.client.name||'Client à renseigner')+'</strong>'+safeLines([d.client.address,d.client.phone,d.client.email].filter(Boolean).join('\n'))+'</section></div>'+
+    '<section class="q-title"><small>'+esc(e.trade)+'</small><h2>'+esc(d.title)+'</h2>'+(d.site?'<p>Chantier · '+esc(d.site)+'</p>':'')+'</section>'+
+    fact('Objet des travaux',e.intro)+fact('Spécifications',e.spec)+fact('Fournitures',e.supply)+
+    '<table class="q-items"><thead><tr><th>Désignation</th><th>Quantité</th><th>PU HT</th><th>TVA</th><th>Total HT</th></tr></thead><tbody>'+(t||'<tr><td colspan="5">Ajoutez une prestation pour chiffrer le chantier.</td></tr>')+'</tbody></table>'+
+    '<section class="q-sum">'+(d.discount?sum('Brut HT',m.gross)+sum('Remise '+pct(d.discount),-m.discount):'')+sum('Total HT',m.net)+m.taxes.map(t=>sum('TVA '+pct(t.rate),t.amount)).join('')+'<div class="q-grand"><span>Total TTC</span><strong>'+euros(m.total)+'</strong></div></section>'+
+    '<section class="q-pay"><h3>Échéancier de règlement</h3><div>'+schedule+'</div></section>'+
+    '<section class="q-conditions"><h3>Modalités du chantier</h3>'+fact('Paiement',e.payment)+fact('Intervention',e.timing)+fact('Déplacement et devis',[e.travel,e.fee].filter(Boolean).join(' '))+fact('Gestion des déchets',e.waste)+fact('Assurance professionnelle',c.insurance)+fact('Médiation de la consommation',c.mediator)+fact('Précisions',d.notes)+fact('Conditions particulières',d.terms)+'</section>'+
+    '<footer class="q-sign"><b>Bon pour accord</b><span>Nom, date et signature du client</span></footer>'+photosPaper(d.photos)+'</article>';
+  if(e.order==='Modalités puis échéancier'){
+    const pay=html.indexOf('<section class="q-pay">'),conditions=html.indexOf('<section class="q-conditions">'),signature=html.indexOf('<footer class="q-sign">');
+    return html.slice(0,pay)+html.slice(conditions,signature)+html.slice(pay,conditions)+html.slice(signature);
+  }
+  return html;
+}
+function editionDialog(d,state,done){
+  const e=structuredClone(d.edition||newEdition());
+  if(!d.edition)e.middle=Math.min(e.middle,10000-d.deposit);
+  const template=select('Domaine','trade',pairs(Object.keys(trades)),e.trade)+select('Couleur du document','color',pairs(colors),e.color)+select('Mise en page','layout',pairs(['Atelier','Compact']),e.layout)+select('Typographie','font',pairs(['Éditorial','Contemporain']),e.font)+select('Ordre des rubriques','order',pairs(['Échéancier puis modalités','Modalités puis échéancier']),e.order);
+  dialog('Personnaliser le devis','<form id="editionForm"><div class="fields">'+template+'</div><label>Logo pour ce modèle (PNG ou JPEG, 240 Ko maximum)<input id="customLogo" type="file" accept="image/png,image/jpeg"></label>'+button('resetLogo','Reprendre le logo MA RENOVATION')+'<p id="logoState"></p>'+area('Présentation du chantier','intro',e.intro)+area(trades[e.trade][1],'spec',e.spec)+area('Fournitures comprises et exceptions','supply',e.supply)+area('Début, durée et conditions d’intervention','timing',e.timing)+input('Déplacement','travel',e.travel)+input('Coût du devis','fee',e.fee)+area('Déchets : quantité estimée, tri, enlèvement, points de collecte et coûts','waste',e.waste)+input('Mode de règlement','payment',e.payment)+'<div class="fields">'+input('À la signature (%)','first',d.deposit/100,'number','min="0" max="100" step=".01" required')+input('En cours de chantier (%)','middle',e.middle/100,'number','min="0" max="100" step=".01" required')+'</div><p id="rest"></p>'+button('reuse','Reprendre le modèle du domaine','book')+(state.me.role==='Administrateur'?button('preset','Mémoriser pour ce domaine','check'):'')+'<button class="primary wide">Appliquer au devis</button></form>');
+  const f=$('#editionForm'),v=f.elements;
+  v.trade.onchange=()=>{v.color.value=trades[v.trade.value][0];v.spec.parentNode.firstChild.textContent=trades[v.trade.value][1];};
+  let logo=e.logo||'';
+  const logoLabel=()=>$('#logoState').textContent=logo?'Logo personnalisé sélectionné.':'Logo MA RENOVATION.';
+  $('#customLogo').onchange=async ev=>{const f=ev.target.files[0];if(!f)return;if(!['image/png','image/jpeg'].includes(f.type)||f.size>240000){toast('Utilisez un PNG ou JPEG de moins de 240 Ko.');return;}
+    const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(f);}).catch(()=>null);if(data&&$('#logoState')){logo=data;logoLabel();}};
+  f.querySelector('[data-act="resetLogo"]').onclick=()=>{logo='';logoLabel();};logoLabel();
+  const balance=()=>{const n=Math.round(Number(v.first.value)*100)+Math.round(Number(v.middle.value)*100);v.middle.setCustomValidity(n>10000?'Le total des deux échéances dépasse 100 %.':'');$('#rest').textContent=n<=10000?'Solde à la réception : '+pct(10000-n):'Le total dépasse 100 %.';};
+  f.oninput=balance;balance();
+  const values=()=>{const data=Object.fromEntries(new FormData(f));const {first,middle,...rest}=data;
+    return {first:Math.round(Number(first)*100),edition:{...rest,logo,middle:Math.round(Number(middle)*100)}};};
+  const reuse=()=>{const profile=state.profiles?.[v.trade.value]||{first:4000,edition:newEdition(v.trade.value)};
+    for(const [k,val] of Object.entries(profile.edition))if(v[k])v[k].value=k==='middle'?val/100:val;
+    v.first.value=profile.first/100;logo=profile.edition.logo||'';logoLabel();balance();};
+  f.querySelector('[data-act="reuse"]').onclick=reuse;
+  const preset=f.querySelector('[data-act="preset"]');
+  if(preset)preset.onclick=async()=>{if(!f.reportValidity())return;const data=values();try{
+    const saved=await api('profile',{...data,version:state.profiles?.[data.edition.trade]?.version||0});
+    (state.profiles||={})[data.edition.trade]=saved;toast('Modèle enregistré pour ce domaine.');
+  }catch(e){toast(e.message);}};
+  onForm('#editionForm',async o=>{const {first,middle,...terms}=o;done({...terms,logo,middle:Math.round(Number(middle)*100)},Math.round(Number(first)*100));$('#modal').close();});
+}
+
+return {trades,lotIdeas,newEdition,installments,editionPaper,editionDialog};})();
+modules.writer=(()=>{
+const { $, esc, select, input, button, dialog, api }=modules.ui;
+function localRewrite(raw,tone){
+  let s=raw.trim().replace(/\s+/g,' ').replace(/\bm(?:2|ètre[s]? carr[ée]s?)\b/gi,'m²')
+    .replace(/\bje (?:souhaite|veux) (?:faire )?poser\b/gi,'pose de').replace(/\bon (?:va )?pose(?:r)?\b/gi,'pose de')
+    .replace(/\bon (?:va )?enl[eè]ve(?:r)?\b/gi,'dépose de').replace(/\bon (?:va )?pein(?:t|dre)\b/gi,'mise en peinture de')
+    .replace(/\ble client (?:fournit|achète) (.+?)(?=[.;]|$)/gi,'$1 à la charge du client')
+    .replace(/\b(?:et puis|ensuite on)\b/gi,'puis').replace(/\bde (les|le)\b/g,(_m,v)=>v==='les'?'des':'du');
+  if(!s)return '';
+  if(tone==='Plus lisible')s=s.replace(/\s*;\s*/g,'.\n').replace(/, puis /g,'.\nPuis ');
+  return s.split('\n').map(line=>line[0]?.toLocaleUpperCase('fr')+line.slice(1)).join('\n').replace(/([^.!?])$/,'$1.');
+}
+function writer(state,d,apply){
+  const targets=[['title','Objet du devis'],['notes','Précisions'],['terms','Conditions particulières'],...(d.edition?[['intro','Présentation du chantier'],['spec','Détail technique']]:[]),...d.lines.map((l,i)=>['line'+i,l.label])];
+  const get=k=>k.startsWith('line')?d.lines[Number(k.slice(4))].label:(d.edition?.[k]??d[k]??'');
+  let target=d.edition?'intro':'notes',history=[],source=get(target),candidate='',busy=false,generation=0;
+  dialog('Assistant de rédaction','<div class="writing-chat">'+select('Texte à modifier','target',targets,target)+'<div id="messages" aria-live="polite"></div><label>Texte à reformuler<textarea id="writerText" rows="4"></textarea></label>'+input('Consigne pour Gemini (facultative)','instruction','','text','maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"')+select('Style','tone',[['Professionnel','Professionnel'],['Plus lisible','Plus lisible']],'Professionnel')+'<div class="actions">'+button('local','Reformuler sur cet appareil','edit')+(state.ai?button('gem','Reformuler avec Gemini','arrow','primary'):'')+'</div><label>Proposition à relire<textarea id="suggestion" rows="4"></textarea></label>'+button('apply','Appliquer au champ choisi','check','primary wide')+'</div>');
+  const root=$('#modal'),b=k=>root.querySelector('[data-act="'+k+'"]'),msg=$('#messages'),src=$('#writerText'),out=$('#suggestion');
+  const refresh=()=>{msg.innerHTML=history.map(([who,t])=>'<p><b>'+esc(who)+'</b> '+esc(t)+'</p>').join('');b('apply').disabled=busy||!out.value.trim();};
+  src.value=source;out.oninput=refresh;refresh();
+  root.addEventListener('close',()=>generation++,{once:true});
+  root.querySelector('[name=target]').onchange=e=>{generation++;target=e.target.value;source=get(target);candidate='';history=[];src.value=source;out.value='';busy=false;refresh();};
+  async function ask(remote){
+    const raw=src.value.trim();if(busy)return;
+    if(!raw){history.push(['Assistant','Saisissez le texte à reformuler.']);refresh();return;}
+    const job=++generation;
+    busy=true;const tone=root.querySelector('[name=tone]').value;const instruction=root.querySelector('[name=instruction]').value.trim();history.push(['Vous',remote&&instruction?instruction+' — '+raw:raw]);refresh();
+    try{
+      const next=remote?(await api('rewrite',{text:raw,tone,instruction})).text:localRewrite(raw,tone);
+      if(job!==generation)return;
+      candidate=next;out.value=candidate;src.value=candidate;history.push([remote?'Gemini':'Assistant local',candidate]);
+    }catch(e){if(job===generation)history.push(['Assistant',e.message+' Vous pouvez utiliser la reformulation locale.']);}
+    finally{if(job===generation){busy=false;refresh();}}
+  }
+  b('local').onclick=()=>ask(false);if(b('gem'))b('gem').onclick=()=>ask(true);
+  b('apply').onclick=()=>{const value=out.value.trim();const max=target==='title'?160:target.startsWith('line')?250:target==='intro'||target==='spec'?1500:4000;
+    if(value.length>max){history.push(['Assistant','Raccourcissez la proposition à '+max+' caractères pour ce champ.']);refresh();return;}
+    if(value){apply(target,value);root.close();}
+  };
+}
+
+return {localRewrite,writer};})();
+modules.references=(()=>{
+// ADEME, Coûts des travaux de rénovation — ECS. Calcul sur les coûts totaux HT positifs par type.
+const ecsReference=[
+  ['Chauffe-eau classique',6,1052.37],
+  ['Chauffe-eau thermodynamique individuel',88,2859.50],
+  ['Chauffe-eau solaire individuel',284,6444.08],
+  ['Système solaire combiné',38,15222.53],
+  ['Autre solaire / non communiqué',10,4604.15]
+];
+function priceReference(){
+  return '<details class="ecs-reference"><summary>Repères ADEME · eau chaude sanitaire</summary><p>Enquête FAIRE 2017–2018. Médiane des coûts totaux HT positifs par type, toutes régions et configurations confondues. Les tarifs du catalogue restent réglables indépendamment.</p><table><thead><tr><th>Équipement</th><th>Observations</th><th>Médiane historique HT</th></tr></thead><tbody>'+ecsReference.map(([k,n,v])=>'<tr><td>'+k+'</td><td>'+n+'</td><td>'+v.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})+'</td></tr>').join('')+'</tbody></table><a href="https://www.data.gouv.fr/datasets/couts-des-travaux-de-renovation-ecs" target="_blank" rel="noopener">Source ADEME · Licence Ouverte 2.0</a></details>';
+}
+
+return {ecsReference,priceReference};})();
+modules.courrier=(()=>{
+const {$,dialog,onForm,input,area,button,api,toast,today}=modules.ui;
+function courrier(state,d,isReminder,update){
+ let r=state.reminders?.find(x=>x.id===d.id);
+ const msg=isReminder?(r?.message||'Bonjour,\n\nAvez-vous pu consulter notre devis '+d.number+' pour '+d.title+' ? Nous restons disponibles pour en discuter.\n\nMA RENOVATION'):'Bonjour,\n\nVous trouverez en pièce jointe notre devis '+d.number+' pour '+d.title+'. Nous restons disponibles pour toute précision.\n\nMA RENOVATION';
+ dialog(isReminder?'Relance du client':'Envoyer le devis par Gmail','<form id="mailForm">'+input('Destinataire','to',d.client.email,'email','readonly')+(isReminder?input('Date du rappel','due',r?.due||today(7),'date','required'):'')+area('Message accompagnant le PDF','message',msg)+(isReminder?'<button>Enregistrer le rappel</button>':'')+(isReminder&&r&&!r.completed?button('finishReminder','Classer le rappel'):'')+button('dispatch',isReminder?'Envoyer la relance avec PDF':'Envoyer le PDF','arrow','primary')+'<p class="hint">'+(state.gmail?'L’envoi utilise la boîte Gmail configurée.':'Connectez votre boîte Gmail depuis la configuration serveur pour activer l’envoi.')+'</p></form>');
+ const f=$('#mailForm'),send=f.querySelector('[data-act=dispatch]');
+ send.disabled=!state.gmail||!d.client.email||(isReminder&&d.status!=='Envoyé');
+ const save=async completed=>{r=await api('reminder',{id:d.id,due:f.elements.due.value,message:f.elements.message.value,version:r?.version||0,completed});state.reminders=[...(state.reminders||[]).filter(x=>x.id!==d.id),r];};
+ onForm('#mailForm',async()=>{if(isReminder){await save(false);$('#modal').close();toast('Rappel enregistré.');}});
+ const finish=f.querySelector('[data-act=finishReminder]');if(finish)finish.onclick=async()=>{try{await save(true);$('#modal').close();toast('Rappel classé.');}catch(e){toast(e.message);}};
+ send.onclick=async()=>{if(!f.reportValidity()||!confirm('Envoyer maintenant '+d.number+' avec son PDF à '+d.client.email+' ?'))return;send.disabled=true;
+   try{if(isReminder)await save(false);const result=await api('mail',{id:d.id,kind:isReminder?'relance':'devis',message:f.elements.message.value,confirm:true,version:r?.version});state.reminders=result.reminders;$('#modal').close();update(result.document);toast('Message envoyé avec le PDF.');}
+   catch(e){toast(e.message);}finally{send.disabled=false;}
+ };
+}
+
+return {courrier};})();
+modules.terrain=(()=>{
+const { $,esc,button,select,input,api,toast,today }=modules.ui;
+const { amounts,euros }=modules.money;
+// Libellés de saisie en persan ; la ligne enregistrée garde le libellé français du catalogue.
+const faLabels=('نصب کاشی کف|نصب پارکت لمینت|نصب پارکت مهندسی|نصب کفپوش وینیل|نصب قرنیز|کندن پوشش قبلی|اجرای پرایمر|تراز کردن کف|نصب کاشی دیوار|عایق زیر کاشی|نصب زیردوشی|نصب پارتیشن دوش|نصب شیر مخلوط|نصب کابینت روشویی|نصب توالت|نصب آبگرمکن ۵۰ لیتری|رنگ دیوار|رنگ سقف|بتونه کاری|نصب کاشی بین کابینتی|مونتاژ کابینت|تیغه گچی|نصب پریز|نصب تهویه|اجرای میکروسمنت|پوشاندن محل کار|حمل نخاله|نیروی کار اضافی|شست‌وشوی دیوار|کندن کاغذ دیواری|ترمیم ترک|بتونه و سنباده|رنگ آستر|دو دست رنگ ساتن|رنگ چوب|رنگ در دو طرف|نصب پوشش فایبرگلاس|تمیزکاری کپک سطحی|رنگ نما|نصب کاشی ۹۰ در ۹۰|نصب کاشی مورب|نصب موزاییک|نصب کاشی دیوار بزرگ|پروفیل لبه|بندکشی اپوکسی|ترمیم بند کاشی|کاشی پله|کندن موکت یا کفپوش|تراشیدن چسب|زیرلایه عایق صدا|پارکت چوبی چسبی|سنباده و لاک پارکت|نصب آستانه در|جمع‌آوری زیردوشی|آب‌بندی گوشه‌ها|نصب کفشور خطی|شیب‌بندی|پوشش فریم توالت|نصب وان|تغییر لوله آب|لوله فاضلاب|نصب کلکتور|توالت دیواری|روشویی دوقلو|تعویض آبگرمکن برقی|آبگرمکن پمپ حرارتی|آبگرمکن خورشیدی|سیستم خورشیدی ترکیبی|شیر ایمنی آبگرمکن|عایق لوله آب گرم|تعویض تابلو برق|مدار اختصاصی|نقطه روشنایی|کلید تبدیل|چراغ توکار|تهویه تک‌جریان|تهویه دوجریان|دریچه تهویه|تعویض رادیاتور|حوله خشک‌کن|ترموستات|عایق دمشی سقف|عایق داخلی دیوار|عایق زیر کف|لایه بخاربند|نصب در داخلی|در ریلی کمد|پنجره دوجداره|پنجره سقفی|کرکره برقی|سقف کاذب|درزگیری گچ‌برگ|طاقچه ضد رطوبت|باز کردن کابینت|صفحه کابینت|نصب سینک|تخریب تیغه غیر باربر|بتن‌ریزی|نصب مش فولادی|اجرای کف‌سازی|پرایمر قیری|لایه زیرین عایق|عایق نهایی|تعویض ناودان|ترمیم آب‌بندی اتصال سقف|لاک میکروسمنت|تفکیک نخاله|حمل با کانتینر|نظافت نهایی|هزینه رفت‌وآمد').split('|');
+const unitFa={'m²':'متر مربع','m³':'متر مکعب','ml':'متر طول','h':'ساعت','u':'عدد','forfait':'مقطوع'};
+const rooms=[['Cuisine','آشپزخانه'],['Salle de bains','حمام'],['Séjour','پذیرایی'],['Chambre','اتاق'],['Extérieur','فضای بیرون'],['Chantier','کل پروژه']];
+const tiers=['فقط نصب','اقتصادی','استاندارد','ممتاز'];
+const label=s=>faLabels[Number(s.id?.slice(1))-1]||s.label;
+function terrain(ctx,initial){
+ const {state,main,go,done,fresh}=ctx,edit=state.me.role!=='Lecture';
+ let d=initial?structuredClone(initial):null,dirty=false;
+ const menu=()=>state.documents.filter(x=>x.status==='Brouillon').map(x=>button('draft-'+x.id,x.title+' · '+x.number,'doc')).join('');
+ const fields=()=>input('عنوان پروژه (به فرانسوی برای مشتری)','title',d.title)+input('نام مشتری','name',d.client.name)+input('آدرس محل کار','site',d.site)+input('ایمیل مشتری','email',d.client.email,'email');
+ function render(){
+ main.innerHTML='<section class="terrain" lang="fa" dir="rtl"><header><h1>دفتر کارگاه</h1>'+button('fr','Français','back')+'</header>'+(d?
+ '<form id="faQuote"><div class="card pad">'+fields()+'</div><section class="card pad"><h2>افزودن خدمت</h2>'+select('نوع کار','service',state.services.map(s=>[s.id,label(s)+' · '+s.label]),state.services[0]?.id)+select('اتاق یا بخش','room',rooms,'Cuisine')+select('نوع قیمت','tier',tiers.map((v,i)=>[i,v]),0)+input('مقدار','quantity',1,'number','min=".01" max="10000" step=".01"')+input('مالیات (%)','tax',20,'number','min="0" max="100" step=".01"')+'<p id="faPrice"></p>'+button('add','افزودن به پیش‌فاکتور','plus')+'</section><section class="card pad"><h2>اقلام پیش‌فاکتور</h2>'+d.lines.map((l,i)=>'<div class="member"><div>'+esc(label(state.services.find(s=>s.id===l.serviceId)||l))+' · '+l.quantity/100+' '+esc(unitFa[l.unit]||l.unit)+'</div>'+button('remove-'+i,'حذف','trash')+'</div>').join('')+'<p>جمع با مالیات · '+euros(amounts(d.lines,d.discount,d.deposit).total)+'</p></section>'+button('save','ذخیره پیش‌نویس برای دفتر','check','primary')+'</form>':
+ (edit?button('create','پیش‌فاکتور جدید','plus','primary'):'')+'<h2>پیش‌نویس‌ها</h2><div class="quick">'+menu()+'</div>')+'</section>';
+ const f=$('#faQuote');if(!f)return;
+ const v=f.elements;f.onsubmit=e=>e.preventDefault();function price(){const s=state.services.find(s=>s.id===v.service.value);$('#faPrice').textContent=s?euros(s.prices[Number(v.tier.value)])+' / '+unitFa[s.unit]:'';}
+ f.oninput=e=>{if(['title','site'].includes(e.target.name)){d[e.target.name]=e.target.value;dirty=true;}if(['name','email'].includes(e.target.name)){d.client[e.target.name]=e.target.value;dirty=true;}price();};price();
+ }
+ main.onclick=async e=>{const a=e.target.closest('[data-act]')?.dataset.act;if(!a)return;try{
+ if(a==='fr'){if(dirty&&!confirm('تغییرات ذخیره نشده‌اند. خارج می‌شوید؟'))return;dirty=false;go('Accueil',null,true);return;}
+ if(a==='create'){d=fresh(state);d.title='Travaux de rénovation';dirty=true;}
+ if(a.startsWith('draft-')){d=await api('document/'+a.slice(6));if(!edit){go('editor',d);return;}}
+ if(a==='add'){const v=$('#faQuote').elements,s=state.services.find(x=>x.id===v.service.value);if(!v.quantity.reportValidity()||!v.tax.reportValidity()||!Number(v.quantity.value))return;
+ d.lines.push({serviceId:s.id,label:s.label,unit:s.unit,tier:Number(v.tier.value),lot:v.room.value,quantity:Math.round(Number(v.quantity.value)*100),price:s.prices[Number(v.tier.value)],tax:Math.round(Number(v.tax.value)*100)});dirty=true;}
+ if(a.startsWith('remove-')){d.lines.splice(Number(a.slice(7)),1);dirty=true;}
+ if(a==='save'){if(!$('#faQuote').reportValidity())return;const saved=await api('documents',d);done(saved);dirty=false;d=null;toast('پیش‌نویس ذخیره شد');}
+ render();
+ }catch(error){toast('خطا · '+error.message);}};
+ render();return ()=>dirty;
+}
+
+return {terrain};})();
+modules.signature=(()=>{
+const {esc}=modules.ui;
+function inkMarkup(ink){
+ if(!ink?.length)return '';
+ return '<svg viewBox="0 0 480 128" class="signature-ink" aria-label="Tracé du signataire" role="img">'+ink.map(points=>'<polyline fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="'+points.map(p=>p.map(Number).join(',')).join(' ')+'"/>').join('')+'</svg>';
+}
+function signatureProof(s){
+ return s?'<section class="signed-proof">'+inkMarkup(s.ink)+'<strong>Signé électroniquement · '+esc(s.name)+'</strong><p>'+esc(s.consent)+'</p><small>'+esc(new Date(s.at).toLocaleString('fr-FR',{timeZone:'Europe/Paris'}))+' (Paris) · '+esc(s.number)+' · version '+esc(s.version)+'</small><small>Empreinte SHA-256 du devis signé<br>'+esc(s.digest)+'</small></section>':'';
+}
+
+return {inkMarkup,signatureProof};})();
+modules.sheet=(()=>{
+function bindSheet(root,d,changed,lineDialog,style,moveLine){
+  function text(el,object,key,label,max){
+    if(!el)return;
+    el.textContent=object[key]||'';
+    el.contentEditable='plaintext-only';el.dataset.hint=label;el.setAttribute('role','textbox');el.setAttribute('aria-label',label);
+    el.oninput=()=>{object[key]=el.innerText.slice(0,max);if(el.innerText.length>max)el.textContent=object[key];changed();};
+    el.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();el.blur();}};
+  }
+  function action(el,label,fn){
+    if(!el)return;
+    el.classList.add('sheet-target');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',label);el.title=label;el.onclick=fn;
+    el.onkeydown=e=>{if([' ','Enter'].includes(e.key)){e.preventDefault();fn();}};
+  }
+  text(root.querySelector('.q-title h2'),d,'title','Objet du devis',160);
+  text(root.querySelector('.q-parties section:last-child strong'),d.client,'name','Nom du client',120);
+  let address=root.querySelector('.q-title p');
+  if(!address){address=document.createElement('p');root.querySelector('.q-title').append(address);}
+  text(address,d,'site','Adresse du chantier',250);
+  const facts={'Objet des travaux':'intro','Spécifications':'spec','Fournitures':'supply','Paiement':'payment','Intervention':'timing','Gestion des déchets':'waste','Précisions':'notes','Conditions particulières':'terms'};
+  for(const f of root.querySelectorAll('.quote-fact')){
+    const label=f.querySelector('b')?.textContent,k=facts[label];if(k)text(f.querySelector('p'),['notes','terms'].includes(k)?d:d.edition,k,label,['notes','terms'].includes(k)?4000:1500);
+  }
+  let dragged=-1;
+  const rows=root.querySelectorAll('.q-items tbody tr:not(.q-lot)');
+  rows.forEach((row,index)=>{
+    action(row,d.lines[index]?'Modifier '+d.lines[index].label:'Ajouter une prestation',()=>lineDialog(d.lines[index]?index:-1));
+    if(!d.lines[index]||rows.length<2)return;
+    row.draggable=true;
+    row.title='Cliquer pour modifier, glisser pour déplacer';
+    row.ondragstart=e=>{dragged=index;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(index));};
+    row.ondragover=e=>{if(dragged>=0){e.preventDefault();row.classList.add('drop-line');}};
+    row.ondragleave=()=>row.classList.remove('drop-line');
+    row.ondrop=e=>{e.preventDefault();if(dragged>=0&&dragged!==index)moveLine(dragged,index);dragged=-1;row.classList.remove('drop-line');};
+    row.ondragend=()=>{dragged=-1;rows.forEach(r=>r.classList.remove('drop-line'));};
+  });
+  action(root.querySelector('.q-brand'),'Personnaliser le logo et les couleurs',style);
+  action(root.querySelector('.q-pay'),'Modifier les échéances',style);
+}
+
+return {bindSheet};})();
+modules.billing=(()=>{
+const { $,esc,button,dialog,input,select,area,api,onForm,today,dateLabel,toast }=modules.ui;
+const {euros}=modules.money;
+const {installments}=modules.edition;
+const paid=i=>i.payments.reduce((n,p)=>n+p.amount,0);
+const caption=k=>k==='Solde'?'Facture de solde':k==='Acompte'?'Facture d’acompte':'Facture de situation';
+function invoicePaper(i){
+ const party=c=>[c.name,c.address,c.identity,c.email,c.phone].filter(Boolean).map(esc).join('<br>');
+ const rows=i.lines.map(l=>'<tr><td>'+esc(l.label)+'</td><td>'+esc(l.quantity/100)+' '+esc(l.unit)+'</td><td>'+euros(l.price)+'</td><td>'+esc(l.tax/100)+' %</td></tr>').join('');
+ return '<article class="sheet couture tone-ambre invoice"><header class="q-head"><div class="q-brand"><img src="'+esc(i.logo||'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMkAAACUCAYAAAA51g0sAAAxK0lEQVR4nO2dZ3gU17mA3zmzkpCQAIkmYxWqKmqsK8G9xL0luBEXjLtxuU6uW4pb7NhxiZM4Nu691+teAbe4rlhJICFM7010tELaOXN/jBZWoy0zu7OSDHqfZx6YmXPOHM3Od+pXoJeuZL/urkAv9lG6uwIAVVVV10kph+m6/tXWrVu/XrRo0ZrurlMCONc9kKfqN3GqT+Od7q5ML9bpdiEpLCwsTE9PrwOSgi7PBb5ua2v7cvPmzZ8uWbJkdTdVzynG/24M35yUDzNX4H+ogWJgfndXqhdrdLuQTJw4UZ0/f/6fgT8LIUSoNFLKhUKI9zRNe9fr9X4F7OjaWsZF9inDWXb2aFyBC8/PY/M7S8kDtnRjvXqxSLcLSQC3230Y8AKwV6R0Usotuq4/vHHjxruWLFmyqUsqFztJh2ez8pKxDAp+0ZoO99dQ9+N6KgHZTXXrxSIhW+7uwOPxzADcmqZNj5ROCNFPVdXrs7KyFlZVVU3tourFRHF/ZlxQ0lFAAFQFLiulbFQGj3ZLxXqxRY/pSYJQKioqrhNC3CGEUKMlbmtru6y2tnZaV1TMDtkp3HXzflw/MCV8mhXb4Y6fmLK+jSe7rma92KUnCgkAbrf7BuBvFpK2aZp2vNfr/TTRdbJKChx+k5vPizOjp/1+Dfp9dVQBNQmvWC8x0WOGW2aklMUWkyapqvpaUVHR2IRWyDp55xTymRUBAdh/KMrEEfwEDE5orXqJmR4pJOXl5ccAp9rI0j81NfX+RNXHBn1+vTf1R+fa66F/OwrXr4YwB3atgPXSc+hxQlJZWXm1qqrvCSEy7OQTQhzldrvHJapeVhjbnx/PK6Sv3XwKcEkpgwv78XkCqtVLnPQYIcnPz+9TVVX1jKqqD1iZsIfh945WygbZqTx6ZTljXTG+0T4qXFXOwUNTud3ZmvUSLz1i4j58+PD8zMzMt4QQVfGUI6X0+3y+7Llz5zY5VTcrpMMpf9yPt0b1i7+suZvgrp/4dTN8En9pvThBt/ckbrd7QmZm5vfxCgiAEMLVt2/fw52olw2GTyriTScEBKBoAEwcw0dAjjMl9hIv3SoklZWVlwPThRBDnSpT1/UjnSrLAukn5tF4RI6zPfLx+ShHDaMRSHWy3F5io7uERKmqqrpFVdX/0FGxMf6CFeUIJ8uL9KiqgdSdPYbkRBR+QTFpZVl4E1F2L/boDiFxVVVVPSaEuDlB5Y8qKCgYkaCyd5KbxutTxzJcTdCsTlXgqrEU5Pbt3Y3vbrpUSAoLCzOqqqo+EEJMcaI8KaWu6/pH5uvp6elHOVF+OAYKzrm6nNMyHO0DO9M/GaaOZXKG4JzEPqmXSHSZkOTn52enp6fPFEI48gFLKbdrmnZWdXX18VLKecH3NE2b4MQzwlB8binP5qUn8AlBjMiA80t4FhjTNU/sxUyXCInb7R6VlZX1JeDIZp+UcpmiKIfU1ta+AkhFUe4zJSly4jkhyDhtOLUHOrbMYI2DsuHEXOqB/l375F6gC4SksrJyXynlt0IIR1pCv9//xcqVK/eprq72BK5VV1c/A6wKnAshinB+D0hUDWT+6aO6R3XkdwW49hnIXHrAsv2eRkJfeGVl5VGKonwuhHBEeU/X9UdramqOXLNmzVrTrR2tra0PBk6EEBk5OTnDnHhmgOHpfHx1GUNEN22/KgpcWUb2qHQ6zcF6SSwJE5LKysopiqJ8YFcHKxRSyu1tbW1nVVdXXwL4wyR7WEq5rT29PnTo0FhVWzqR5eLqq8o4Mq2b1Q9TXXBlOUcNTub67q3JnkVChKSysvIviqI8JoSI+7OSUupSyhNqa2tfjpSurq5uo6ZpjwHouv69x+NZGu+z2xl30VgeyLGttpgYhqXBxaXclZaEu7vrsqfg+OChvLz87qSkpOucLFPTtK82btx49JIlS1oipXO73XkYXkiapZQ7FEWpUxTlHI/HsypSvghknTmSdaeN7HnzgDcXIl9eSDawrrvrsrvj6I9fUVFxvdMCAqCq6kEDBw58YeLEiRGHUB6PZ6nf738Z6C+EGKIoyhGapt0a62P3H8LPp/ZAAQE4dSRiwlAW0muDknAc+wDcbvd5Qggr5rYxoSjKaY2Njf+Jls7lct0jpdTbT5tVVf1rLM8r7MeMqaVk9Qg16RAowCUlpBf046fursvujiNC4na7T5FSPi5EYtd+kpKSLikrK7spUhqPx1MnpXzX7/c/19bWVhXL3GRQMjdNLeOgFMem/okhRYVryqkYksy/u7suuzNxf9Tty7zvCiEi+AVxDimlLoSY7PF4nomQTBC7P6sDbqzi26qBMeYOg6ZD/QZkaRaONyUNm+DOnzh2B73Lw4kgrp6koqJiP0VR3uwqAQFo760eKysrOzZCslgFZOjpI/jGaQGROjxRz+LbZ6E+Uk/dzsGgQxQPgMlFfECvDUpCiFlIiouLS4UQHwghukiLqQNJycnJrxcVFR3oZJn7Dqb+NwmYqD83j02frWIEwIxVlD85lyaH5YTDc1CO3psF9NqgOE5MH0RpaWluWlraB0IIh9tcW6T17dv3nfLy8oJQN4cOHTrETmF5aXx2eSlZisNDoRkr8L+/jKzga5+sYOjbC2lz9kkwuYjkikwanC53T8e2kIwePXpwcnLyp0BeAupjl0Gqqn44YsSIDiqHVVVVdwwbNsxTWFg43EohGS7+5+pyDu7r8GJqwyZ4o4EcwNxxaC8tZMjXqzpdjwtVgavKyR+exhtOlrunY0tIRo8e3a9///4fCSEKE1UhuwghRmZmZr4/ePDgdAC32/1nIcRNQoic1NTUT80CFILxU4q5P9fhQeNaH7w6j2PWQrhYK5teauSgBQ77lc9IgivKOC09CUdsdnqxsbrldrvTgI8BR201pJQa0CKEiEvxw+/3f+hyuT4H7g2+rmlaraZph9bV1W0MkW2vE3JZem6hsxtyPj/8y8t9nk38IVrakenc8L9V/C2Sz+BY+H4t3FdLEdDobMl7HuF6EqWiouLWkpKSEgC3250EvIrDAgK839LSUrF+/foCXddfiacgRVF+LaW8x3xdVdVyIcQ1IbKkjM3EO6nAWQGROjw+l++sCAjAwm3c9WAtH+7QnKwF7D8ETs1nDr02KHETsieprKy8UVXVO6WUfl3XH9Z1fbDL5TrTqYf6/f4fgetqampmmp57pKIoD8YynJNSylBBgHRdf7S6uvoKTNrDg/vw3l/35fhMh1vw5+ax8d2lHSfqVjhoKEumlpHn5LqBrsO9taz/cR1D6Y2DEjOhfpPkqqqqaiFEaSIe2NbW9mBtbe3VhP/RUqqqqv4ghLgJSLNSppTSb9Y4llJqQohrPR7Pv8zpBVx36z7cXTjAbu0jM30F2rQG+gHNMWRPmjiCrRNH4ajY+jT4q4cvft7CoU6WuycRarjV2tzcfKCU8v+cfpimaXfX1tZeSeRWbcesWbPuaG1tLQRei1ZmKAFp5+5QAgJMuLDYeQGZuwlebKCI2AQEoO21ReR8udLZFa9UFa4u45DsZP7kZLl7EpF6d1FVVXVfmPG8LaSUmqZpU2MJtlNWVnaSy+X6pxBieKhyw/kNllK26rp+utfrDRb2weOHsPiacms9lFXW+OAeD79b2sILoe4XFBSM6NOnz/5JSUlbm5ubt/p8viWLFy9eEiptpovx/zuOb0Y75BEyQE0T3D2Lff30KkTaJdISsGxubo47gpSUsrWtre3sWKNR1dXVvbNu3boSKeWtUsqdAUXbdbjCqiAKIZIVRXnV7XafEnR53bwtvLIuolWKPXx+eGgOT4UTEICUlJSypKSkl4D30tLSvujfv39Yc4KNfv77RAN/aHI4dGrFQDhzFN/TGwfFNhH3SVRVXRekdm4bKeXWlpaW42bPnv1qrGUALF++3Ddr1qxbmpubK3Rd/xx26nBFRAiRDLxaXl5+WuDa+ham/MPLj75wRsA20HT4Tx3zGjZxQZSk5t31iLvtC7Zy30Ozed/pFa+TRiAOzu61QbFLRCGpr6/fIISYLKW0/UlJKdc1Nzcf3tDQ4FjMjcbGxkYppd3hQpKqqq9WVFT8rv1cn7+NA/5ezaJ4P8JnGtn+QxPl0dKpqmpLSADqNnLCtDks0h1W8rqkhPTiXhsUW0Tdcfd4PM9omnaalNJntVAp5RpN0yY0NjY6+mO43e4LVVW17QRBCKEKIZ4uLy8PeEKUc7Yw5v4a1rTFuDD63mLkR8spxFpMedtCAvDNWkpeXYCDg0NIEnBNBRW5aUQ1YOvFwJJaSm1t7bs+n+9wKaWluB+6rt9WW1s7L3pK65SVlR0rpXw41vxCCFVV1afcbvd57Ze0WRvIe2g2W+wOKD3r4cX5TABWWMwSk5AALW8sZuQXK5xd8cpMgUtKuTxV5SQny91dsay7NXfu3O9aWloOkVJG/DA0TVvi9XqfiL9qu3C73eNcLter5qVeTdNWAmbvjWERQqhSyicrKiomt19q/WYt2Y814LP6FS7ZCtNqucEP31p9LrELCcCqF3/moHmbbeSwQEF/OHcMb9NrgxIVWwqODQ0Nc/x+/8HAglD3pZQtqqpeg7UhiGU0TVOBDp+JlHLbjh07TvB4PH/w+/2WPa8Lg8fLysouar/k+3wlgx6tpzWaoGzcAffX8MFmyd126t/a2hqPkLDRzzfT5nD9ekcHXnBEDsqxOb02KNGwrSpfV1e3cMOGDb+SUnqDr0sp57S2th7g8XjedqpyAbxe749CiEpgRvuzNL/fP6mhoWEWgMvlutTv939mtTwhhHC5XI+Ul5df2X6p+fOVDHm6MfzH2yrhvlpWrWrhlBj+hFbT81vDJQzH8mb+/q86PmxxeMXrvEKS3QN7lSAjEZPR1aJFi9Zs2LDhME3TvgLaNE27e9asWe45c+bUOFy/nXg8nvUej+cY4GFN06bW1dW9E3SvTUp5OjDXanlCCEVV1X8GCcrmD5cx7PlGOn2GUod/1tIybzMV2OwFAFpaWuLqSQLM3czxD89hqZMrXkKBy8eSm58WXbthTyUufbqcnJzU5OTknIULF/7sVIXioaCgYETfvn2/E0LYskpsbW39Y11d3Z3tp0NOyWPl2QWoYFhLTZuNnLGa/QBP2EIiUFhYODw9PX1R4FxKeemsWbMeiaUsIPXUfDaeNcZZHa+l2+B2DxdtbuNxJ8vdHYjLnnv58uW+niIgAPPmzVuk6/oJ2NSfSk5OvqOioiKg27T27aUMf6wev9ThuUb0GauZRIwCArB9+/YOPYeu6532ndxud5Lb7R6Um5sbzdG3760ljJzp8IpXXjpcVMxjQCQN7IEKfMAepn7fU32vxYXb7Z4opXzFrh8wTdNu9nq9t7Wf5mWnUrvax8PAjdHyVlRUvC6ECBn5t12Ff+eHJaWcoyhKi67r/YB+QD8hRCqAruue6urqfaI9bwAc/Id9+aLA4c/1tflory1mIKaFEiBpWB++urKc/f8+i883tvFr6Dw03R3pkS4848Xj8bym6/otdvOpqnprZWXlXe2nS1f7KAdr2rOKoqQLITJDHZhaXiFEqaIobiHEGCHE0ICAAOi6bskL/yb48sEa/rTG8havNX47GvWAwczH1ICmqzzyhyr2H9UPrq3giCSFmDxj/hLZLYUEwOv13i6lfNZuPlVVry8vLw8s8S6l61tLy/q/q1u548E5fO7kipcCTClmUIrg4sA1AVOvLGdywLN+4QC4Yiw3AGc79+Sey24rJIAuhLhQ07TpdjMmJSVdV1FR0ckUuIuwFc+lcRNH/7uOFU46vHtjAdt3SAINzITzC/in2WHf+KFwSj7PAPs69+SeyW45JwmmpKQkKyUl5VshREj/XJHQNO1+r9f7eytpBw8enJ6dnR0uHu/JycnJTwVO2trarkpKSlod5pm61+t93WZV00/Np+ksB2LKf7QE+eTPDMPw8pJ/bA6zJxcR0peMDjxYx8av1lCGdRWdXxy7vZAAlJWVjXS5XN/FEpZO07RpXq/3cjr7zrLM2LFjJ6WkpDwfOPf5fGPq6+vnx1peGIZfXMTCI3Ni/03rNsC91ezrMwyzUvfJoub3VYyJFKu+VcKds6ir38i+OKxp0VPYnYdbO6mrq1vY0tLym2CjLauoqnrpuHHjphHHu1IUJcER3wFY/PxcjqkP5TjJAquaYVoDU9sFRBnRlzeuKIssIADJAq4eS9leaeGNzn7p7BFCAtDQ0PCVpmnnx2JEpijKxW63+xFif19dISQ0wyeP1XObXcvL7W3w71peWecz1OezkrjzmgqO7Wux1pkpcE0Zv+kvds9YjnuMkADU1ta+LISIdenywoqKiseI4Z2pqtolQgKwwsfN99Uw06rlpabDg3XMm7+NMwFUOO2yUq7fy6YXgBEZcEEJfwNOsFnlHs8eJSQAHo/nZl3Xn4+esjMul+uCioqKF7Bv/tplQgKwcCtHPljHMit95tNz2ebZQFn7afHkQl6qGBTbvObAbJSzR/I6UBJL/p7KHickgN7U1HSR3+//byyZXS7XmePGjXseG4KiaVrcq0420X5sYuzL8yJbNb6/GO3jFeRhaClnHZ/HF0fnxrdCdspIUg7fi8+AAfGU05PYE4WEJUuWtOzYseMkTdNiWmFSFOUMt9v9Yrv7Vyt0aU/Szpa3l1HxydLQPs5qmuCl+YwFNgIudxafThrtjCeVKcXsNXYAHwE9PKCeNfZIIQGYO3duk6qqJ0opY1wPYqKmaW9CdG3cLlrdCsW8p+ZxYt2GjhcXbIHH5nJaa7tpQV5fnri8jHEuh76GJAFXlbN/3m5iR7/HCgmAx+OZ29LScoqU0rYRFICqqie43e438vPz+0RJ2l1CggYfPDSbG2vavRN4m+Ceam5Z6+MtgEzBJVeVcW6GwzUckAxXlHFJpuAyZ0vuevZoIQFoaGj4Ukp5aRxFHD9gwIA3owhKtwkJQFMrd90xi2mXfQV3zuKJDX4Cse1/dX4JD+UlKKDfiAw4v5R/A06G7ety4nVS9mvgIRvpjwEi2Z8kA3OwLrzPAbfYeH5IampqnqqsrCyMxV0RgMvlOjYzM/NtTdNOXb58eSe9XCnld5qmvSqEyJVS5quq2h0e3q9q2sFy4G/t58MmjeLDA7MT21AeOBR1yVY+fnMxJcDyRD4rUTiplnI3ENZ9ZzvHYAQCCkcxUB+ljFuJTzAEMDzEdb2qquoOIcRZsRbs9/u/WLly5Qnr1q3bFnPtuobUg7KpnTqW0V2hl6Tr8O9aFn69jjJidyjebXT1cCtanMWiLqhDEYa3l07HrFmz/kfTtO9iLdjlch2Sm5u7MzRdD0Up7c+bFxd3jYAAKApcPJaRBRm8zS9QX7CrhSQ/yv0CcNZjYQjGhbmuAAWqqp5IGJdJVlAU5eC8vLwPCwsLbam8dxVDU7j1srEck9LFi7N9VLi6nKOGpnJb9NQ9C6eFZH2U+1Z6Eqe1Y81URbhX6fF41vt8vpOklJvieMaEPn36fDR6tNMBFOJDheMvLeFPQ7rJy9bgVLiilD+lwqndU4PYcFpIQsbcCCJaT1JI5Im9E4TrSQAqAOrr6+uFEGfE4ig8gMvlGt+vX7/pJSUltkPDJYjCKUW8WTqwe4c7RQPg/GJeAcZ2Zz3s4LSQLI1yP1pPUkBihUQBKiPc33nP4/F8out6PEvDKIriTk1N/bSoqGhg9NQJpd/Jucw8Mid+oywnOGxvko7LYSYwqLvrYgWnhWQ5kR2v7U14VYXB7fWJNmSLh1FE1ikaS9CehtfrfULTtPvjfOa41NTUT91ud3d9EMI9kI/PGEN2Nz0/JOcUMtA9iOnQMwQ3Ek4LiQasjHA/CQjnV6q7h1pgqJh08Dvl9Xr/V9O0t+J5qBCiSkr5WXcIyvAMHrmslAOcUjlxClWBK0opG9mPx7q7LtFIxKuLNi8JN+TqCiGJNGkPUGk6l+vXr58kpfwhngcLISo0TfvS7XbvFU85duifxEVTS7mwXw9tq9OT4MpSzh3k4prurkskukNIwk3ee0JPAu2T92CWL1/uE0KcQvQ5V0RUVS0Gplvw0hg3SeCeXMjDiVI5cYq9+8KFpdyvQkjHfj2BRAhJrJP3ntqTAODxeFY1NzcfR2fPhnYpGjRo0IycnJy94ywnEtm/Hcn08dm/DFX1cYNRzhzFe8DI7q5LKHpaT+JodCwTeViLPBtWkBoaGua0tbWdGc/SMIAQomDw4MEzysrKEhFAp89he/HlKSOtO7mzyqpt6PM3MsfpcgFOHkHqkdnMAPomovx46ClzkiSMViSRG4lWhloAAzFW4UJSW1v7kaIoV8RbGSHEGFVVvy4oKBgRb1nBlGXy0gVFjHF6M8TnhxfmccvokVTUb2CWw8UDMLmEvLJM3qOHqa70lJ5kJIaF3CbHa7MLK0OtAJWRblZXVz+qadq/46sOqKqan5GRMdPtdo+KtyyA7GT+fHEJpzitcqLr8MLPvPPDBm47/TW0GdXs17DReWd0SQKuLOPQvDTudbrseEjUnCSSC4JQQtJVk3arEZ0qoyXwer3X+P3+d6Kls0CelHJGSUnJ6HgKUeHYS0q5dWgCVE7eXMjPn6zgN4HzL8D/qYeqhZtx2F33TmOtazME50RP3TUkQkh8wLoI99OBTNO1rhKSly2m7bTCFQK5cuXKSeaweLEghMhNSUn5qqSkJFYvIyMSpXLyzSq2vbKI8UCHedjXsG7mMg5Z2xzahj4eRmTAhaU8BUQNQdEVJGqLKdoKl7k3SbSQDMXYxHwFa17iK60Uum7dum3r168/XkoZtzGRECI7JSVlenFxcanNrBkn5fLNkTlEMyG2zbxNaK8u4lDCaEF8tJof31zAxdtjCm4XmQOHov52OJ8CtqKWJYJECYndeUmihWQfjPnOXKztdYzConf3ZcuWrWxpaTlJShm3oZUQYmifPn2mFxUVWVX+E/sM4uOzCnB8g7KpBZ6q57JVzZEjfE1fwxMvzedxzdG4WwYTRzFgwhBmYsHZRiLpLiExr3AVkdjl33HALIy5kpV5iYCdDtui0tDQMEvX9TOklHFHChFCDElNTf187Nix5dHSjujLfy4r5cBo/nrtskODJ+p5eEGzNZWRT1Zw8TsLqXa2Foax1kWlFBf24xWny7ZDTxCSLIxl15gNnSxQBTt/RMcm78F4vd4PNE2LZr5sCSHEkKSkpJmFhYVhx+QDBJOuKONSp72c6MDzjfz40wbsLHPrLy1iwherIs5FYyJVhavKOHnvNG5wumyr9IThViGGUmQi7cIDPQlYFxIrk/cO1NbW3i+ldMTXlBAiMy0t7dOKior9QtyuOr+EZxKhcvLeItZ8vJLDsB9qwvfcHA6s3xhb+O1IDE6Fi4q4M8VwPNLl9ISJe6LnI1kYPZddIamM5WGjR4++WtO092LJa0YIMUAI8bHb7d4/6PLQM0cyIxEqJz+uofW5BUwAtseSfwsseKGRM1ZvdzYyMEBJFso5BbwNxLVUHgs9YbiVaCFxYyxLB4TDqpCUEYPLpddee03btm3bJCnlbLt5QyGEGLBjx47Ah5F08BA+P3WE8yGiF29Gf7yeU4hT6+Hnbbz17Hz+sSMBkSaPzqPPsbl8RReHyE6UkGwAtka4PxR2LlkWkVghGQfUsGvp1+rQLhUYE8sD58+fv2XdunXHSCnj3pX2+/33zp49+wWAwv48f0EJpYrDE/WtbfBsIzdv1PjQifJ+Wsfvn/+Z6QlY8OLcArL3HcQndKGf4USa4kQacilAbvv/E92TVEEHXSMd6ytplbE+dPny5SsURTlZShnT0AVASvlpTU3NjQCD+3DdFaWcnhavO0ETmg6PN/Dh7C3cHimd2+3uX1ZWlhk4cnJyIu7tf7yc499bHNEALyZUBS4tZb9RfYlbLcgqiRQSK0MuFUNvqyuWf4NJ2OQ9mOrqao+maedJKW3vSkspFwkhzsbY6T5kSiF/y7YZWMcKLzSy4Nu1nGKhPrOSk5M3BI6hQ4f+JUqWlufmM/671c67iMpIgivKuSwriSlOlx2K7hSSfGAEhgbwwgTVoR/GxqB5DT/hPUmA2traN6SUN9nJI6Xc5vP5TvJ4POuB4eeP4cNxg53/rT5cwtb3ljMeIz6JLdra2qzMOpY808AJCzY5P5HP6QsXFPMIcIDTZZvpruEWGD1JYXu6RDmkq8Joic02EFZ7Ejuaw2Gpqam5W9O0aVbSSil1Xdcnz507dzaQfuRefHlcPo6rLdasR778M0cBa2PJr6qqJZuaJo3Pn27kts0x+e2PzH5DUM8YyadEMG1wgu7uSbpi0l5P59DJVoVkCDjjZURV1av8fv9n0dIJIW5uj+OulAzgzfOLd87dHGNlMzw1h4t88H2sZQghLK9fNW7llscaeK8tAW7CTxtJ+mHZTCeBqivdPSfpikl7KHWJRqxvllU6URGPx9O2ffv230RZGn7b4/H8FWDvVO69soyjkh3+hXx+eGIOj6xs48l4ytE0zZZ15g/rmPjcfOeH1QowpYSC8izedLrsAN3dkyRaSEJN2sHYLLO68lLpVGXmz5+/pbm5+UQpZachjqZpDZs3bz4P0FX47cWlXDvQ4bZR6vBYI566zbZUTkJiV0iAlo+WMuGTZbFtVEYiWcClJRw3rA83O102JFZIVhF5QphLYodbaRhCGE7xrktWuDo9tLFxsa7rJxAUgkBKuUFV1RPnz5+/BSi5sIgXiwc4+VSDl+az5utVHIE1c4GIuFyuWOz8Vz3dyDHV65y3QRnUBy4r45Z0oq/U2SWRQiKJHLQlGWPMn6jl3wqMv682zP2EqqdEwuv1/gicL6XUpZSapmmTPB7PAiDrxFy+OCLH+chYM1aw4/+WcBDxe3sBYupJAPDD1080cv0ax20aobA/TCriFcCuTU5EEu3XL9qQyw8sTtCzx2EIYLjddatCMgajV3IUj8fzmpTyL7qu/762tvYjwFWVxWdnFzjvH3fuRvSn53E6DvbadibuZta1cO8jc3gjEaorR+SQfFIe03EwRHaihSTaMvAiIvsOjodwk/YAVoVExYZtiR1qamru8Hq9/wTI7cuTV4ylymnbkPUt8OgcbvZpOGGPvxMhRFxulWZv4qzH66lPhOrK2WMY8qshTCf+cIfgVCERiNaTJHrS/mKE+1aFBIwhV8zLpRHQwYiAe3UZ5zjtjrRVwrR6PljeEl7lpKio6MC+ffuquq7vHAD5fD7pcrnMw7IOQ0ApZWpZWVkHXwVFRUVbXnvtNav9Q9sXazgiL4N5Jw63ZgVqFaHAlGKqVvuYtmArF8Zb3u4qJMkY49JI/qGWYGxiWrENd3TybuJX5xU7HwFXB56sZ1HtBn4bKV1qaurzwEglSGsyLS366FJV1QdUVX0g+NrChQtxu907z6WxM/qD1+sNF3139XPzOWZYGl+5hzg7qklPgqljmXL7j9Rs8Men59Xdc5JECUkZhqBEEhKJdbXwyngrFIa8M0by8fi9nP8d3l7EtumrORiiuv1JgEaYgRBCKIoSzZPkf59s5MrVCQg3undfuKSUB4BD4imnu4UkUStb4zAWBDZESWd1yFWO8+8qdcIQPj9thPNuPX9Yg3xpAUdjLSR0woTEKut28NCDc3jJF9csJzRVgxFnj+Z9iF1zIdFCsozIO9uJ6knM6vHhsCokfXHWIk4Zlc7rF5Yw2mnbkBXb4fEGrga+tZJeCNFNERQ7Mm8z5z1Rz5xETORPHk7fI/biS2JsEBI9J9kBrCG0/tMODCFKBOOA9y2ks9OTVdpMH5bMFG6/upzjnLYN2dYGD87miU1+HrSap6mpaUxGRsZOA6bk5ORkXdc79G5SyqGqqprf532apn0UrfyWlharO+xtX67liL0XMu9Uh519K8AFxQxf38K7NRs5Epv2+4kWEjCGXKGEZAEO7PyGwIUxJ1GIvnQ71Ea5FcCrsVYqgArHXVzETU7bhmg6PFKPZ8FWbMV5XLx4cbQhMaNHj+7Xv39Hi9nW1tbGurq6qAqbNlnz+jIOz83g+30GO2t5mCTg8rEcfvdP3LnQx4128naVkOwf4nqihlpFGN3qvRhOuCORDBxssdzKOOoUoGjSKN50D3beHenz82j6fh3HYHJH6gTJycmdvpNQ15ygrQ3P03O5Yu++TNvL4YYkMwWmjOWGv/7ITz54w2q+rhKSUCRKSNzAauA1i+nXYK1HqYy1Qu1kHpzNjBNGOK/SPWMFbe8v4xASFJS1qanJlZPTMZRKW1tbwr6dtTt45KHZTLhxHL9zekg6pj9MKeHlB+sZB9RZydMV4Sa7WkiqADvxDa0uAw8jdr+0amE/3rmo2PkIuI2b4OkGzqCzYZljhOo1VFVNaAPbuIXJj8+lTk/ATP7gYbhOyWMm1oI6dYmQhFNNSeTy74820ttxoRPTpuKAJB6cWsYEp+OGrGuBh+dwpw/iig4cjSFDhnQSCL/fn+hRiP/r1Rz29qLExKw5awxZBw5mBhZCZO9uPYnAGBbZERI77lUr7VSmnXMvG8ulTscNaZXw8Bymr/TxJ2dLDvGs1tYu70naaXppIYd/u8b5BR7F8LpSWpTJU9HSdoWQLA5xrRnrRk92KMWIf/KTjTyJ7EkOOHsUT1YNtJkrCjrweD2LZ2/kJOy7I7XN9u3bO/WBXSQkALOemcvFyxw31YJUF1xazNlDXPxPpHROCkkqobuuLXQO8/YziflxT8BwitdkI48dIam0kXav/Yfw/skjnHei9sYCfDNXczgxuiO1S2pqaieBkFJ2mXO4DW08Oa2Op7YnYEd+WBpMKeW+SCGynRSSPDpHsApgHnIlKoDoSRi743ZWkOzUpRBrCpF98tP46PISspxe6/1hDfLVRRyPYWbQJfTp06eTkGia1lU9CQA/b+OiR+r5SSagaa0ajDJpdPgQ2U4JSRZwFPArQi8rmyfviZi0H4vhg0kFjraRbyPWex4XEDXATkYyj/++kvLO7W98LN8OTzZwLTDD2ZIj4/P5NCnlxvZDBxBCdKmQANp3a/n1W4ui6uPFxAnDST1mb2YSIkS2E3/oQcADGBt4eRi70rdiOJwL+ANebMpjx5bDCqcBjwadP4IhLO9ibVd/AUaMFCtUEnnOc90VJUxyekd9axs8WMPzG/z809mSo1NfX1+P0RAG0x3Rpza8spDDh6Xx04HZzu/xnVNI7kof79du4HDYZYcf72jgOuCSCPdvB57G+Ijvab8mMVr64OHC32FXdFeLCIweIB/CmrxuAb4DrqRz7/VXdmkCVGBxzRyj3oEVsbuBYNWMo04fwce/HeXsjrqmw71e6jxN7EMM3hZ3NwYKJt20P8/nOq4/DRt3wM0/cM/qHewMyNSjgsrbRMFQYY/WokhgNp3NhIdjvfcIRz277DUU4PL9h7B/VjKpqS4y01z0SVZI9kOfVBWXgBRdR+2TRJImSVaAZJUUdAQKitRxpbpQAJcQxm+TLOCrVTR9soJiIkc17m5OBCZiLCY8hMXd7Fip6M81B+fYGlYbaLBN7rKx0XV0n2Z4EPX58S/dRpN3A2uBhzEa2V56OCrGYkiPUGePwDEYjZHefmzG0FDYLeiKfZJeYkfDWFhIgAMeR9mXjqOSfhiKpr30stviAsaDZY+IozEURQM9yTdYWyrvpZdfJP/BGC4FPnir9AOOwzA96B2h9LJb42WXgCRc5eWXQK/E99JLFHqFpJdeouBqP4K1W7fRcUe8DGP1Ig9jB/1jjH2HcKQCE4D9MIyU+rTnWwp8hREJ14pX8Tw6bvA10tGvbxlwBJADZGCsz88HPiU+Nfz+wIHs2mDMwDCJ3dBe/n8tlL83He36N2Iv5J1KR2VKnfAuW3Mx3nVRe31T29OvxzDEmonh4d9qXc26Am46s4SOVpBJGHtWAbZiT/VIAMUY7z0fY9k7qb2ctRimDz9gT6Gzgl17aG10dJyeBByJ8bcNwdAeWI/hYeczOivkMpCOY9Av269nAx+Y7unA38JUahDGDvTWEHmCjwZgkoU/8mFTvoParx+EIWjhypcYRkh2nDyAMeF8C0MgItVfx3jhkwkfJvlwU/pl2FMBOtmU/23T/X7AtUR+D4GjDXiZ8BG77rJQhvm4wFTGXqb7Vh1EZAI3ssv1VKSjGUPdaJTFspuC8gYaCRX4g+me+dgC/BHTKCuUkAwB5oYpJJSQHIRhH2LnRT8LEUMMhBKSGzD2DqyUvxhrgtIXeMxm3QPHDMLH65tlSnuyhboE+MSU1+wm9IUY6roCo5U2011CclR7new+extGAxUNs5D0xfi27XyfOwklJI+yS3pfxJD2PwPPYEhZMEdj6BMF8vsxPrrxGF2/gjEkmozRBQc/K5J/KLOQPNP+73bgH+3lD8UQ6PEYqhDmXuDtCOWDMbT4xpTHB0zDWM7Mx2jtcjGGdvfQcXlUb/+bQumOnWtK90GUugQoouPu9cwQaV5k17t4BqNnHoVhcEZ7nSfS+X1/HqKsQ4Hrgw5zY3d9iKPcVIZdITmDzo2dF7gcYxg9BGPoWApMofNvpEPUaF3BQrIeww+bjjHsndpedibGt3lamGfsHPGYhWQFxsdWSxj9+iDG0PGj2QwcFiF9BsaYPvh548OkNQuJjjGviaSqfpYpvcSwAQnH66b0NUT/m7MxvCMG5wvlpC2Zji2lhqEvFo1/mco+NkSapzAUNAdEKWsQnVvryih5vKb0VrAjJPtjOCYMblSvJboe4SUYQ8fgfJHCU4caUr1JeC+OKoaHneD0swI3zUKiY0yWrHj2eCsojyT0D2pmDB1b/LfDpDMLSRvWLAMDLUbguCpMuqNM6RYTXpvYzEAMgQ3Of2SIdDeZ0twRpdwMOjY6XkJ/PHZ0uW401eHaKOm9pvRWsCokCp0bmIimsyZuMOX9IkJas5BUE129fxDGSCI4XzaEFpIrLVS40JTHTpCYr4PybSX03MQsJM9bLNs8zHk0TLqPTOkmWiw/wMWm/KFioQzEGBIF0qwi8jzsclOZZ9usUygOMZX5QJT0XlN6K1gVkgmmdF7saaIn0XmSH24ibxaSky0+411TvqNC7ZPoGBPDaJxoOn/GYiWgo4+odKDAQp6ofmfbMatom42FwJjEHRp03oQNj37tvErHpeyj6PyDN9HxvWQT/sdS6DjOXkhsblWTMT6cwzAaDLPw94+hTKc43nT+ONYFEYzRhPl3+rWFfBJjMcQK5u2NzFDLkguJHrIADP9WwdwGln2s5pjOrQxzVlgse5PpPFQXW2K6/l+s7d2YnzOfXQI+CGOOsNGU7gGM8XSgQboEYy5k5rD2egW4j+guS8dgDHErMSb8+RiteqTWuTttiKpM51/HUIbHdG5lSXgj1jWpzb9fZwN/rLvKNC+vloRMZQ0r4cCs+sqwks7siXG1xbLNrKNjLziYzi95HsY8KdDzHoGhNWt2QDE16P9rIKI/KDeGr+NDLdRxB91jahsKs/VnLO99bZQyQ2EnLmcnc+9QQmLVPNQ8VJuDEV4tFhwJm2wD87zATpcfjLlV3hEm3T/YJSQKxnzmuqD7uXQcvv6L8C3fRIzhcPDfsAmjhZ2FYV68tP1YjtGzRNKQ6ErMLqdiee/m7y7h5szxGNObe5yLMYYtvwTMZrCxWtGZe9M1YdLNwPiAA8ON8zH2nQJCdSm7fostGHs+ocjH8BkQEJAdGMO3FwnfWvYkC0FzL7AX4d9ZOMzvPNZRgGXiUXA06y+ZN5h6MnPp2K2OJ7yKSTgG0XFPpY7IPek/gv4/GGMDC4yh0EVB9x4hhO5QOxfQcZ3/LxgLA5GGE1YdXHQF9abzg0Kmisx+pnM7Lm1jIh4hMe/eOrFc2VU00TFcWhbGLrAdfkfH4da7UdK/QkfXrhe3/3s6uz7kHUReojUvlliJ5hXWM6FFnHTd857pPHhBwwqpdPSq04x1PbGYiUdIvqSjs+mDMHa87dCdKy3/MJ3fS3g9LDPDMDYKA2zFmEdEopWOajiHACMwhl4BniWyj2SzSWy0wNbD6LggYAVzb+jkcO0zOmrjloIth98303HR5QG6yNVrOC1gK5xtyuvDWJuPRjKGLtdzEdKE0wKORq4pX6QW/kNT2vmEVg0PphBjkSI4n9UPMQtDQS+Q78/s0j7wYyzpRsL8Tt4kfEM3nNBawk9HecYbpvThNBaCsaOWcggd1UskhtJspBAILoyhZbBO2zwir4qG0gK2wu/p+LecC/EJCYTWsfoRuBrD7ekojBZzH4whysMYE2edyO46u0JI+mGoKwSn1zC0By7CmKuUYugInYMxQW41pb/PYr0C/Cco7/Kg/1vZODyQjh+KjrFYcgaGTttIjCXm+zAWAHTg/0zpn47yDLMmwXaMD/RQjPdwKZ1VcOwqOE4O8Xcsw1DbOQ7DFqQcQ3n2LxiNV3DaVUTXsetRQqJiKNtZVWEPPiLtoneFkIDRGj0bQ92303HCbZUCQr+raD1YgNts1PEJDOGxIySpdO4pzYcTqvLH0dHDitXjM6wNAR0TEifMdzWMceUBGF11tM08ieF6dCpwqgPPj5etGK3FoRg9SLSNp/UYblkLMEwC7DKPzhPYz+i8kxyOv2AMcxdFSLMQY344BeOHtoMPowWP1IA5EVTnAwxrxD9i9KiR0DBMBk5ur1siYtuERcHoCfKDrrXEWYm+GMOCAowxeBrGZmHA/LUWa17cB0GHeN4rsbZZ6cIw/Q3QjL219DQMde5CdtV/A4Zw/IRhWWn3wzPTn44uVjcQftk3HAJjCLsPu1bHVmDMQ4KXRZPpqAa0FevuUgsw3sUwjMZtPYYw15rSmb8hH/ZabzC0EPbHmJhnYaz0NWEI/LfYdzk6nF3zNY3wEdfMmH+btf8PfNPXoqESHq8AAAAASUVORK5CYII=')+'" alt=""><b>'+esc(i.company.name)+'</b></div><div><b>'+caption(i.kind)+'</b><span>'+esc(i.number)+'</span></div></header><div class="q-meta"><span>Émission · '+dateLabel(i.issued)+'</span><span>Échéance · '+dateLabel(i.due)+'</span></div><div class="q-parties"><section><small>Entreprise</small>'+party(i.company)+'</section><section><small>Client</small>'+party(i.client)+'</section></div><section class="q-title"><small>Devis '+esc(i.quote)+'</small><h2>'+esc(i.title)+'</h2><p>'+esc(i.site)+'</p></section><p>Prestation ou versement du '+dateLabel(i.service)+'</p><p>'+esc(i.details)+'</p><h3>Prestations du devis de référence</h3><table class="q-items"><thead><tr><th>Désignation</th><th>Quantité</th><th>PU HT</th><th>TVA</th></tr></thead><tbody>'+rows+'</tbody></table><p>Montant contractuel TTC · '+euros(i.quoteTotal)+(i.discount?' · Remise du devis '+esc(i.discount/100)+' %':'')+'</p>'+i.prior.map(p=>'<div>Déjà facturé · '+esc(p.number)+' · '+euros(p.total)+'</div>').join('')+'<h3>Montants de cette facture</h3><table class="q-items"><thead><tr><th>Taux</th><th>Base HT</th><th>TVA</th></tr></thead><tbody>'+i.taxes.map(t=>'<tr><td>'+esc(t.rate/100)+' %</td><td>'+euros(t.base)+'</td><td>'+euros(t.amount)+'</td></tr>').join('')+'</tbody></table><div class="q-sum"><div><span>Total HT</span><b>'+euros(i.taxes.reduce((v,t)=>v+t.base,0))+'</b></div><div class="q-grand"><strong>Total TTC</strong><strong>'+euros(i.total)+'</strong></div></div><h3>Conditions de règlement</h3><p class="preserve">'+esc(i.terms)+'</p></article>';
+}
+async function billingDialog(d){
+ let book=await api('billing/'+d.id);
+ function show(){
+  const outstanding=book.total-book.billed,overview=[['Devis TTC',book.total],['Facturé',book.billed],['Encaissé',book.paid],['Reste à facturer',outstanding]];
+  dialog('Factures et règlements','<p>'+esc(d.number)+' · '+esc(d.title)+'</p><div class="bill-stats">'+overview.map(([k,v])=>'<div><small>'+k+'</small><strong>'+euros(v)+'</strong></div>').join('')+'</div>'+book.invoices.map(i=>'<section class="bill-entry"><div><strong>'+esc(i.number)+' · '+caption(i.kind)+'</strong><p>'+euros(i.total)+' TTC · '+(paid(i)===i.total?'Soldée':'À encaisser '+euros(i.total-paid(i)))+'</p></div><div>'+button('view-'+i.seq,'Ouvrir')+(paid(i)<i.total?button('pay-'+i.seq,'Saisir un règlement'):'')+'</div></section>').join('')+(outstanding&&d.status==='Accepté'?button('issue','Créer une facture','plus','primary'):''));
+  for(const i of book.invoices){$('#modal [data-act=view-'+i.seq+']').onclick=()=>view(i);const b=$('#modal [data-act=pay-'+i.seq+']');if(b)b.onclick=()=>payment(i);}
+  const b=$('#modal [data-act=issue]');if(b)b.onclick=issue;
+ }
+ function back(){const b=$('#modal [data-act=ledger]');if(b)b.onclick=show;}
+ function view(i){
+  dialog(i.number,button('ledger','Revenir au suivi du devis','back')+button('printBill','Imprimer / PDF','print')+invoicePaper(i)+'<h3>Règlements reçus</h3>'+i.payments.map(p=>'<p>'+dateLabel(p.day)+' · '+esc(p.method)+' · '+euros(p.amount)+'</p>').join(''));
+  back();$('#modal [data-act=printBill]').onclick=()=>{
+    const copy=document.createElement('div');copy.className='invoice-print';copy.innerHTML=invoicePaper(i);document.body.append(copy);document.body.classList.add('printing-invoice');
+    const clean=()=>{copy.remove();document.body.classList.remove('printing-invoice');};window.addEventListener('afterprint',clean,{once:true});try{window.print();}catch(e){clean();throw e;}
+  };
+ }
+ function issue(){
+  const remain=book.total-book.billed,schedule=installments(book.total,d.deposit,d.edition?.middle||0);
+  const next=schedule[0]>book.billed?schedule[0]-book.billed:schedule[0]+schedule[1]>book.billed?schedule[0]+schedule[1]-book.billed:remain;
+  const kind=next===remain?'Solde':book.billed?'Situation':'Acompte',key=crypto.randomUUID();
+  dialog('Créer une facture',button('ledger','Retour au suivi','back')+'<form id="issueForm">'+select('Type de facture','kind',['Acompte','Situation','Solde'].map(x=>[x,x]),kind)+input('Montant TTC (€)','amount',next/100,'number','required min=".01" max="'+remain/100+'" step=".01"')+input('Date de prestation ou de versement','service',today(),'date','required')+input('Échéance','due',today(30),'date','required')+input('Adresse de facturation du client','address',book.invoices.at(-1)?.client.address||d.client.address||'','text','required maxlength="450"')+'<details><summary>Identifiants et coordonnées de facturation</summary>'+input('Identification du client professionnel, SIREN et TVA si applicable','clientIdentity',book.invoices.at(-1)?.client.identity||'')+input('Adresse de l’entreprise','sellerAddress',book.invoices.at(-1)?.company.address||d.company.address)+area('Identifiants de l’entreprise, dont TVA si applicable','sellerIdentity',book.invoices.at(-1)?.company.identity||d.company.identity)+'</details>'+area('Travaux ou étape facturée','details','')+area('Conditions de règlement et mentions applicables au client','terms',d.edition?.payment||'Règlement par virement bancaire.')+'<button class="primary">Émettre et numéroter</button></form>');back();
+  const f=$('#issueForm');f.elements.kind.onchange=()=>{if(f.elements.kind.value==='Solde')f.elements.amount.value=remain/100;};
+  onForm('#issueForm',async o=>{if(!confirm('Émettre définitivement cette facture de '+o.amount+' € TTC ?'))return;book=await api('invoice',{...o,id:d.id,amount:Math.round(Number(o.amount)*100),count:book.invoices.length,request:key});show();toast('Facture émise.');});
+ }
+ function payment(i){
+  const left=i.total-paid(i),key=crypto.randomUUID();
+  dialog('Règlement · '+i.number,button('ledger','Retour au suivi','back')+'<form id="paymentForm">'+input('Montant reçu (€)','amount',left/100,'number','required min=".01" max="'+left/100+'" step=".01"')+input('Date d’encaissement','day',today(),'date','required')+select('Mode de paiement','method',['Virement','Chèque','Carte','Espèces'].map(x=>[x,x]),'Virement')+'<button class="primary">Enregistrer le règlement</button></form>');back();
+  onForm('#paymentForm',async o=>{book=await api('payment',{...o,id:d.id,seq:i.seq,amount:Math.round(Number(o.amount)*100),request:key});show();});
+ }
+ show();
+}
+
+return {invoicePaper,billingDialog};})();
+modules.editor=(()=>{
+const { $, esc, input, select, area, button, options, status, dateLabel, today, dialog, onForm, api, toast, icon }=modules.ui;
+const { amounts, euros }=modules.money;
+const { photoDialog, photosPaper }=modules.photos;
+const { brief }=modules.brief;
+const { assistant }=modules.assistant;
+const { newEdition, editionDialog, editionPaper, lotIdeas }=modules.edition;
+const {courrier}=modules.courrier;
+const { bindSheet }=modules.sheet;
+const { billingDialog }=modules.billing;
+const { signatureProof }=modules.signature;
+const { writer }=modules.writer;
+const decimal = n => Number((n / 100).toFixed(2));
+const percent = n => decimal(n).toLocaleString('fr-FR') + ' %';
+function fresh(state) {
+  return {
+    id: crypto.randomUUID(),
+    version: 0,
+    status: 'Brouillon',
+    title: 'Nouveau chantier',
+    site: '',
+    client: {
+      name: '',
+      email: '',
+      phone: '',
+      address: ''
+    },
+    company: state.company,
+    issued: today(),
+    valid: today(30),
+    discount: 0,
+    deposit: state.profiles?.['Tous corps d’état']?.first ?? 4000,
+    edition:structuredClone(state.profiles?.['Tous corps d’état']?.edition||newEdition()),
+    terms: state.company.terms || 'Toute prestation supplémentaire fera l’objet d’un chiffrage soumis à l’accord du client avant exécution.',
+    notes: '',
+    lines: []
+  };
+}
+function paper(d) {
+  const html=unsignedPaper(d);
+  return d.signature?html.replace(/<footer[^>]*>[\s\S]*?<\/footer>/,()=>signatureProof(d.signature)):html;
+}
+function unsignedPaper(d){
+  if(d.edition)return editionPaper(d);
+  const m = amounts(d.lines, d.discount, d.deposit),
+    c = d.company;
+  const lines = d.lines.map((l, i) => ((i === 0 || l.lot !== d.lines[i - 1].lot) && l.lot ? '<tr class="lot"><td colspan="5">' + esc(l.lot) + '</td></tr>' : '') + '<tr><td>' + esc(l.label) + '<small>' + esc(['Pose seule', 'Fourniture et pose · Essentiel', 'Fourniture et pose · Confort', 'Fourniture et pose · Premium'][l.tier] || '') + '</small></td><td>' + decimal(l.quantity).toLocaleString('fr-FR') + ' ' + esc(l.unit) + '</td><td>' + euros(l.price) + '</td><td>' + percent(l.tax) + '</td><td>' + euros(Math.round(l.quantity * l.price / 100)) + '</td></tr>').join('');
+  const row = (s, v, cls = '') => '<div class="' + cls + '"><span>' + esc(s) + '</span><strong>' + euros(v) + '</strong></div>';
+  return '<article class="sheet"><header><div class="paperbrand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNjNkMzUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNlNWJjNzkiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTExIDQ2VjI3bDEyLTEwIDEyIDEwdjE5TTIzIDQ2VjI5bDEzLTExIDE2IDEzdjE1Ii8+PC9zdmc+Cg==" alt="">' + esc(c.name) + '</div><div><b>DEVIS</b><br>' + esc(d.number || 'Brouillon') + '</div></header><div class="letter"><div><small>ÉMETTEUR</small><strong>' + esc(c.name) + '</strong>' + [c.address, c.email, c.phone, c.identity].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div><small>DESTINATAIRE</small><strong>' + esc(d.client.name || 'Client à renseigner') + '</strong>' + [d.client.address, d.client.email, d.client.phone].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div><h2>' + esc(d.title) + '</h2>' + (d.site ? '<p>' + esc(d.site) + '</p>' : '') + '<p>Émis le ' + (d.issued ? dateLabel(d.issued) : '…') + ' · Valable jusqu’au ' + (d.valid ? dateLabel(d.valid) : '…') + '</p><table class="paperlines"><thead><tr><th>Prestation</th><th>Qté</th><th>PU HT</th><th>TVA</th><th>Total HT</th></tr></thead><tbody>' + (lines || '<tr><td colspan="5">Les prestations apparaîtront ici.</td></tr>') + '</tbody></table><div class="totals">' + (d.discount ? row('Sous-total HT', m.gross) + row('Remise (' + percent(d.discount) + ')', -m.discount) : '') + row('Total HT', m.net) + m.taxes.map(t => row('TVA ' + percent(t.rate), t.amount)).join('') + row('Total TTC', m.total, 'grand') + (d.deposit ? row('Acompte (' + percent(d.deposit) + ')', m.deposit) + row('Solde TTC', m.total - m.deposit) : '') + '</div>' + (d.notes ? '<section><b>Précisions</b><p>' + esc(d.notes) + '</p></section>' : '') + (d.terms ? '<section><b>Conditions</b><p>' + esc(d.terms) + '</p></section>' : '') + '<footer><b>Bon pour accord</b><p>Date et signature du client</p></footer>' + photosPaper(d.photos) + '</article>';
+}
+function mountEditor(ctx, d) {
+  const {
+      state,
+      main,
+      done,
+      go
+    } = ctx,
+    editable = d.status === 'Brouillon' && state.me.role !== 'Lecture';
+  const recoveryKey = 'ma-draft-' + state.me.id + '-' + d.id;
+  let dirty = !d.version,
+    busy = false;
+  const remember = () => {
+    if (!editable || location.protocol === 'file:') return;
+    try {
+      sessionStorage.setItem(recoveryKey, JSON.stringify(d));
+    } catch {/* Le devis reste éditable si le stockage du navigateur est indisponible. */}
+  };
+  const forget = () => {
+    try {
+      sessionStorage.removeItem(recoveryKey);
+    } catch {}
+  };
+  const dirtyFlag = () => {
+    dirty = true;
+    remember();
+  };
+  const qrow = (l, i) => '<div class="linebox"><div class="lineinfo"><b>' + esc(l.label) + '</b><small>' + esc(l.lot || 'Prestation') + ' · ' + esc(state.tiers[l.tier]) + ' · ' + decimal(l.quantity) + ' ' + esc(l.unit) + ' × ' + euros(l.price) + '</small></div><strong>' + euros(Math.round(l.price * l.quantity / 100)) + '</strong>' + (editable ? button('line-' + i, 'Modifier', 'edit', 'icononly') + button('del-' + i, 'Retirer', 'trash', 'icononly') : '') + '</div>';
+  let sheetMode=false,mobilePane=editable?'saisie':'apercu';
+  const panes=()=>'<div class="quote-switch" role="group" aria-label="Rubriques du devis">'+[['saisie','Fiche'],['apercu','Feuille'],...(d.version?[['suivi','Suivi']]:[])].map(([id,label])=>'<button type="button" data-act="pane-'+id+'" aria-pressed="'+(mobilePane===id)+'">'+label+'</button>').join('')+'</div>';
+  function wireSheet(){
+    if(sheetMode&&editable)bindSheet($('#paper'),d,()=>{
+      dirtyFlag();
+      for(const field of $('#quoteForm').elements){
+        if(['title','site','notes','terms','client.name'].includes(field.name))field.value=field.name==='client.name'?d.client.name:d[field.name];
+      }
+    },lineDialog,()=>main.querySelector('[data-act=edition]').click(),(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
+  }
+  function draw() {
+    const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
+    main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar"><div><b>Assistant chantier</b><small>Décrire ou dicter une zone à chiffrer</small></div>' + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Dicter un chantier', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
+    if(editable&&d.edition){
+      const grid=main.querySelector('.edgrid');grid.classList.toggle('sheet-mode',sheetMode);
+      const bar=main.querySelector('.previewtitle');bar.insertAdjacentHTML('beforeend',button('sheet',sheetMode?'Revenir au formulaire':'Modifier sur la feuille','edit'));
+      if(sheetMode)bar.insertAdjacentHTML('afterend','<div class="sheet-tools">'+button('edition','Style et rubriques','gear')+button('addline','Ajouter une ligne','plus')+'</div>');
+      wireSheet();
+    }
+    const next = {
+      Brouillon: ['Validé', 'Archivé'],
+      Validé: ['Envoyé', 'Archivé'],
+      Envoyé: ['Accepté', 'Refusé'],
+      Accepté: ['Archivé'],
+      Refusé: ['Archivé']
+    };
+    $('#workflow').innerHTML = (d.version && state.me.role==='Administrateur' ? (next[d.status] || []).map(s => button('status-' + s, {
+      Validé: 'Valider et figer',
+      Envoyé: 'Marquer comme envoyé',
+      Accepté: 'Marquer accepté',
+      Refusé: 'Marquer refusé',
+      Archivé: 'Archiver'
+    }[s])).join('') : '') + (d.version && state.me.role !== 'Lecture' ? button('duplicate', 'Dupliquer', 'copy') : '');
+    if (d.version && state.me.role==='Administrateur' && !['Brouillon', 'Archivé'].includes(d.status)) {
+      if (['Validé', 'Envoyé'].includes(d.status)) $('#workflow').insertAdjacentHTML('beforeend', button('share', 'Créer un lien client', 'arrow'));
+      $('#workflow').insertAdjacentHTML('beforeend', button('revoke', 'Désactiver le lien'));
+    }
+    if(state.me.role==='Administrateur'&&['Validé','Envoyé'].includes(d.status)){
+      if(d.status==='Validé')$('#workflow').insertAdjacentHTML('beforeend',button('mail','Envoyer via Gmail','arrow'));
+      $('#workflow').insertAdjacentHTML('beforeend',button('reminder','Relance client','bell'));
+    }
+    if(state.me.role==='Administrateur'&&['Accepté','Archivé'].includes(d.status))$('#workflow').insertAdjacentHTML('afterbegin',button('billing','Factures et règlements','doc','primary'));
+    if(d.signature&&state.me.role==='Administrateur')$('#workflow').insertAdjacentHTML('beforeend',button('evidence','Télécharger le dossier de signature','download'));
+    if (d.version) $('#workflow').insertAdjacentHTML('beforeend', button('history', 'Historique des versions', 'doc'));
+    $('#quoteForm').onsubmit = e => e.preventDefault();
+    $('#quoteForm').oninput = e => {
+      const el = e.target,
+        n = el.name;
+      if (!n || n === 'pick') return;
+      if (n.startsWith('client.')) d.client[n.slice(7)] = el.value;else if (n === 'discount' || n === 'deposit') d[n] = Math.round(Number(el.value) * 100);else d[n] = el.value;
+      dirtyFlag();
+      $('#paper').innerHTML = paper(d);wireSheet();
+    };
+    const picker = $('[name="pick"]');
+    if (picker) picker.onchange = () => {
+      const c = state.customers.find(x => x.id === picker.value);
+      if (c) {
+        d.client = {
+          ...c
+        };
+        dirtyFlag();
+        draw();
+      }
+    };
+  }
+  function lineDialog(index) {
+    const l = d.lines[index];
+    dialog(l ? 'Modifier la prestation' : 'Ajouter une prestation', '<form id="lineForm">' + select('Filtrer les prestations par métier','categoryFilter',[['','Tous les métiers'],...Array.from(new Set(state.services.map(s=>s.category))).sort().map(c=>[c,c])],'') + select('Catalogue', 'serviceId', [['', 'Ligne libre'], ...state.services.map(s => [s.id, s.category + ' · ' + s.label])], l?.serviceId || '') + select('Gamme tarifaire', 'tier', state.tiers.map((t, i) => [i, t]), l?.tier ?? 0) + input('Libellé', 'label', l?.label || '', 'text', 'required maxlength="250"') + select('Présentation du libellé','emphasis',[['normal','Normal'],['bold','Gras']],l?.strong?'bold':'normal') + input('Pièce ou lot', 'lot', l?.lot ?? d.lines.at(-1)?.lot ?? '', 'text','list="qLotIdeas"') + '<datalist id="qLotIdeas">'+(lotIdeas[d.edition?.trade]||[]).map(x=>'<option value="'+esc(x)+'">').join('')+'</datalist>' + '<div class="fields">' + input('Quantité', 'quantity', decimal(l?.quantity ?? 100), 'number', 'min=".01" max="10000" step=".01" required') + select('Unité', 'unit', state.units.map(v => [v, v]), l?.unit || 'm²') + input('Prix unitaire HT (€)', 'price', decimal(l?.price || 0), 'number', 'min="0" max="100000" step=".01" required') + input('TVA (%)', 'tax', decimal(l?.tax ?? 2000), 'number', 'min="0" max="100" step=".01" required') + '</div>' + (l ? input('Position dans le devis', 'position', index + 1, 'number', 'min="1" max="' + d.lines.length + '" required') : '') + '<button class="primary wide">Appliquer au devis</button></form>');
+    const f = $('#lineForm'),
+      v = f.elements;
+    function sync() {
+      const s = state.services.find(x => x.id === v.serviceId.value);
+      if (s) {
+        v.label.value = s.label;
+        v.unit.value = s.unit;
+        v.price.value = decimal(s.prices[Number(v.tier.value)]);
+      }
+    }
+    v.categoryFilter.onchange=()=>{
+      const rows=state.services.filter(s=>!v.categoryFilter.value||s.category===v.categoryFilter.value);
+      v.serviceId.innerHTML=options([['','Ligne libre'],...rows.map(s=>[s.id,s.label])],v.serviceId.value);
+    };
+    if(state.me.role!=='Administrateur')v.price.readOnly=true;
+    v.serviceId.onchange = sync;
+    v.tier.onchange = sync;
+    onForm('#lineForm', async o => {
+      const line = {
+        ...o,
+        tier: Number(o.tier)
+      };
+      line.strong = o.emphasis === 'bold';
+      delete line.emphasis;
+      delete line.categoryFilter;
+      for (const k of ['price', 'quantity', 'tax']) line[k] = Math.round(Number(o[k]) * 100);
+      if (l) {
+        d.lines.splice(index, 1);
+        const target = Number(o.position || index + 1) - 1;
+        delete line.position;
+        d.lines.splice(target, 0, line);
+      } else d.lines.push(line);
+      dirtyFlag();
+      $('#modal').close();
+      draw();
+    });
+  }
+  async function save() {
+    if (!$('#quoteForm').reportValidity()) throw Error('Vérifiez les champs du devis.');
+    const saved = await api('documents', d);
+    Object.assign(d, saved);
+    done(saved);
+    dirty = false;
+    forget();
+    draw();
+    return saved;
+  }
+  main.onclick = async e => {
+    const a = e.target.closest('[data-act]')?.dataset.act;
+    if (!a || busy) return;
+    busy = true;
+    try {
+      if(a.startsWith('pane-')){mobilePane=a.slice(5);if(mobilePane!=='apercu')sheetMode=false;draw();main.querySelector('[data-act="'+a+'"]').focus();}
+      if(a==='sheet'){sheetMode=!sheetMode;if(window.innerWidth<=900)mobilePane=sheetMode?'apercu':'saisie';draw();const focus=window.innerWidth<=900&&!sheetMode?'[data-act=pane-saisie]':'[data-act=sheet]';main.querySelector(focus).focus();}
+      if(a==='billing')await billingDialog(d);
+      if(a==='evidence'){
+        const data=await api('evidence/'+d.id),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=d.number+'-signature.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      }
+      if (a === 'return') go('Devis');
+      if(a==='edition')editionDialog(d,state,(edition,deposit)=>{d.edition=edition;d.deposit=deposit;dirtyFlag();draw();});
+      if(a==='writer')writer(state,d,(target,value)=>{if(target.startsWith('line'))d.lines[Number(target.slice(4))].label=value;
+        else if(['intro','spec'].includes(target))d.edition[target]=value;else d[target]=value;dirtyFlag();draw();});
+      if(a==='reminder'||a==='mail')courrier(state,d,a==='reminder',saved=>{done(saved);go('editor',saved,true);});
+      if (a === 'addline') lineDialog(-1);
+      if (a.startsWith('line-')) lineDialog(Number(a.slice(5)));
+      if (a.startsWith('del-')) {
+        d.lines.splice(Number(a.slice(4)), 1);
+        dirtyFlag();
+        draw();
+      }
+      if (a === 'save') {
+        await save();
+        toast('Devis enregistré.');
+      }
+      if (a === 'brief') brief(state, items => {
+        d.lines.push(...items);
+        dirtyFlag();
+        draw();
+      });
+      if (a === 'assist') assistant(state, items => {
+        d.lines.push(...items);
+        dirtyFlag();
+        draw();
+      });
+      if (a === 'duplicate') {
+        const n = fresh(state);
+        Object.assign(n, {
+          title: d.title + ' · copie',
+          site: d.site,
+          client: {
+            ...d.client
+          },
+          lines: structuredClone(d.lines),
+          photos: structuredClone(d.photos || []),
+          terms: d.terms,
+          notes: d.notes,
+          discount: d.discount,
+          edition:structuredClone(d.edition), deposit: d.deposit
+        });
+        go('editor', n);
+      }
+      if (a === 'share') {
+        const link = await api('share', {
+          id: d.id
+        });
+        dialog('Lien privé du devis', '<p>Transmettez ce lien au client. Le lien précédent est remplacé. Une réponse est possible au statut « Envoyé », pendant la validité du devis.</p>' + input('Lien valable 30 jours', 'publicLink', new URL(link.path, location.origin).href, 'text', 'readonly') + button('copylink', 'Copier le lien', 'copy'));
+        const el = $('[name=publicLink]');
+        el.select();
+        $('[data-act=copylink]').onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(el.value);
+            toast('Lien copié.');
+          } catch {
+            el.select();
+            toast('Copiez le lien sélectionné.');
+          }
+        };
+      }
+      if (a === 'revoke' && confirm('Désactiver le lien de ce devis ?')) {
+        await api('share', {
+          id: d.id,
+          revoke: true
+        });
+        toast('Lien désactivé.');
+      }
+      if (a === 'history') {
+        const versions = await api('history/' + d.id);
+        dialog('Versions de ' + d.number, versions.map(v => '<div class="member"><div><b>Version ' + v.version + ' · ' + esc(v.status) + '</b><small>' + esc(new Date(v.at).toLocaleString('fr-FR')) + '</small></div>' + button('version-' + v.version, 'Consulter') + '</div>').join(''));
+        $('#modal').querySelectorAll('[data-act^="version-"]').forEach(b => b.onclick = async () => {
+          try {
+            const old = await api('revision/' + d.id + '/' + b.dataset.act.slice(8));
+            dialog('Version ' + old.version, paper(old));
+          } catch (err) {
+            toast(err.message);
+          }
+        });
+      }
+      if (a === 'photos') photoDialog(d.photos || [], photos=>{d.photos=photos;dirtyFlag();draw();});
+      if (a === 'print') window.print();
+      if (a.startsWith('status-')) {
+        const s = a.slice(7);
+        if (!confirm('Confirmer le statut « ' + s + ' » pour ce devis ?')) return;
+        if (dirty) await save();
+        const updated = await api('status', {
+          id: d.id,
+          status: s,
+          version: d.version
+        });
+        dirty = false;
+        done(updated);
+        go('editor', updated);
+      }
+    } catch (err) {
+      toast(err.message);
+    } finally {
+      busy = false;
+    }
+  };
+  draw();
+  return () => dirty;
+}
+
+return {fresh,paper,mountEditor};})();
+demoApi=createDemoApi({...{"catalog":[{"id":"s1","category":"Sols","label":"Pose de carrelage","unit":"m²","prices":[4000,6500,8500,11500]},{"id":"s2","category":"Sols","label":"Pose de parquet stratifié","unit":"m²","prices":[2000,3800,5500,7800]},{"id":"s3","category":"Sols","label":"Pose de parquet contrecollé","unit":"m²","prices":[3500,7500,10500,14500]},{"id":"s4","category":"Sols","label":"Pose de sol vinyle","unit":"m²","prices":[3000,4400,5900,8200]},{"id":"s5","category":"Sols","label":"Pose de plinthes","unit":"ml","prices":[800,1300,1700,2400]},{"id":"s6","category":"Préparation","label":"Dépose de revêtement","unit":"m²","prices":[1000,1000,1000,1000]},{"id":"s7","category":"Préparation","label":"Application de primaire","unit":"m²","prices":[400,500,700,900]},{"id":"s8","category":"Préparation","label":"Ragréage du support","unit":"m²","prices":[1200,1700,1900,2500]},{"id":"s9","category":"Salle de bains","label":"Pose de faïence","unit":"m²","prices":[4500,6800,9200,13000]},{"id":"s10","category":"Salle de bains","label":"Étanchéité sous carrelage","unit":"m²","prices":[1600,2500,3200,4200]},{"id":"s11","category":"Salle de bains","label":"Pose de receveur","unit":"u","prices":[25000,44000,66000,95000]},{"id":"s12","category":"Salle de bains","label":"Pose de paroi de douche","unit":"u","prices":[12000,26000,42000,62000]},{"id":"s13","category":"Plomberie","label":"Pose de mitigeur","unit":"u","prices":[6500,12000,20500,32000]},{"id":"s14","category":"Plomberie","label":"Pose de meuble vasque","unit":"u","prices":[12000,34000,56000,90000]},{"id":"s15","category":"Plomberie","label":"Pose de WC","unit":"u","prices":[15000,27000,44000,69000]},{"id":"s16","category":"Plomberie","label":"Pose de chauffe-eau 50 L","unit":"u","prices":[20000,38000,49000,63000]},{"id":"s17","category":"Peinture","label":"Peinture des murs","unit":"m²","prices":[1600,2300,2900,3800]},{"id":"s18","category":"Peinture","label":"Peinture des plafonds","unit":"m²","prices":[1900,2600,3400,4400]},{"id":"s19","category":"Peinture","label":"Préparation et enduit","unit":"m²","prices":[1000,1400,1800,2500]},{"id":"s20","category":"Cuisine","label":"Pose de crédence","unit":"m²","prices":[5500,8500,11500,16000]},{"id":"s21","category":"Cuisine","label":"Montage de meubles de cuisine","unit":"u","prices":[7000,17500,32000,49500]},{"id":"s22","category":"Plâtrerie","label":"Cloison en plaques de plâtre","unit":"m²","prices":[3200,5200,6500,8200]},{"id":"s23","category":"Électricité","label":"Pose de prise","unit":"u","prices":[4500,6000,8000,10500]},{"id":"s24","category":"Ventilation","label":"Pose de VMC","unit":"forfait","prices":[28000,52000,78000,110000]},{"id":"s25","category":"Finitions","label":"Application de béton ciré","unit":"m²","prices":[7000,10000,13500,17500]},{"id":"s26","category":"Chantier","label":"Protection du chantier","unit":"forfait","prices":[8000,11000,15000,21000]},{"id":"s27","category":"Chantier","label":"Évacuation des gravats","unit":"forfait","prices":[12000,20000,32000,48000]},{"id":"s28","category":"Chantier","label":"Main-d’œuvre complémentaire","unit":"h","prices":[4500,4500,4500,4500]},{"id":"s29","category":"Peinture","label":"Lessivage et dégraissage des murs","unit":"m²","prices":[300,400,500,700]},{"id":"s30","category":"Peinture","label":"Dépose de papier peint","unit":"m²","prices":[700,800,1000,1300]},{"id":"s31","category":"Peinture","label":"Ouverture et rebouchage des fissures","unit":"ml","prices":[500,800,1100,1500]},{"id":"s32","category":"Peinture","label":"Ratissage complet et ponçage","unit":"m²","prices":[1400,1900,2400,3200]},{"id":"s33","category":"Peinture","label":"Couche d’impression sur fond poreux","unit":"m²","prices":[400,600,800,1000]},{"id":"s34","category":"Peinture","label":"Application de deux couches de finition satinée","unit":"m²","prices":[1300,1900,2500,3400]},{"id":"s35","category":"Peinture","label":"Mise en peinture de boiseries","unit":"m²","prices":[2200,3000,3800,5200]},{"id":"s36","category":"Peinture","label":"Laquage de porte sur deux faces","unit":"u","prices":[6500,8500,11500,15500]},{"id":"s37","category":"Peinture","label":"Pose de toile de verre à peindre","unit":"m²","prices":[1200,1800,2400,3200]},{"id":"s38","category":"Peinture","label":"Traitement superficiel de zones moisies","unit":"m²","prices":[1200,1800,2400,3200]},{"id":"s39","category":"Peinture","label":"Peinture de façade sur support préparé","unit":"m²","prices":[1900,2900,3900,5200]},{"id":"s40","category":"Carrelage","label":"Pose de carrelage grand format 90 × 90 cm","unit":"m²","prices":[4000,7800,10800,14500]},{"id":"s41","category":"Carrelage","label":"Pose de carrelage en diagonale","unit":"m²","prices":[5200,8200,10800,14500]},{"id":"s42","category":"Carrelage","label":"Pose de mosaïque sur trame","unit":"m²","prices":[6500,9700,13200,18000]},{"id":"s43","category":"Carrelage","label":"Double encollage de faïence grand format","unit":"m²","prices":[5500,8400,11500,16000]},{"id":"s44","category":"Carrelage","label":"Profilé de finition en rive","unit":"ml","prices":[800,1400,2000,2900]},{"id":"s45","category":"Carrelage","label":"Réalisation de joints époxy","unit":"m²","prices":[1300,2200,2900,3800]},{"id":"s46","category":"Carrelage","label":"Reprise de joints de carrelage existants","unit":"m²","prices":[1900,2500,3200,4000]},{"id":"s47","category":"Carrelage","label":"Habillage carrelé de marches","unit":"u","prices":[4500,7000,9800,13500]},{"id":"s48","category":"Sols","label":"Dépose de moquette ou de lino collé","unit":"m²","prices":[1000,1000,1300,1600]},{"id":"s49","category":"Sols","label":"Grattage des résidus de colle","unit":"m²","prices":[600,800,1100,1400]},{"id":"s50","category":"Sols","label":"Pose de sous-couche acoustique","unit":"m²","prices":[600,1000,1500,2100]},{"id":"s51","category":"Sols","label":"Pose collée de parquet massif","unit":"m²","prices":[4800,9500,14200,19800]},{"id":"s52","category":"Sols","label":"Ponçage et vitrification de parquet","unit":"m²","prices":[2500,3600,4600,6200]},{"id":"s53","category":"Sols","label":"Pose de barre de seuil","unit":"u","prices":[1400,2600,3900,5500]},{"id":"s54","category":"Salle de bains","label":"Dépose de receveur et démolition du coffrage","unit":"forfait","prices":[35000,45000,52000,63000]},{"id":"s55","category":"Salle de bains","label":"Traitement des angles et traversées en zone humide","unit":"ml","prices":[1100,1700,2200,3000]},{"id":"s56","category":"Salle de bains","label":"Pose de caniveau de douche","unit":"u","prices":[12000,21000,31000,45000]},{"id":"s57","category":"Salle de bains","label":"Réalisation de forme de pente","unit":"m²","prices":[4500,7000,8800,11000]},{"id":"s58","category":"Salle de bains","label":"Habillage de bâti-support","unit":"u","prices":[11500,18000,24000,32000]},{"id":"s59","category":"Salle de bains","label":"Pose de baignoire et tablier","unit":"u","prices":[26000,54500,86000,138000]},{"id":"s60","category":"Plomberie","label":"Modification d’alimentation eau chaude et froide","unit":"ml","prices":[3500,4800,6000,7800]},{"id":"s61","category":"Plomberie","label":"Création d’évacuation en PVC","unit":"ml","prices":[2600,3800,4900,6400]},{"id":"s62","category":"Plomberie","label":"Installation de collecteur sanitaire","unit":"u","prices":[11000,18500,25000,34000]},{"id":"s63","category":"Plomberie","label":"Pose de WC suspendu et bâti-support","unit":"u","prices":[28000,59000,86000,110000]},{"id":"s64","category":"Plomberie","label":"Pose de meuble double vasque","unit":"u","prices":[18500,62000,88000,110000]},{"id":"s65","category":"Eau chaude sanitaire","label":"Remplacement de chauffe-eau électrique à accumulation","unit":"u","prices":[24000,75000,105000,142000]},{"id":"s66","category":"Eau chaude sanitaire","label":"Installation de chauffe-eau thermodynamique individuel","unit":"u","prices":[65000,230000,290000,375000]},{"id":"s67","category":"Eau chaude sanitaire","label":"Installation de chauffe-eau solaire individuel","unit":"forfait","prices":[170000,490000,650000,890000]},{"id":"s68","category":"Eau chaude sanitaire","label":"Installation de système solaire combiné","unit":"forfait","prices":[320000,1190000,1530000,1950000]},{"id":"s69","category":"Eau chaude sanitaire","label":"Remplacement de groupe de sécurité","unit":"u","prices":[5500,8500,11000,14500]},{"id":"s70","category":"Eau chaude sanitaire","label":"Calorifugeage du réseau d’eau chaude","unit":"ml","prices":[700,1200,1700,2200]},{"id":"s71","category":"Électricité","label":"Remplacement de tableau de répartition","unit":"u","prices":[39000,71000,105000,149000]},{"id":"s72","category":"Électricité","label":"Création de circuit spécialisé","unit":"u","prices":[12000,17500,23500,32000]},{"id":"s73","category":"Électricité","label":"Pose de point lumineux et raccordement","unit":"u","prices":[4800,7800,11500,16500]},{"id":"s74","category":"Électricité","label":"Installation de va-et-vient","unit":"u","prices":[6500,9000,12000,15800]},{"id":"s75","category":"Électricité","label":"Pose de spot encastré","unit":"u","prices":[3900,6000,8500,11500]},{"id":"s76","category":"Ventilation","label":"Installation de VMC simple flux hygroréglable","unit":"forfait","prices":[37500,85000,118000,157000]},{"id":"s77","category":"Ventilation","label":"Installation de VMC double flux","unit":"forfait","prices":[120000,330000,450000,610000]},{"id":"s78","category":"Ventilation","label":"Remplacement de bouche d’extraction","unit":"u","prices":[3400,5900,8900,12000]},{"id":"s79","category":"Chauffage","label":"Remplacement de radiateur à eau","unit":"u","prices":[14000,34000,53000,78000]},{"id":"s80","category":"Chauffage","label":"Pose de sèche-serviettes","unit":"u","prices":[10500,25000,41000,63000]},{"id":"s81","category":"Chauffage","label":"Installation de thermostat programmable","unit":"u","prices":[8000,16000,24000,34500]},{"id":"s82","category":"Isolation","label":"Isolation de combles par soufflage","unit":"m²","prices":[1200,2400,3200,4200]},{"id":"s83","category":"Isolation","label":"Doublage thermique intérieur avec parement","unit":"m²","prices":[3400,6200,7900,10400]},{"id":"s84","category":"Isolation","label":"Isolation de plancher bas en sous-face","unit":"m²","prices":[2400,4300,5700,7400]},{"id":"s85","category":"Isolation","label":"Pose de membrane pare-vapeur et raccords","unit":"m²","prices":[800,1400,1900,2500]},{"id":"s86","category":"Menuiseries","label":"Pose de bloc-porte intérieur","unit":"u","prices":[14500,33000,51000,71000]},{"id":"s87","category":"Menuiseries","label":"Pose de portes coulissantes de placard","unit":"u","prices":[17000,39000,61000,85000]},{"id":"s88","category":"Menuiseries","label":"Remplacement de fenêtre double vitrage","unit":"u","prices":[23000,49000,72000,105000]},{"id":"s89","category":"Menuiseries","label":"Pose de fenêtre de toit et raccord","unit":"u","prices":[38000,74000,105000,149000]},{"id":"s90","category":"Menuiseries","label":"Pose de volet roulant","unit":"u","prices":[17000,34000,52000,78000]},{"id":"s91","category":"Plâtrerie","label":"Création de faux plafond suspendu","unit":"m²","prices":[3200,5400,7000,8900]},{"id":"s92","category":"Plâtrerie","label":"Traitement des bandes à joint","unit":"ml","prices":[400,600,800,1100]},{"id":"s93","category":"Plâtrerie","label":"Création de niche en plaques hydrofuges","unit":"u","prices":[12000,20000,29000,41000]},{"id":"s94","category":"Cuisine","label":"Dépose de meubles de cuisine","unit":"u","prices":[3000,4000,5000,6500]},{"id":"s95","category":"Cuisine","label":"Pose et découpe de plan de travail","unit":"ml","prices":[6000,12500,21000,34000]},{"id":"s96","category":"Cuisine","label":"Pose et raccordement d’évier","unit":"u","prices":[9500,20500,32000,49000]},{"id":"s97","category":"Maçonnerie","label":"Démolition de cloison non porteuse","unit":"m²","prices":[2400,3400,4500,5800]},{"id":"s98","category":"Maçonnerie","label":"Coulage de dalle béton","unit":"m³","prices":[18000,35000,48000,55000]},{"id":"s99","category":"Maçonnerie","label":"Pose de treillis et calage des armatures","unit":"m²","prices":[1400,2500,3900,5500]},{"id":"s100","category":"Maçonnerie","label":"Réalisation de chape de rattrapage","unit":"m²","prices":[2200,3800,5100,6600]},{"id":"s101","category":"Étanchéité","label":"Primaire bitumineux sur support préparé","unit":"m²","prices":[500,800,1100,1400]},{"id":"s102","category":"Étanchéité","label":"Sous-couche d’étanchéité bitumineuse","unit":"m²","prices":[1500,3000,4000,5200]},{"id":"s103","category":"Étanchéité","label":"Membrane de finition avec relevés","unit":"m²","prices":[3000,5800,7500,9600]},{"id":"s104","category":"Couverture","label":"Remplacement de gouttière","unit":"ml","prices":[2400,4800,6900,9500]},{"id":"s105","category":"Couverture","label":"Reprise de solin","unit":"ml","prices":[2600,4300,6100,8300]},{"id":"s106","category":"Finitions","label":"Vernis de protection sur béton ciré","unit":"m²","prices":[1200,2000,2800,3800]},{"id":"s107","category":"Chantier","label":"Tri et manutention des déchets","unit":"h","prices":[3800,4200,4800,5500]},{"id":"s108","category":"Chantier","label":"Enlèvement par benne et traitement","unit":"forfait","prices":[18000,35000,55000,79000]},{"id":"s109","category":"Chantier","label":"Nettoyage de fin de chantier","unit":"m²","prices":[400,600,800,1000]},{"id":"s110","category":"Chantier","label":"Déplacement et livraison sur chantier","unit":"forfait","prices":[3500,5000,7000,9500]}],"tiers":["Pose seule","Essentiel","Confort","Premium"],"units":["m²","ml","m³","u","h","forfait"],"fields":{"area":["Quelle surface faut-il carreler (m²) ?"],"room":["Dans quelle pièce ?",["Cuisine","Salle de bains","Douche","Séjour","Autre"]],"face":["Sur quelle surface ?",["Sol","Mur"]],"range":["Qui fournit les carreaux ?",["pose","eco","standard","premium"]],"removal":["Faut-il déposer le revêtement existant ?",["Oui","Non"]],"primer":["Faut-il appliquer un primaire ?",["Oui","Non"]],"level":["Faut-il prévoir un ragréage ?",["Oui","Non"]],"sealing":["Faut-il prévoir une étanchéité ?",["Oui","Non"]]},"conditions":{"level":["face",["Sol"]],"sealing":["room",["Douche","Salle de bains"]]}},today:modules.ui.today});
+modules.app=(()=>{
+const { mobileNav, mobileMore, mobileHome, bindPageSwipe }=modules.mobile;
+const {terrain}=modules.terrain;
+const { priceReference }=modules.references;
+const { $, esc, input, select, area, button, icon, dialog, api, onForm, toast, status, dateLabel, csv, today }=modules.ui;
+const { euros, amounts }=modules.money;
+const { fresh, mountEditor }=modules.editor;
+let state,
+  page,
+  dirty = () => false,
+  poll,
+  epoch = 0;
+const root = $('#root'),
+  modal = $('#modal');
+const canEdit = () => state.me.role !== 'Lecture',
+  admin = () => state.me.role === 'Administrateur';
+const navs = {
+  Accueil: 'home',
+  Devis: 'doc',
+  Clients: 'users',
+  Catalogue: 'book',
+  Activité: 'bell',
+  Administration: 'gear'
+};
+const actions = (...buttons) => '<div class="actions">' + buttons.join('') + '</div>';
+const head = (title, sub, buttons = '') => '<div class="pagehead"><div><h1>' + esc(title) + '</h1>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '</div>' + buttons + '</div>';
+const newButton = () => canEdit() ? button('new', 'Nouveau devis', 'plus', 'primary') : '';
+const total = d => d.total ?? amounts(d.lines, d.discount, d.deposit).total;
+const replace = (arr, v) => {
+  const i = arr.findIndex(x => x.id === v.id);
+  if (i < 0) arr.unshift(v);else arr[i] = v;
+};
+const brand = '<span class="brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNjNkMzUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNlNWJjNzkiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTExIDQ2VjI3bDEyLTEwIDEyIDEwdjE5TTIzIDQ2VjI5bDEzLTExIDE2IDEzdjE1Ii8+PC9zdmc+Cg==" alt=""><span>MA <b>RENOVATION</b></span></span>';
+const safe = fn => async (...args) => {
+  try {
+    await fn(...args);
+  } catch (e) {
+    toast(e.message);
+  }
+};
+function login() {
+  clearInterval(poll);
+  epoch++;
+  state = null;
+  dirty = () => false;
+  if (modal.open) modal.close();
+  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">Espace professionnel</p><h1>L’atelier<br>des devis.</h1></div></section><section class="signform"><div><p class="eyebrow">MA RENOVATION</p><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
+  onForm('#login', async o => {
+    await api('login', o);
+    await start();
+  });
+}
+function nav() {
+  return Object.entries(navs).filter(([p]) => p !== 'Administration' || admin()).map(([p, i]) => button('nav-' + p, p, i, 'nav ' + (p === (page === 'editor' ? 'Devis' : page) ? 'active' : ''))).join('');
+}
+function shell() {
+  const unread = state.events.filter(e => e.id > state.lastRead).length;
+  root.innerHTML = '<div class="shell"><aside id="sidebar">' + brand + '<nav aria-label="Navigation principale">' + nav() + '</nav><div class="profile"><span class="avatar">' + esc(state.me.name.slice(0, 1)) + '</span><div><b>' + esc(state.me.name) + '</b><small>' + esc(state.me.role) + '</small></div>' + button('logout', 'Déconnexion', 'logout', 'icononly') + '</div></aside><div class="workspace"><header class="bar">' + '<span class="mobile-brand">'+brand+'</span>' + '<span>Espace de travail <i>/</i> <b>' + esc(page === 'editor' ? 'Devis' : page) + '</b></span>' + button('terrain','فارسی','users','subtle') + button('nav-Activité', 'Activité' + (unread ? ' (' + unread + ')' : ''), 'bell', 'subtle') + '</header><main id="main" tabindex="-1"></main></div>'+mobileNav(page)+'</div>';
+}
+function go(p, d, force = false) {
+  if (!force && dirty() && !confirm('Quitter sans enregistrer les modifications du devis ?')) return;
+  dirty = () => false;
+  page = p;
+  shell();
+  const main = $('#main');
+  if(p==='Terrain فارسی'){dirty=terrain({state,main,go,done:v=>replace(state.documents,v),fresh},d);}
+  else if (p === 'editor') {
+    dirty = mountEditor({
+      state,
+      main,
+      go,
+      done: v => replace(state.documents, v)
+    }, structuredClone(d));
+  } else if(p==='Plus')main.innerHTML=mobileMore(state);else if (p === 'Accueil') home(main);else if (p === 'Devis') docs(main);else if (p === 'Clients') clients(main);else if (p === 'Catalogue') catalogue(main);else if (p === 'Activité') activity(main);else settings(main);
+  bindPageSwipe(main,p,next=>safe(navigate)(next));
+  window.scrollTo(0, 0);
+}
+const docTable = docs => docs.length ? '<div class="tablewrap quote-list"><table><thead><tr><th>Devis / chantier</th><th>Client</th><th>Statut</th><th class="num">Montant TTC</th></tr></thead><tbody>' + docs.map(d => '<tr><td><button class="link" data-act="open-' + esc(d.id) + '">' + esc(d.title) + '</button><small>' + esc(d.number) + ' · ' + dateLabel(d.issued) + '</small></td><td>' + esc(d.client.name || 'À renseigner') + '</td><td>' + status(d.status) + '</td><td class="num"><b>' + euros(total(d)) + '</b></td></tr>').join('') + '</tbody></table></div>' : '<div class="empty"><b>Aucun devis à afficher</b><p>Les devis correspondant à cette vue apparaîtront ici.</p></div>';
+function localDrafts() {
+  if (!canEdit() || location.protocol === 'file:') return [];
+  try {
+    return Object.keys(sessionStorage).filter(k => k.startsWith('ma-draft-' + state.me.id + '-')).map(k => JSON.parse(sessionStorage.getItem(k))).filter(d => d?.id);
+  } catch {
+    return [];
+  }
+}
+function home(main) {
+  const docs = [...state.documents].sort((a, b) => b.updated.localeCompare(a.updated)),
+    sent = docs.filter(d => d.status === 'Envoyé'),
+    accepted = docs.filter(d => d.status === 'Accepté');
+  main.innerHTML = mobileHome(docs,canEdit())+'<section class="hero"><div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">' + esc(new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long'
+  }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + [['Brouillons', docs.filter(d => d.status === 'Brouillon').length, 'À préparer'], ['Devis envoyés', sent.length, 'En attente de réponse'], ['Montant accepté', euros(accepted.reduce((s, d) => s + total(d), 0)), 'Total TTC des devis acceptés']].map(([s, v, h]) => '<div><small>' + s + '</small><strong>' + v + '</strong><span>' + h + '</span></div>').join('') + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
+}
+function docs(main) {
+  main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'].map(s => [s, s]), 'Tous') + '</div><div id="results"></div></section>';
+  let view;
+  function render() {
+    const q = $('[name=query]').value.toLocaleLowerCase('fr'),
+      s = $('[name=filter]').value;
+    view = state.documents.filter(d => (s === 'Tous' || s === d.status) && [d.number, d.title, d.site, d.client.name].join(' ').toLocaleLowerCase('fr').includes(q)).sort((a, b) => b.updated.localeCompare(a.updated));
+    $('#results').innerHTML = docTable(view);
+  }
+  main.oninput = render;
+  main.querySelector('[data-act=export]').onclick = () => csv('devis.csv', [['Référence', 'Objet', 'Client', 'Statut', 'Émis le', 'Valide au', 'Montant TTC (€)'], ...view.map(d => [d.number, d.title, d.client.name, d.status, d.issued, d.valid, (total(d) / 100).toFixed(2).replace('.', ',')])]);
+  render();
+}
+function clientForm(c = {
+  id: crypto.randomUUID(),
+  version: 0
+}) {
+  dialog(c.version ? 'Fiche client' : 'Nouveau client', '<form id="client">' + input('Nom / société', 'name', c.name, 'text', 'required') + area('Adresse de facturation', 'address', c.address) + input('Téléphone', 'phone', c.phone, 'tel') + input('E-mail', 'email', c.email, 'email') + '<button class="primary wide">Enregistrer le client</button></form>');
+  onForm('#client', async o => {
+    replace(state.customers, await api('customers', {
+      ...o,
+      id: c.id,
+      version: c.version
+    }));
+    modal.close();
+    go('Clients');
+  });
+}
+function clients(main) {
+  main.innerHTML = head('Carnet clients', 'Coordonnées réutilisables dans vos devis.', canEdit() ? button('client', 'Nouveau client', 'plus', 'primary') : '') + '<div class="filters">' + input('Rechercher un client', 'query', '', 'search') + '</div><div id="results" class="cards"></div>';
+  function render() {
+    const q = $('[name=query]').value.toLowerCase(),
+      result = state.customers.filter(c => [c.name, c.email, c.phone].join(' ').toLowerCase().includes(q));
+    $('#results').innerHTML = result.map(c => '<article class="tile"><span class="avatar">' + esc(c.name.slice(0, 1)) + '</span><h3>' + esc(c.name) + '</h3><p>' + esc(c.address) + '</p><p>' + esc(c.email) + '<br>' + esc(c.phone) + '</p>' + (canEdit() ? button('client-' + c.id, 'Modifier', 'edit', 'subtle') : '') + '</article>').join('') || '<p class="empty">Aucun client dans cette vue.</p>';
+  }
+  main.oninput = render;
+  render();
+}
+function serviceForm(s = {
+  id: crypto.randomUUID(),
+  version: 0,
+  prices: [0, 0, 0, 0]
+}) {
+  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', s.label, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + state.tiers.map((t, i) => input(t + ' (€ HT)', 'p' + i, s.prices[i] / 100, 'number', 'min="0" max="100000" step=".01" required')).join('') + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
+  onForm('#service', async o => {
+    replace(state.services, await api('services', {
+      ...s,
+      ...o,
+      prices: state.tiers.map((_, i) => Math.round(Number(o['p' + i]) * 100))
+    }));
+    modal.close();
+    go('Catalogue');
+    toast('Catalogue mis à jour.');
+  });
+}
+function catalogue(main) {
+  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
+  main.insertAdjacentHTML('beforeend','<details><summary>Rechercher une fourniture</summary>'+input('Produit, format ou référence','produit','','search')+'<div class="actions"><a id="leroy" target="_blank" rel="noopener">Leroy Merlin</a><a id="plateforme" target="_blank" rel="noopener">La Plateforme du Bâtiment</a></div></details>'+priceReference());
+  const supplier=()=>{const q=$('[name=produit]').value.trim();$('#leroy').href='https://www.leroymerlin.fr/recherche/?q='+encodeURIComponent(q);
+    $('#plateforme').href=q?'https://www.google.com/search?q='+encodeURIComponent('site:laplateforme.com '+q):'https://www.laplateforme.com/';};
+  $('[name=produit]').oninput=supplier;supplier();
+  function render() {
+    const q = $('[name=query]').value.toLowerCase(),
+      cat = $('[name=category]').value;
+    const rows = state.services.filter(s => (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
+    $('#results').innerHTML = '<table><thead><tr><th>Prestation</th>' + state.tiers.map(t => '<th>' + t + '</th>').join('') + '</tr></thead><tbody>' + rows.map(s => '<tr><td>' + (admin() ? button('service-' + s.id, s.label, '', 'link') : esc(s.label)) + '<small>' + esc(s.category) + ' · ' + esc(s.unit) + '</small></td>' + s.prices.map(v => '<td>' + euros(v) + '</td>').join('') + '</tr>').join('') + '</tbody></table>' + (rows.length ? '' : '<p class="empty">Aucune prestation correspondante.</p>');
+  }
+  main.oninput = render;
+  render();
+}
+function activity(main) {
+  main.innerHTML = head('Activité de l’équipe', 'Les 100 derniers événements enregistrés.', actions(button('notify', 'Notifications navigateur', 'bell'), button('read', 'Marquer comme lu', 'check'))) + '<section class="card timeline">' + state.events.map(e => '<div><span class="mark"></span><section><b>' + esc(e.action) + '</b><small>' + esc(e.actor) + ' · ' + esc(new Date(e.time).toLocaleString('fr-FR')) + '</small>' + (state.documents.some(d => d.id === e.target) ? button('open-' + e.target, 'Voir le devis', 'arrow', 'subtle') : '') + '</section>' + (e.id > state.lastRead ? '<span class="badge b4">Nouveau</span>' : '') + '</div>').join('') + '</section>';
+}
+function settings(main) {
+  const c = state.company;
+  main.innerHTML = head('Administration', 'Identité de l’entreprise et accès de l’équipe.') + '<div class="admincols"><form class="card pad" id="company"><h2>Entreprise</h2>' + input('Raison sociale', 'name', c.name, 'text', 'required') + area('Adresse', 'address', c.address) + input('Téléphone', 'phone', c.phone) + input('E-mail', 'email', c.email, 'email') + area('Identifiants et mentions professionnelles', 'identity', c.identity) + area('Assurance : assureur, coordonnées, police et couverture géographique','insurance',c.insurance) + area('Médiateur de la consommation : nom et coordonnées','mediator',c.mediator) + area('Conditions par défaut des nouveaux devis', 'terms', c.terms) + '<button class="primary">Enregistrer</button></form><section class="card pad"><header><h2>Équipe</h2>' + button('user', 'Ajouter', 'plus') + '</header>' + state.members.map(m => '<div class="member"><div><b>' + esc(m.name) + '</b><small>' + esc(m.login) + ' · ' + esc(m.role) + ' · ' + (m.active ? 'Actif' : 'Suspendu') + '</small></div>' + button('user-' + m.id, 'Gérer', 'gear', 'subtle') + '</div>').join('') + '<h3>Assistant Gemini</h3><p>' + (state.ai ? 'Clé configurée sur le serveur.' : 'En attente de la clé GEMINI_API_KEY dans le fichier .env du serveur.') + '</p><h3>Notifications sur téléphone</h3><p>' + (state.mobileNotifications ? 'Envoi ntfy configuré.' : 'Le journal intégré est actif. Le serveur peut aussi prévenir un téléphone via un sujet ntfy privé.') + '</p></section></div>';
+  onForm('#company', async o => {
+    state.company = await api('company', {
+      ...o,
+      version: c.version
+    });
+    toast('Identité enregistrée.');
+    go('Administration');
+  });
+}
+function userForm(m) {
+  dialog(m ? 'Gérer ' + m.name : 'Nouveau membre', '<form id="member">' + (m ? select('Accès', 'active', [['1', 'Actif'], ['0', 'Suspendu']], m.active) : input('Nom', 'name', '', 'text', 'required') + input('Identifiant', 'login', '', 'text', 'required') + select('Rôle', 'role', state.roles.map(s => [s, s]), 'Terrain')) + input(m ? 'Nouveau mot de passe (facultatif)' : 'Mot de passe (12 caractères minimum)', 'password', '', 'password', (m ? '' : 'required ') + 'minlength="12" autocomplete="new-password"') + '<button class="primary wide">Enregistrer</button></form>');
+  onForm('#member', async o => {
+    await api('users', m ? {
+      id: m.id,
+      password: o.password,
+      active: o.active === '1'
+    } : o, m ? 'PUT' : 'POST');
+    modal.close();
+    if (m?.id === state.me.id) return login();
+    state = await api('state');
+    go('Administration');
+  });
+}
+let navigation=0;
+async function navigate(destination){
+  const ticket=++navigation,from=page,session=epoch;
+  if(dirty()&&!confirm('Quitter sans enregistrer les modifications du devis ?'))return;
+  const data=await api('state');
+  if(ticket!==navigation||page!==from||session!==epoch)return;
+  state=data;go(destination,null,true);
+}
+root.onclick = safe(async e => {
+  const a = e.target.closest('[data-act]')?.dataset.act;
+  if (!a || !state) return;
+  if(page==='Terrain فارسی'&&e.target.closest('.terrain'))return;
+  if(a==='terrain'){go('Terrain فارسی');return;}
+  if (a.startsWith('nav-')||a.startsWith('tab-')) {
+    await navigate(a.slice(4));
+  } else if (a.startsWith('recover-')) {
+    const d = localDrafts().find(x => x.id === a.slice(8));
+    if (!d) return;
+    const existing = state.documents.find(x => x.id === d.id);
+    if (existing) {
+      const live = await api('document/' + d.id);
+      if (live.version !== d.version || live.status !== 'Brouillon') {
+        if (!confirm('Le devis a évolué. Reprendre la saisie dans un nouveau devis ?')) return;
+        const originalId = d.id;
+        Object.assign(d, {
+          id: crypto.randomUUID(),
+          number: '',
+          version: 0,
+          status: 'Brouillon'
+        });
+        sessionStorage.setItem('ma-draft-' + state.me.id + '-' + d.id, JSON.stringify(d));
+        sessionStorage.removeItem('ma-draft-' + state.me.id + '-' + originalId);
+      }
+    }
+    go('editor', d);
+  } else if (a.startsWith('forget-')) {
+    if (confirm('Écarter la saisie locale ?')) {
+      sessionStorage.removeItem('ma-draft-' + state.me.id + '-' + a.slice(7));
+      go('Accueil');
+    }
+  } else if (a === 'new') go('editor', fresh(state));else if (a.startsWith('open-')) go('editor', await api('document/' + a.slice(5)));else if (a === 'menu') $('#sidebar').classList.toggle('show');else if (a === 'logout') {
+    if (dirty() && !confirm('Quitter sans enregistrer le devis ?')) return;
+    await api('logout', {});
+    for (const d of localDrafts()) sessionStorage.removeItem('ma-draft-' + state.me.id + '-' + d.id);
+    login();
+  } else if (a === 'service' || a.startsWith('service-')) serviceForm(state.services.find(s => s.id === a.slice(8)));else if (a === 'client' || a.startsWith('client-')) clientForm(state.customers.find(c => c.id === a.slice(7)));else if (a === 'user' || a.startsWith('user-')) userForm(state.members.find(m => m.id === Number(a.slice(5))));else if (a === 'read') {
+    state.lastRead = state.events[0]?.id || 0;
+    await api('read', {
+      id: state.lastRead
+    });
+    go('Activité');
+  } else if (a === 'notify') {
+    if (!('Notification' in window)) return toast('Ce navigateur ne propose pas les notifications système.');
+    const p = await Notification.requestPermission();
+    toast(p === 'granted' ? 'Notifications activées pendant l’ouverture de l’application.' : 'Notifications système désactivées.');
+  }
+});
+async function start() {
+  state = await api('state');
+  const current = ++epoch;
+  if(window.innerWidth<=900)go('Accueil',null,true);else go('editor',state.documents[0],true);clearInterval(poll);
+  poll = setInterval(async () => {
+    try {
+      const events = await api('events');
+      if (current !== epoch) return;
+      const last = state.events[0]?.id || 0;
+      if (events.length && events[0].id > last) {
+        state.events = events;
+        const b = $('.bar [data-act="nav-Activité"]');
+        if (b) b.innerHTML = icon('bell') + 'Activité (' + events.filter(e => e.id > state.lastRead).length + ')';
+        if (page === 'Activité') activity($('#main'));
+        if ('Notification' in window && Notification.permission === 'granted' && document.hidden) new Notification('MA RENOVATION', {
+          body: events[0].action
+        });
+      }
+    } catch {}
+  }, 20000);
+}
+window.addEventListener('sessionexpired', login);
+window.addEventListener('beforeunload', e => {
+  if (dirty()) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+if(false) navigator.serviceWorker.register('/sw.js').catch(() => {});
+start().catch(login);
+
+return {};})();
+</script></body></html>

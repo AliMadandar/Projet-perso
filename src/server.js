@@ -19,7 +19,7 @@ const w = workspace(store.db),
 const prod = process.env.NODE_ENV === 'production',
   origin = process.env.APP_ORIGIN;
 if (prod && (!origin || !origin.startsWith('https://'))) throw Error('APP_ORIGIN doit être une origine HTTPS en production.');
-const assets = new Set(['index.html','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js']);
+const assets = new Set(['index.html','theme.js','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js']);
 const types = {
   html: 'text/html',
   css: 'text/css',

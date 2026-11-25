@@ -23,7 +23,7 @@ export function notifications(w, env = process.env, send = fetch) {
         try {
           const headers = {
             'Content-Type': 'text/plain; charset=utf-8',
-            'Title': 'MA RENOVATION'
+            'Title': 'QuoteRelay'
           };
           if (env.NTFY_TOKEN) headers.Authorization = 'Bearer ' + env.NTFY_TOKEN;
           const result = await send(url, {

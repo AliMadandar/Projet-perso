@@ -39,22 +39,52 @@ export function installments(total,deposit,middle){
   const progress=Math.min(total-first,Math.round(total*middle/10000));
   return [first,progress,total-first-progress];
 }
+const tierLabels = ['Pose seule', 'Fourniture et pose · Essentiel', 'Fourniture et pose · Confort', 'Fourniture et pose · Premium'];
+
+export function quoteItems(lines, discount) {
+  const groups = [];
+  for (const line of lines) {
+    const lot = line.lot || '';
+    if (groups.at(-1)?.lot !== lot) groups.push({ lot, lines: [] });
+    groups.at(-1).lines.push(line);
+  }
+  const bodies = groups.map(group => {
+    const heading = group.lot
+      ? '<tr class="q-lot" role="row"><th scope="rowgroup" colspan="5" role="rowheader">' + esc(group.lot) + '</th></tr>'
+      : '';
+    let lotTotal = 0;
+    const rows = group.lines.map(({ label, strong, tier, quantity, unit, price, tax }) => {
+      const total = Math.round(quantity * price / 100);
+      lotTotal += total;
+      const detail = (key, name, value) => '<td class="quote-cell quote-' + key + '" role="cell"><span class="quote-cell-label" aria-hidden="true">' + name + '</span>' + value + '</td>';
+      return '<tr class="quote-line" role="row"><td class="quote-description" role="cell">' +
+        (strong ? '<strong>' + esc(label) + '</strong>' : esc(label)) +
+        '<small>' + esc(tierLabels[tier] || '') + '</small></td>' +
+        detail('quantity', 'Quantité', esc((quantity / 100).toLocaleString('fr-FR') + ' ' + unit)) +
+        detail('price', 'PU HT', euros(price)) + detail('tax', 'TVA', pct(tax)) +
+        detail('total', 'Total HT', euros(total)) + '</tr>';
+    }).join('');
+    const subtotal = group.lot ? '<tr class="quote-subtotal" role="row"><td colspan="5" role="cell"><span>Sous-total HT' +
+      (discount ? ' avant remise' : '') + '</span><strong>' + euros(lotTotal) + '</strong></td></tr>' : '';
+    return '<tbody role="rowgroup">' + heading + rows + subtotal + '</tbody>';
+  }).join('');
+  return '<table class="q-items quote-items" role="table" aria-label="Prestations du devis"><thead role="rowgroup"><tr role="row">' +
+    ['Prestation', 'Quantité', 'Prix unitaire HT', 'TVA', 'Total HT'].map(name => '<th scope="col" role="columnheader">' + name + '</th>').join('') +
+    '</tr></thead>' + (bodies || '<tbody role="rowgroup"><tr class="quote-empty" role="row"><td colspan="5" role="cell">Ajoutez une prestation pour chiffrer le chantier.</td></tr></tbody>') + '</table>';
+}
+
 export function editionPaper(d){
   const e=d.edition,c=d.company,m=amounts(d.lines,d.discount,d.deposit);
-  const t=d.lines.map((l,i)=>{
-    const lot=l.lot&&(!i||d.lines[i-1].lot!==l.lot)?'<tr class="q-lot"><td colspan="5">'+esc(l.lot)+'</td></tr>':'';
-    return lot+'<tr><td>'+(l.strong?'<strong>'+esc(l.label)+'</strong>':esc(l.label))+'<small>'+esc(['Pose seule','Fourniture et pose · Essentiel','Fourniture et pose · Confort','Fourniture et pose · Premium'][l.tier])+'</small></td><td>'+esc((l.quantity/100).toLocaleString('fr-FR')+' '+l.unit)+'</td><td>'+euros(l.price)+'</td><td>'+pct(l.tax)+'</td><td>'+euros(Math.round(l.quantity*l.price/100))+'</td></tr>';
-  }).join('');
   const nums=installments(m.total,d.deposit,e.middle),rates=[d.deposit,e.middle,10000-d.deposit-e.middle];
   const schedule=['À la signature','En cours de chantier','À la réception'].map((v,i)=>rates[i]?'<div><b>'+pct(rates[i])+'</b><span>'+v+'</span><strong>'+euros(nums[i])+'</strong></div>':'').join('');
   const sum=(k,v)=>'<div><span>'+esc(k)+'</span><b>'+euros(v)+'</b></div>';
-  const html='<article class="sheet couture '+(e.font==='Contemporain'?'sans-titres ':'')+'tone-'+(colors.includes(e.color)?e.color:'ambre')+(e.layout==='Compact'?' condensed':'')+'">'+
+  const html='<article class="sheet couture quote-document '+(e.font==='Contemporain'?'sans-titres ':'')+'tone-'+(colors.includes(e.color)?e.color:'ambre')+(e.layout==='Compact'?' condensed':'')+'">'+
     '<header class="q-head"><div class="q-brand"><img src="'+esc(e.logo||'/ma-logo.png')+'" alt=""><b>'+esc(c.name)+'</b></div><div><b>Devis</b><span>'+esc(d.number||'Brouillon')+'</span></div></header>'+
     '<div class="q-meta"><span>Émis le '+(d.issued?dateLabel(d.issued):'…')+'</span><span>Valable jusqu’au '+(d.valid?dateLabel(d.valid):'…')+'</span></div>'+
     '<div class="q-parties"><section><small>Entreprise</small><strong>'+esc(c.name)+'</strong>'+safeLines([c.address,c.phone,c.email,c.identity].filter(Boolean).join('\n'))+'</section><section><small>Destinataire</small><strong>'+esc(d.client.name||'Client à renseigner')+'</strong>'+safeLines([d.client.address,d.client.phone,d.client.email].filter(Boolean).join('\n'))+'</section></div>'+
     '<section class="q-title"><small>'+esc(e.trade)+'</small><h2>'+esc(d.title)+'</h2>'+(d.site?'<p>Chantier · '+esc(d.site)+'</p>':'')+'</section>'+
     fact('Objet des travaux',e.intro)+fact('Spécifications',e.spec)+fact('Fournitures',e.supply)+
-    '<table class="q-items"><thead><tr><th>Désignation</th><th>Quantité</th><th>PU HT</th><th>TVA</th><th>Total HT</th></tr></thead><tbody>'+(t||'<tr><td colspan="5">Ajoutez une prestation pour chiffrer le chantier.</td></tr>')+'</tbody></table>'+
+    quoteItems(d.lines,d.discount)+
     '<section class="q-sum">'+(d.discount?sum('Brut HT',m.gross)+sum('Remise '+pct(d.discount),-m.discount):'')+sum('Total HT',m.net)+m.taxes.map(t=>sum('TVA '+pct(t.rate),t.amount)).join('')+'<div class="q-grand"><span>Total TTC</span><strong>'+euros(m.total)+'</strong></div></section>'+
     '<section class="q-pay"><h3>Échéancier de règlement</h3><div>'+schedule+'</div></section>'+
     '<section class="q-conditions"><h3>Modalités du chantier</h3>'+fact('Paiement',e.payment)+fact('Intervention',e.timing)+fact('Déplacement et devis',[e.travel,e.fee].filter(Boolean).join(' '))+fact('Gestion des déchets',e.waste)+fact('Assurance professionnelle',c.insurance)+fact('Médiation de la consommation',c.mediator)+fact('Précisions',d.notes)+fact('Conditions particulières',d.terms)+'</section>'+

@@ -3,7 +3,7 @@ import { amounts, euros } from './money.js';
 import { photoDialog, photosPaper } from './photos.js';
 import { brief } from './brief.js';
 import { assistant } from './assistant.js';
-import { newEdition, editionDialog, editionPaper, lotIdeas } from './edition.js';
+import { newEdition, editionDialog, editionPaper, lotIdeas, quoteItems } from './edition.js';
 import {courrier} from './courrier.js';
 import { bindSheet } from './sheet.js';
 import { billingDialog } from './billing.js';
@@ -43,9 +43,8 @@ function unsignedPaper(d){
   if(d.edition)return editionPaper(d);
   const m = amounts(d.lines, d.discount, d.deposit),
     c = d.company;
-  const lines = d.lines.map((l, i) => ((i === 0 || l.lot !== d.lines[i - 1].lot) && l.lot ? '<tr class="lot"><td colspan="5">' + esc(l.lot) + '</td></tr>' : '') + '<tr><td>' + esc(l.label) + '<small>' + esc(['Pose seule', 'Fourniture et pose · Essentiel', 'Fourniture et pose · Confort', 'Fourniture et pose · Premium'][l.tier] || '') + '</small></td><td>' + decimal(l.quantity).toLocaleString('fr-FR') + ' ' + esc(l.unit) + '</td><td>' + euros(l.price) + '</td><td>' + percent(l.tax) + '</td><td>' + euros(Math.round(l.quantity * l.price / 100)) + '</td></tr>').join('');
   const row = (s, v, cls = '') => '<div class="' + cls + '"><span>' + esc(s) + '</span><strong>' + euros(v) + '</strong></div>';
-  return '<article class="sheet"><header><div class="paperbrand"><img src="/icon.svg" alt="">' + esc(c.name) + '</div><div><b>DEVIS</b><br>' + esc(d.number || 'Brouillon') + '</div></header><div class="letter"><div><small>ÉMETTEUR</small><strong>' + esc(c.name) + '</strong>' + [c.address, c.email, c.phone, c.identity].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div><small>DESTINATAIRE</small><strong>' + esc(d.client.name || 'Client à renseigner') + '</strong>' + [d.client.address, d.client.email, d.client.phone].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div><h2>' + esc(d.title) + '</h2>' + (d.site ? '<p>' + esc(d.site) + '</p>' : '') + '<p>Émis le ' + (d.issued ? dateLabel(d.issued) : '…') + ' · Valable jusqu’au ' + (d.valid ? dateLabel(d.valid) : '…') + '</p><table class="paperlines"><thead><tr><th>Prestation</th><th>Qté</th><th>PU HT</th><th>TVA</th><th>Total HT</th></tr></thead><tbody>' + (lines || '<tr><td colspan="5">Les prestations apparaîtront ici.</td></tr>') + '</tbody></table><div class="totals">' + (d.discount ? row('Sous-total HT', m.gross) + row('Remise (' + percent(d.discount) + ')', -m.discount) : '') + row('Total HT', m.net) + m.taxes.map(t => row('TVA ' + percent(t.rate), t.amount)).join('') + row('Total TTC', m.total, 'grand') + (d.deposit ? row('Acompte (' + percent(d.deposit) + ')', m.deposit) + row('Solde TTC', m.total - m.deposit) : '') + '</div>' + (d.notes ? '<section><b>Précisions</b><p>' + esc(d.notes) + '</p></section>' : '') + (d.terms ? '<section><b>Conditions</b><p>' + esc(d.terms) + '</p></section>' : '') + '<footer><b>Bon pour accord</b><p>Date et signature du client</p></footer>' + photosPaper(d.photos) + '</article>';
+  return '<article class="sheet quote-document"><header><div class="paperbrand"><img src="/icon.svg" alt="">' + esc(c.name) + '</div><div><b>DEVIS</b><br>' + esc(d.number || 'Brouillon') + '</div></header><div class="letter"><div><small>ÉMETTEUR</small><strong>' + esc(c.name) + '</strong>' + [c.address, c.email, c.phone, c.identity].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div><small>DESTINATAIRE</small><strong>' + esc(d.client.name || 'Client à renseigner') + '</strong>' + [d.client.address, d.client.email, d.client.phone].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div><h2>' + esc(d.title) + '</h2>' + (d.site ? '<p>' + esc(d.site) + '</p>' : '') + '<p>Émis le ' + (d.issued ? dateLabel(d.issued) : '…') + ' · Valable jusqu’au ' + (d.valid ? dateLabel(d.valid) : '…') + '</p>' + quoteItems(d.lines, d.discount) + '<div class="totals">' + (d.discount ? row('Sous-total HT', m.gross) + row('Remise (' + percent(d.discount) + ')', -m.discount) : '') + row('Total HT', m.net) + m.taxes.map(t => row('TVA ' + percent(t.rate), t.amount)).join('') + row('Total TTC', m.total, 'grand') + (d.deposit ? row('Acompte (' + percent(d.deposit) + ')', m.deposit) + row('Solde TTC', m.total - m.deposit) : '') + '</div>' + (d.notes ? '<section><b>Précisions</b><p>' + esc(d.notes) + '</p></section>' : '') + (d.terms ? '<section><b>Conditions</b><p>' + esc(d.terms) + '</p></section>' : '') + '<footer><b>Bon pour accord</b><p>Date et signature du client</p></footer>' + photosPaper(d.photos) + '</article>';
 }
 export function mountEditor(ctx, d) {
   const {
@@ -84,14 +83,21 @@ export function mountEditor(ctx, d) {
       }
     },lineDialog,()=>main.querySelector('[data-act=edition]').click(),(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
   }
-  function draw() {
+  function draw(changedLine = -1, changedTotal = false) {
     const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
     main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar"><div><b>Assistant chantier</b><small>Décrire ou dicter une zone à chiffrer</small></div>' + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Dicter un chantier', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
     if(editable&&d.edition){
       const grid=main.querySelector('.edgrid');grid.classList.toggle('sheet-mode',sheetMode);
-      const bar=main.querySelector('.previewtitle');bar.insertAdjacentHTML('beforeend',button('sheet',sheetMode?'Revenir au formulaire':'Modifier sur la feuille','edit'));
+      const bar=main.querySelector('.previewtitle');bar.insertAdjacentHTML('beforeend',button('sheet',sheetMode?'Revenir au formulaire':'Modifier sur la feuille','edit',sheetMode?'':'primary'));
       if(sheetMode)bar.insertAdjacentHTML('afterend','<div class="sheet-tools">'+button('edition','Style et rubriques','gear')+button('addline','Ajouter une ligne','plus')+'</div>');
       wireSheet();
+    }
+    if (changedLine >= 0) {
+      const row = sheetMode ? main.querySelectorAll('.quote-line')[changedLine] : main.querySelectorAll('.linebox')[changedLine];
+      row?.classList.add('quote-line-updated');
+      if (changedTotal) main.querySelector('.q-grand, .totals .grand')?.classList.add('quote-total-updated');
+      row?.querySelector('button')?.focus({ preventScroll: true });
+      if (sheetMode) row?.focus();
     }
     const next = {
       Brouillon: ['Validé', 'Archivé'],
@@ -168,15 +174,14 @@ export function mountEditor(ctx, d) {
       delete line.emphasis;
       delete line.categoryFilter;
       for (const k of ['price', 'quantity', 'tax']) line[k] = Math.round(Number(o[k]) * 100);
-      if (l) {
-        d.lines.splice(index, 1);
-        const target = Number(o.position || index + 1) - 1;
-        delete line.position;
-        d.lines.splice(target, 0, line);
-      } else d.lines.push(line);
+      const previousTotal = amounts(d.lines, d.discount).total;
+      const target = l ? Number(o.position || index + 1) - 1 : d.lines.length;
+      if (l) d.lines.splice(index, 1);
+      delete line.position;
+      d.lines.splice(target, 0, line);
       dirtyFlag();
       $('#modal').close();
-      draw();
+      draw(target, previousTotal !== amounts(d.lines, d.discount).total);
     });
   }
   async function save() {

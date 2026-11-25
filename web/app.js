@@ -29,7 +29,7 @@ const replace = (arr, v) => {
   const i = arr.findIndex(x => x.id === v.id);
   if (i < 0) arr.unshift(v);else arr[i] = v;
 };
-const brand = '<span class="brand"><img src="/icon.svg" alt=""><span>Quote<b>Relay</b></span></span>';
+const brand = '<span class="brand"><img src="/icon.svg" alt=""><b>Rivqo</b></span>';
 const safe = fn => async (...args) => {
   try {
     await fn(...args);
@@ -43,7 +43,7 @@ function login() {
   state = null;
   dirty = () => false;
   if (modal.open) modal.close();
-  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">Espace professionnel</p><h1>L’atelier<br>des devis.</h1></div></section><section class="signform"><div><p class="eyebrow">QuoteRelay</p><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
+  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">Espace professionnel</p><h1>L’atelier<br>des devis.</h1></div></section><section class="signform"><div><p class="eyebrow">Rivqo</p><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
   onForm('#login', async o => {
     await api('login', o);
     await start();
@@ -264,7 +264,7 @@ async function start() {
         const b = $('.bar [data-act="nav-Activité"]');
         if (b) b.innerHTML = icon('bell') + 'Activité (' + events.filter(e => e.id > state.lastRead).length + ')';
         if (page === 'Activité') activity($('#main'));
-        if ('Notification' in window && Notification.permission === 'granted' && document.hidden) new Notification('QuoteRelay', {
+        if ('Notification' in window && Notification.permission === 'granted' && document.hidden) new Notification('Rivqo', {
           body: events[0].action
         });
       }

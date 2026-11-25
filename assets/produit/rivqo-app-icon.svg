@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+  <title>Rivqo</title>
+  <rect width="64" height="64" fill="#30224a"/>
+  <path fill="#fff4e5" d="M15 46V29C15 21 21 15 29 15H46Q49 15 49 18V23Q49 26 46 26H32Q26 26 26 32V46Q26 49 23 49H18Q15 49 15 46Z"/>
+  <rect x="34" y="34" width="15" height="15" rx="2.8" fill="#ffba91"/>
+</svg>

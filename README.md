@@ -1,4 +1,4 @@
-# QuoteRelay — Devis et facturation
+# Rivqo — Devis et facturation
 
 Application de chiffrage avec espace terrain, bureau et administration. Les devis et les factures affichent l’identité de l’entreprise qui les émet. Le même projet sert l’interface sur ordinateur, la vue mobile et le portail client.
 

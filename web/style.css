@@ -1,5 +1,14 @@
-/* Couleurs de l’interface et du document imprimable. */
+@font-face {
+  font-family: "Inter UI";
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+/* Typographie et couleurs de l’interface et du document imprimable. */
 :root {
+  --font-ui: -apple-system, BlinkMacSystemFont, "Inter UI", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --paper-ink: #282038;
   --paper-muted: #62596c;
   --paper-rule: #e6dfe9;
@@ -37,7 +46,7 @@
   --accepted-accent: #1e6249;
   --radius: 14px;
   color-scheme: light;
-  font: 15px/1.5 "Inter","Segoe UI",Arial,sans-serif;
+  font: 15px/1.5 var(--font-ui);
   color: var(--ink);
   background: var(--bg);
 }

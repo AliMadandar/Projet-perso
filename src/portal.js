@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { fail, str } from './workspace.js';
 const digest = t => createHash('sha256').update(t).digest('hex');
+const expired = d => new Date().toISOString().slice(0, 10) > d.valid;
 const consent = 'Je signe ce devis et accepte les travaux, leur prix et les conditions qui y figurent.';
 export function portal(w) {
   const find = token => {
@@ -39,7 +40,7 @@ export function portal(w) {
     view(token) {
       const d = find(token);
       return {
-        document: d, consent, digest:digest(JSON.stringify(d)),
+        document: d, canReply: d.status === 'Envoyé' && !expired(d), consent, digest:digest(JSON.stringify(d)),
         reply: w.get('SELECT name,decision,at FROM replies WHERE document_id=?', d.id) || null
       };
     },
@@ -49,7 +50,7 @@ export function portal(w) {
           name = str(o.name, 120);
         if (!name || o.confirm !== true || !['Accepté', 'Refusé'].includes(o.decision)) fail('Précisez votre nom et confirmez votre décision.');
         if (d.status !== 'Envoyé') fail('Ce devis ne reçoit plus de réponse.', 409);
-        if (new Date().toISOString().slice(0, 10) > d.valid) fail('La durée de validité est dépassée.', 409);
+        if (expired(d)) fail('La durée de validité est dépassée.', 409);
         const at = new Date().toISOString();
         if(o.decision==='Accepté'){
           const snapshot=JSON.stringify(d),hash=digest(snapshot);

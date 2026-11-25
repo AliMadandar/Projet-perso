@@ -21,7 +21,7 @@ export function bindSheet(root,d,changed,lineDialog,style,moveLine){
     const label=f.querySelector('b')?.textContent,k=facts[label];if(k)text(f.querySelector('p'),['notes','terms'].includes(k)?d:d.edition,k,label,['notes','terms'].includes(k)?4000:1500);
   }
   let dragged=-1;
-  const rows=root.querySelectorAll('.q-items tbody tr:not(.q-lot)');
+  const rows=root.querySelectorAll('.quote-line, .quote-empty');
   rows.forEach((row,index)=>{
     action(row,d.lines[index]?'Modifier '+d.lines[index].label:'Ajouter une prestation',()=>lineDialog(d.lines[index]?index:-1));
     if(!d.lines[index]||rows.length<2)return;

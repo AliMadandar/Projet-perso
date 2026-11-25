@@ -1,6 +1,6 @@
-# MA RENOVATION — Atelier des devis
+# QuoteRelay — Devis et facturation
 
-Application de chiffrage pour une entreprise de rénovation, avec espace terrain, bureau et administration. Le même projet sert l’interface sur ordinateur, la vue mobile et le portail client.
+Application de chiffrage avec espace terrain, bureau et administration. Les devis et les factures affichent l’identité de l’entreprise qui les émet. Le même projet sert l’interface sur ordinateur, la vue mobile et le portail client.
 
 ## Essayer immédiatement
 

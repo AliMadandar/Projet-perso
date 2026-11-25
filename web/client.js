@@ -4,13 +4,29 @@ const token = location.hash.slice(1);
 async function render() {
   const {
     document: d,
-    reply,consent,digest
+    reply,canReply,consent,digest
   } = await api('portal', {
     token
   });
   const ink=[];
   const main = $('#clientView');
-  main.innerHTML = '<section class="clienttools">' + status(d.status) + button('print', 'Imprimer / PDF', 'print') + '</section>' + paper(d) + (reply ? '<div class="card pad clienttools"><b>Réponse enregistrée</b><p>' + esc(reply.decision) + ' · ' + esc(reply.name) + ' · ' + esc(new Date(reply.at).toLocaleDateString('fr-FR')) + '</p></div>' : d.status === 'Envoyé' ? '<form class="card pad clienttools" id="decision"><h2>Votre réponse</h2>' + input('Votre nom complet', 'name', '', 'text', 'required maxlength="120"') + select('Décision', 'decision', [['', 'Choisir…'], ['Accepté', 'Signer et accepter le devis'], ['Refusé', 'Refuser le devis']], '') + '<div id="inkArea" hidden><label>Tracer votre signature au doigt ou à la souris (facultatif)</label><canvas id="ink" width="480" height="128" aria-label="Zone de signature manuscrite"></canvas>'+button('erase','Effacer le tracé')+'</div><label class="agree"><input type="checkbox" required><span id="consentText">Je confirme ma décision pour ce devis.</span></label><button class="primary">Transmettre ma réponse</button></form>' : '');
+  const notice = d.status === 'Validé'
+    ? 'Vous pourrez répondre dès que l’entreprise aura marqué ce devis comme envoyé.'
+    : d.status === 'Envoyé' && !canReply ? 'La durée de validité du devis est dépassée.' : '';
+  const toolbar = '<section class="clienttools client-toolbar">' + status(d.status) +
+    button('print', 'Imprimer / PDF', 'print') +
+    (canReply && !reply ? button('reply', 'Répondre au devis', 'arrow', 'primary') : '') + '</section>';
+  const response = reply
+    ? '<div class="card pad clienttools"><h2 tabindex="-1" id="client-response">Réponse enregistrée</h2><p>' +
+      esc(reply.decision) + ' · ' + esc(reply.name) + ' · ' + esc(new Date(reply.at).toLocaleDateString('fr-FR')) + '</p></div>'
+    : canReply ? '<form class="card pad clienttools" id="decision"><h2 tabindex="-1">Votre réponse</h2>' + input('Votre nom complet', 'name', '', 'text', 'required maxlength="120"') + select('Décision', 'decision', [['', 'Choisir…'], ['Accepté', 'Signer et accepter le devis'], ['Refusé', 'Refuser le devis']], '') + '<div id="inkArea" hidden><label>Tracer votre signature au doigt ou à la souris (facultatif)</label><canvas id="ink" width="480" height="128" aria-label="Zone de signature manuscrite"></canvas>'+button('erase','Effacer le tracé')+'</div><label class="agree"><input type="checkbox" required><span id="consentText">Je confirme ma décision pour ce devis.</span></label><button class="primary">Transmettre ma réponse</button></form>' : '';
+  main.innerHTML = toolbar + (notice ? '<p class="clienttools client-status">' + notice + '</p>' : '') + paper(d) + response;
+  const respond = $('[data-act=reply]');
+  if (respond) respond.onclick = () => {
+    const heading = $('#decision h2');
+    heading.focus({ preventScroll: true });
+    heading.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
   $('[data-act=print]').onclick = () => window.print();
   const canvas=$('#ink');
   if(canvas){
@@ -35,6 +51,7 @@ async function render() {
       confirm: true, consent,digest,ink
     });
     await render();
+    $('#client-response').focus();
   });
 }
 render().catch(e => {

@@ -12,6 +12,27 @@ import { writer } from './writer.js';
 import { niloButton } from './nilo.js';
 const decimal = n => Number((n / 100).toFixed(2));
 const percent = n => decimal(n).toLocaleString('fr-FR') + ' %';
+const quoteStatuses = {
+  Brouillon: ['Validé', 'Archivé'],
+  Validé: ['Envoyé', 'Archivé'],
+  Envoyé: ['Accepté', 'Refusé'],
+  Accepté: ['Archivé'],
+  Refusé: ['Archivé']
+};
+const statusLabels = {
+  Validé: 'Valider et figer',
+  Envoyé: 'Marquer comme envoyé',
+  Accepté: 'Marquer accepté',
+  Refusé: 'Marquer refusé',
+  Archivé: 'Archiver'
+};
+const assistantStatuses = {
+  validateQuote: 'Validé',
+  markSent: 'Envoyé',
+  acceptQuote: 'Accepté',
+  rejectQuote: 'Refusé',
+  archiveQuote: 'Archivé'
+};
 export function fresh(state) {
   return {
     id: crypto.randomUUID(),
@@ -57,7 +78,8 @@ export function mountEditor(ctx, d) {
     editable = d.status === 'Brouillon' && state.me.role !== 'Lecture';
   const recoveryKey = 'ma-draft-' + state.me.id + '-' + d.id;
   let dirty = !d.version,
-    busy = false;
+    busy = false,
+    edits = 0;
   const remember = () => {
     if (!editable || location.protocol === 'file:') return;
     try {
@@ -71,6 +93,7 @@ export function mountEditor(ctx, d) {
   };
   const dirtyFlag = () => {
     dirty = true;
+    edits++;
     remember();
   };
   const qrow = (l, i) => '<div class="linebox"><div class="lineinfo"><b>' + esc(l.label) + '</b><small>' + esc(l.lot || 'Prestation') + ' · ' + esc(state.tiers[l.tier]) + ' · ' + decimal(l.quantity) + ' ' + esc(l.unit) + ' × ' + euros(l.price) + '</small></div><strong>' + euros(Math.round(l.price * l.quantity / 100)) + '</strong>' + (editable ? button('line-' + i, 'Modifier', 'edit', 'icononly') + button('del-' + i, 'Retirer', 'trash', 'icononly') : '') + '</div>';
@@ -82,7 +105,7 @@ export function mountEditor(ctx, d) {
       for(const field of $('#quoteForm').elements){
         if(['title','site','notes','terms','client.name'].includes(field.name))field.value=field.name==='client.name'?d.client.name:d[field.name];
       }
-    },lineDialog,()=>main.querySelector('[data-act=edition]').click(),(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
+    },lineDialog,openQuoteStyle,(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
   }
   function draw(changedLine = -1, changedTotal = false) {
     const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
@@ -102,20 +125,9 @@ export function mountEditor(ctx, d) {
       if (sheetMode) paperRow?.focus();
       else formRow?.querySelector('button')?.focus({ preventScroll: true });
     }
-    const next = {
-      Brouillon: ['Validé', 'Archivé'],
-      Validé: ['Envoyé', 'Archivé'],
-      Envoyé: ['Accepté', 'Refusé'],
-      Accepté: ['Archivé'],
-      Refusé: ['Archivé']
-    };
-    $('#workflow').innerHTML = (d.version && state.me.role==='Administrateur' ? (next[d.status] || []).map(s => button('status-' + s, {
-      Validé: 'Valider et figer',
-      Envoyé: 'Marquer comme envoyé',
-      Accepté: 'Marquer accepté',
-      Refusé: 'Marquer refusé',
-      Archivé: 'Archiver'
-    }[s])).join('') : '') + (d.version && state.me.role !== 'Lecture' ? button('duplicate', 'Dupliquer', 'copy') : '');
+    $('#workflow').innerHTML = (d.version && state.me.role==='Administrateur'
+      ? (quoteStatuses[d.status] || []).map(s => button('status-' + s, statusLabels[s])).join('') : '') +
+      (d.version && state.me.role !== 'Lecture' ? button('duplicate', 'Dupliquer', 'copy') : '');
     if (d.version && state.me.role==='Administrateur' && !['Brouillon', 'Archivé'].includes(d.status)) {
       if (['Validé', 'Envoyé'].includes(d.status)) $('#workflow').insertAdjacentHTML('beforeend', button('share', 'Créer un lien client', 'arrow'));
       $('#workflow').insertAdjacentHTML('beforeend', button('revoke', 'Désactiver le lien'));
@@ -191,14 +203,22 @@ export function mountEditor(ctx, d) {
     });
   }
   async function save() {
-    if (!$('#quoteForm').reportValidity()) throw Error('Vérifiez les champs du devis.');
+    if (!main.querySelector('#quoteForm').reportValidity()) throw Error('Vérifiez les champs du devis.');
+    const submitted = edits;
     const saved = await api('documents', d);
-    Object.assign(d, saved);
+    if (!main.isConnected) return false;
     done(saved);
+    if (edits !== submitted) {
+      Object.assign(d, { number: saved.number, version: saved.version, updated: saved.updated });
+      remember();
+      toast('Le devis a été enregistré. Vérifiez et enregistrez aussi les modifications saisies depuis.');
+      return false;
+    }
+    Object.assign(d, saved);
     dirty = false;
     forget();
     draw();
-    return saved;
+    return true;
   }
   function openBrief(message) {
     brief(state, items => {
@@ -229,26 +249,226 @@ export function mountEditor(ctx, d) {
       go('editor', saved, true);
     });
   }
-  async function openAssistantTask(task, active) {
-    if (task.action === 'find') return true;
-    if (task.action === 'quote' || task.action === 'rewrite') {
-      if (!editable) throw Error('Ouvre un brouillon pour préparer ou reformuler le devis.');
-      if (task.action === 'rewrite') openWriter(task.prompt);
-      else if (state.ai) openBrief(task.prompt);
+
+  function openQuoteStyle() {
+    editionDialog(d, state, (edition, deposit) => {
+      d.edition = edition;
+      d.deposit = deposit;
+      dirtyFlag();
+      draw();
+    });
+  }
+
+  function openQuotePhotos() {
+    photoDialog(d.photos || [], photos => {
+      d.photos = photos;
+      dirtyFlag();
+      draw();
+    });
+  }
+
+  function focusQuoteField(name) {
+    sheetMode = false;
+    mobilePane = 'saisie';
+    draw();
+    const field = main.querySelector('#quoteForm').elements.namedItem(name);
+    const group = field.closest('details');
+    if (group) group.open = true;
+    const modal = $('#modal');
+    const focus = () => { if (field.isConnected) field.focus(); };
+    if (modal.open) modal.addEventListener('close', focus, { once: true });
+    else focus();
+  }
+
+  function reviewDiscount(discount) {
+    if (discount == null) return focusQuoteField('discount');
+    if (!Number.isSafeInteger(discount) || discount < 0 || discount > 10000) {
+      throw Error('La remise doit être comprise entre 0 et 100 %.');
+    }
+    const before = amounts(d.lines, d.discount).total;
+    const after = amounts(d.lines, discount).total;
+    dialog('Appliquer une remise', '<p>Remise proposée de ' + percent(discount) +
+      '. Le total TTC passerait de ' + euros(before) + ' à ' + euros(after) + '.</p>' +
+      '<p class="hint">La remise sera modifiée dans le brouillon. Enregistre ensuite le devis après vérification.</p>' +
+      '<form id="discountReview"><button class="primary">Appliquer au brouillon</button></form>');
+    onForm('#discountReview', () => {
+      if (!main.isConnected) return;
+      d.discount = discount;
+      dirtyFlag();
+      $('#modal').close();
+      focusQuoteField('discount');
+    });
+  }
+
+  function duplicateQuote() {
+    const copy = fresh(state);
+    Object.assign(copy, {
+      title: d.title + ' · copie',
+      site: d.site,
+      client: { ...d.client },
+      lines: structuredClone(d.lines),
+      photos: structuredClone(d.photos || []),
+      terms: d.terms,
+      notes: d.notes,
+      discount: d.discount,
+      edition: structuredClone(d.edition),
+      deposit: d.deposit
+    });
+    return go('editor', copy) === true;
+  }
+
+  async function shareQuote(active = () => main.isConnected) {
+    const link = await api('share', { id: d.id });
+    if (!active()) return false;
+    dialog('Lien privé du devis', '<p>Transmettez ce lien au client. Le lien précédent est remplacé. Une réponse est possible au statut « Envoyé », pendant la validité du devis.</p>' +
+      input('Lien valable 30 jours', 'publicLink', new URL(link.path, location.origin).href, 'text', 'readonly') +
+      button('copylink', 'Copier le lien', 'copy'));
+    const field = $('[name=publicLink]');
+    field.select();
+    $('[data-act=copylink]').onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(field.value);
+        toast('Lien copié.');
+      } catch {
+        field.select();
+        toast('Copiez le lien sélectionné.');
+      }
+    };
+    return true;
+  }
+
+  async function revokeShare(active = () => main.isConnected) {
+    if (!confirm('Désactiver le lien de ce devis ?') || !active()) return false;
+    await api('share', { id: d.id, revoke: true });
+    if (active()) toast('Lien désactivé.');
+    return true;
+  }
+
+  async function openQuoteHistory(active = () => main.isConnected) {
+    const versions = await api('history/' + d.id);
+    if (!active()) return false;
+    dialog('Versions de ' + d.number, versions.map(v => '<div class="member"><div><b>Version ' + v.version +
+      ' · ' + esc(v.status) + '</b><small>' + esc(new Date(v.at).toLocaleString('fr-FR')) + '</small></div>' +
+      button('version-' + v.version, 'Consulter') + '</div>').join(''));
+    const modal = $('#modal');
+    modal.querySelectorAll('[data-act^="version-"]').forEach(control => control.onclick = async () => {
+      const stillHere = () => main.isConnected && control.isConnected && modal.open;
+      try {
+        const old = await api('revision/' + d.id + '/' + control.dataset.act.slice(8));
+        if (stillHere()) dialog('Version ' + old.version, paper(old));
+      } catch (error) {
+        if (stillHere()) toast(error.message);
+      }
+    });
+    return true;
+  }
+
+  async function downloadSignature(active = () => main.isConnected) {
+    const data = await api('evidence/' + d.id);
+    if (!active()) return false;
+    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = d.number + '-signature.json';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return true;
+  }
+
+  async function changeQuoteStatus(next, active = () => main.isConnected) {
+    if (!d.version) throw Error('Enregistre le brouillon avant de modifier son statut.');
+    if (!quoteStatuses[d.status]?.includes(next)) throw Error('Ce statut est indisponible pour ce devis.');
+    if (!confirm('Confirmer le statut « ' + next + ' » pour ce devis ?') || !active()) return false;
+    if (dirty && !(await save())) return false;
+    if (!active()) return false;
+    const updated = await api('status', { id: d.id, status: next, version: d.version });
+    if (!main.isConnected) return false;
+    dirty = false;
+    done(updated);
+    go('editor', updated);
+    if (updated.status === 'Envoyé') toast('Devis marqué comme envoyé.', 'sent');
+    return true;
+  }
+
+  const draftTasks = {
+    quote: task => {
+      if (state.ai) openBrief(task.prompt);
       else if (!task.newQuote) openGuidedQuote();
+    },
+    rewrite: task => openWriter(task.prompt),
+    editQuote: () => focusQuoteField('title'),
+    addLine: () => lineDialog(-1),
+    quoteDates: () => focusQuoteField('issued'),
+    quoteClient: () => focusQuoteField('client.name'),
+    quoteStyle: openQuoteStyle,
+    quotePhotos: openQuotePhotos,
+    guidedQuote: openGuidedQuote,
+    quoteDiscount: task => reviewDiscount(task.discount),
+    saveQuote: async (_task, active) => {
+      if (!confirm('Enregistrer ce brouillon et ses modifications ?') || !active()) return false;
+      if (!(await save())) return false;
+      if (active()) toast('Devis enregistré.');
       return true;
     }
-    if (state.me.role !== 'Administrateur') throw Error('Cette action est réservée à l’administration.');
-    if (task.action === 'billing') {
-      if (!['Accepté', 'Archivé'].includes(d.status)) throw Error('Ouvre un devis accepté pour accéder à la facturation.');
-      return billingDialog(d, { kind: task.kind, delivery: task.delivery, gmail: state.gmail, active });
+  };
+
+  async function openAssistantTask(task, active = () => true) {
+    const current = () => main.isConnected && active();
+    if (!current() || busy) return false;
+    busy = true;
+    try {
+      const { action } = task;
+      if (action === 'find') return true;
+      if (action === 'quotePdf') {
+        window.print();
+        return true;
+      }
+      if (action === 'quoteHistory') {
+        if (!d.version) throw Error('Enregistre le devis pour consulter ses versions.');
+        return await openQuoteHistory(current);
+      }
+      if (Object.hasOwn(draftTasks, action)) {
+        if (!editable) throw Error('Ouvre un brouillon modifiable pour cette action.');
+        return (await draftTasks[action](task, current)) !== false;
+      }
+      if (action === 'duplicate') {
+        if (!d.version || state.me.role === 'Lecture') throw Error('Ouvre un devis enregistré avec un rôle qui permet de le dupliquer.');
+        return duplicateQuote();
+      }
+      if (state.me.role !== 'Administrateur') throw Error('Cette action est réservée à l’administration.');
+      if (Object.hasOwn(assistantStatuses, action)) return await changeQuoteStatus(assistantStatuses[action], current);
+      if (['billing', 'invoicePayment', 'invoicePdf'].includes(action)) {
+        if (!['Accepté', 'Archivé'].includes(d.status)) throw Error('Ouvre un devis accepté pour accéder à la facturation.');
+        return await billingDialog(d, {
+          operation: action, kind: task.kind, delivery: task.delivery, gmail: state.gmail,
+          invoiceNumber: task.invoiceNumber, amount: task.amount, active: current
+        });
+      }
+      if (action === 'shareQuote') {
+        if (!['Validé', 'Envoyé'].includes(d.status)) throw Error('Valide le devis avant de créer un lien privé.');
+        if (!confirm('Créer un lien privé pour ce devis ? Le lien précédent sera remplacé.') || !current()) return false;
+        return await shareQuote(current);
+      }
+      if (action === 'revokeShare') {
+        if (['Brouillon', 'Archivé'].includes(d.status)) throw Error('Ce devis ne dispose pas de lien client à désactiver.');
+        return await revokeShare(current);
+      }
+      if (action === 'signatureProof') {
+        if (!d.signature) throw Error('Ce devis ne comporte pas de dossier de signature.');
+        return await downloadSignature(current);
+      }
+      if (action === 'quoteMail' || action === 'reminder') {
+        const reminder = action === 'reminder';
+        if (!(reminder ? ['Validé', 'Envoyé'] : ['Validé']).includes(d.status)) {
+          throw Error('Vérifie le statut du devis avant de préparer le message au client.');
+        }
+        openMail(reminder);
+        return true;
+      }
+      throw Error('Cette action est indisponible dans le devis.');
+    } finally {
+      busy = false;
     }
-    const reminder = task.action === 'reminder';
-    if (!(reminder ? ['Validé', 'Envoyé'] : ['Validé']).includes(d.status)) {
-      throw Error('Vérifie le statut du devis avant de préparer le message au client.');
-    }
-    openMail(reminder);
-    return true;
   }
   main.onclick = async e => {
     const a = e.target.closest('[data-act]')?.dataset.act;
@@ -257,12 +477,10 @@ export function mountEditor(ctx, d) {
     try {
       if(a.startsWith('pane-')){mobilePane=a.slice(5);if(mobilePane!=='apercu')sheetMode=false;draw();main.querySelector('[data-act="'+a+'"]').focus();}
       if(a==='sheet'){sheetMode=!sheetMode;if(window.innerWidth<=900)mobilePane=sheetMode?'apercu':'saisie';draw();const focus=window.innerWidth<=900&&!sheetMode?'[data-act=pane-saisie]':'[data-act=sheet]';main.querySelector(focus).focus();}
-      if(a==='billing')await billingDialog(d,{gmail:state.gmail});
-      if(a==='evidence'){
-        const data=await api('evidence/'+d.id),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=d.number+'-signature.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-      }
+      if (a === 'billing') await billingDialog(d, { gmail: state.gmail, active: () => main.isConnected });
+      if (a === 'evidence') await downloadSignature();
       if (a === 'return') go('Devis');
-      if(a==='edition')editionDialog(d,state,(edition,deposit)=>{d.edition=edition;d.deposit=deposit;dirtyFlag();draw();});
+      if (a === 'edition') openQuoteStyle();
       if (a === 'writer') openWriter();
       if (a === 'reminder' || a === 'mail') openMail(a === 'reminder');
       if (a === 'addline') lineDialog(-1);
@@ -273,80 +491,17 @@ export function mountEditor(ctx, d) {
         draw();
       }
       if (a === 'save') {
-        await save();
-        toast('Devis enregistré.');
+        if (await save()) toast('Devis enregistré.');
       }
       if (a === 'brief') openBrief();
       if (a === 'assist') openGuidedQuote();
-      if (a === 'duplicate') {
-        const n = fresh(state);
-        Object.assign(n, {
-          title: d.title + ' · copie',
-          site: d.site,
-          client: {
-            ...d.client
-          },
-          lines: structuredClone(d.lines),
-          photos: structuredClone(d.photos || []),
-          terms: d.terms,
-          notes: d.notes,
-          discount: d.discount,
-          edition:structuredClone(d.edition), deposit: d.deposit
-        });
-        go('editor', n);
-      }
-      if (a === 'share') {
-        const link = await api('share', {
-          id: d.id
-        });
-        dialog('Lien privé du devis', '<p>Transmettez ce lien au client. Le lien précédent est remplacé. Une réponse est possible au statut « Envoyé », pendant la validité du devis.</p>' + input('Lien valable 30 jours', 'publicLink', new URL(link.path, location.origin).href, 'text', 'readonly') + button('copylink', 'Copier le lien', 'copy'));
-        const el = $('[name=publicLink]');
-        el.select();
-        $('[data-act=copylink]').onclick = async () => {
-          try {
-            await navigator.clipboard.writeText(el.value);
-            toast('Lien copié.');
-          } catch {
-            el.select();
-            toast('Copiez le lien sélectionné.');
-          }
-        };
-      }
-      if (a === 'revoke' && confirm('Désactiver le lien de ce devis ?')) {
-        await api('share', {
-          id: d.id,
-          revoke: true
-        });
-        toast('Lien désactivé.');
-      }
-      if (a === 'history') {
-        const versions = await api('history/' + d.id);
-        dialog('Versions de ' + d.number, versions.map(v => '<div class="member"><div><b>Version ' + v.version + ' · ' + esc(v.status) + '</b><small>' + esc(new Date(v.at).toLocaleString('fr-FR')) + '</small></div>' + button('version-' + v.version, 'Consulter') + '</div>').join(''));
-        $('#modal').querySelectorAll('[data-act^="version-"]').forEach(b => b.onclick = async () => {
-          try {
-            const old = await api('revision/' + d.id + '/' + b.dataset.act.slice(8));
-            dialog('Version ' + old.version, paper(old));
-          } catch (err) {
-            toast(err.message);
-          }
-        });
-      }
-      if (a === 'photos') photoDialog(d.photos || [], photos=>{d.photos=photos;dirtyFlag();draw();});
+      if (a === 'duplicate') duplicateQuote();
+      if (a === 'share') await shareQuote();
+      if (a === 'revoke') await revokeShare();
+      if (a === 'history') await openQuoteHistory();
+      if (a === 'photos') openQuotePhotos();
       if (a === 'print') window.print();
-      if (a.startsWith('status-')) {
-        const s = a.slice(7);
-        if (!confirm('Confirmer le statut « ' + s + ' » pour ce devis ?')) return;
-        if (dirty) await save();
-        const updated = await api('status', {
-          id: d.id,
-          status: s,
-          version: d.version
-        });
-        dirty = false;
-        done(updated);
-        go('editor', updated);
-        if (updated.status === 'Envoyé') toast('Devis marqué comme envoyé.', 'sent');
-      }
+      if (a.startsWith('status-')) await changeQuoteStatus(a.slice(7));
     } catch (err) {
       toast(err.message);
     } finally {

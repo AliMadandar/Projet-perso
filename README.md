@@ -32,7 +32,20 @@ Cette page donne aussi accès aux notifications du navigateur et aux information
 
 Ouvrez **Nilo** dans la barre de l’atelier, ou **Demander à Nilo** depuis un devis. Les raccourcis dépendent du dossier ouvert et de votre rôle. Avec Gemini configuré, vous pouvez écrire une demande comme « Retrouve le devis de Camille Martin » ou « Prépare une facture d’acompte pour le devis DEV-00001 ». Gemini interprète le texte saisi et Rivqo recherche les dossiers sur le serveur. Si plusieurs devis conviennent, choisissez celui qui correspond à votre demande.
 
+| Demande | Résultat dans Rivqo |
+| --- | --- |
+| « Mets une remise de 10 % sur ce devis » | Présente le total avant et après remise. Vous pouvez appliquer la remise au brouillon puis enregistrer le devis. |
+| « Enregistre un règlement de 125,50 € sur la facture FAC-000001 » | Retrouve la facture et prépare le règlement. Vérifiez le montant, la date et le mode de paiement avant d’enregistrer. |
+| « Crée une fiche pour Camille Martin » | Ouvre le formulaire client avec le nom saisi dans la demande. |
+| « Passe le tarif Essentiel de Pose de carrelage à 65 € HT » | Ouvre la prestation et préremplit uniquement le tarif demandé. |
+| « Prépare l’export des devis acceptés » | Ouvre la liste des devis avec le filtre correspondant, puis vous laisse exporter le résultat. |
+| « Passe l’atelier en mode sombre » | Propose d’appliquer le thème dans ce navigateur. |
+
+Le registre d’actions de Nilo couvre la préparation et le suivi des devis, les factures et règlements, le carnet clients, le catalogue, l’équipe, l’activité et les réglages. Rivqo vérifie l’action choisie par Gemini, les droits, le dossier et son état, puis réutilise l’écran et les validations de l’atelier. Un montant ou une remise préremplis viennent d’une valeur écrite dans la demande. Les confirmations du parcours restent requises avant une émission, un envoi, une validation de devis ou le remplacement d’un lien client.
+
 Pour chiffrer des travaux, Nilo ouvre l’assistant chantier avec votre demande. Relisez les prestations et choisissez celles à ajouter au brouillon. Pour facturer, Nilo ouvre la facture existante ou prépare le formulaire sur un devis accepté. L’émission et l’envoi Gmail demandent chacun votre confirmation. L’envoi utilise l’adresse figurant sur la facture émise et le PDF de cette facture. Si Gmail est indisponible, le PDF reste accessible depuis la facture.
+
+Depuis un devis accepté, essayez « Prépare une facture d’acompte pour ce devis ». Gemini interprète la demande avec le statut du devis ouvert. Les identifiants, adresses et montants du dossier sont résolus dans Rivqo. Si Nilo vous demande une précision, répondez dans la même fenêtre. Les derniers échanges utiles accompagnent cette réponse, par exemple pour comprendre « Pour Camille Martin » après une demande de facture.
 
 ## Personnaliser le document client
 
@@ -74,7 +87,7 @@ GEMINI_API_KEY=votre_cle
 GEMINI_MODEL=gemini-3.8-flash
 ```
 
-Redémarrez le processus Node. Avec Docker, relancez `docker compose up -d app` pour reprendre la configuration. Connectez-vous en administrateur et ouvrez **Paramètres → Intégrations → Tester la connexion Gemini**. Rivqo envoie un court message de test et affiche le résultat. La clé reste côté serveur.
+Redémarrez le processus Node. Avec Docker, relancez `docker compose up -d app` pour reprendre la configuration. Connectez-vous en administrateur et ouvrez **Paramètres → Intégrations → Tester la connexion Gemini**. Rivqo vérifie que le modèle comprend une demande d’acompte fictive dans le même format que Nilo. La clé reste côté serveur.
 
 Si le modèle par défaut répond par une erreur serveur temporaire, Rivqo essaie une fois avec `gemini-3.5-flash-lite`. Le test indique quel modèle a répondu. Vous pouvez aussi choisir ce modèle directement en renseignant `GEMINI_MODEL=gemini-3.5-flash-lite` dans `.env`.
 

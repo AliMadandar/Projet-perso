@@ -113,8 +113,9 @@ function home(main) {
     month: 'long'
   }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
 }
-function docs(main) {
-  main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'].map(s => [s, s]), 'Tous') + '</div><div id="results"></div></section>';
+const quoteFilters = ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'];
+function docs(main, statusFilter = 'Tous') {
+  main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', quoteFilters.map(s => [s, s]), statusFilter) + '</div><div id="results"></div></section>';
   let view;
   function render() {
     const q = $('[name=query]').value.toLocaleLowerCase('fr'),
@@ -129,8 +130,8 @@ function docs(main) {
 function clientForm(c = {
   id: crypto.randomUUID(),
   version: 0
-}) {
-  dialog(c.version ? 'Fiche client' : 'Nouveau client', '<form id="client">' + input('Nom / société', 'name', c.name, 'text', 'required') + area('Adresse de facturation', 'address', c.address) + input('Téléphone', 'phone', c.phone, 'tel') + input('E-mail', 'email', c.email, 'email') + '<button class="primary wide">Enregistrer le client</button></form>');
+}, { name = c.name, email = c.email } = {}) {
+  dialog(c.version ? 'Fiche client' : 'Nouveau client', '<form id="client">' + input('Nom / société', 'name', name, 'text', 'required') + area('Adresse de facturation', 'address', c.address) + input('Téléphone', 'phone', c.phone, 'tel') + input('E-mail', 'email', email, 'email') + '<button class="primary wide">Enregistrer le client</button></form>');
   onForm('#client', async o => {
     replace(state.customers, await api('customers', {
       ...o,
@@ -141,22 +142,29 @@ function clientForm(c = {
     go('Clients');
   });
 }
-function clients(main) {
-  main.innerHTML = head('Carnet clients', 'Coordonnées réutilisables dans vos devis.', canEdit() ? button('client', 'Nouveau client', 'plus', 'primary') : '') + '<div class="filters">' + input('Rechercher un client', 'query', '', 'search') + '</div><div id="results" class="cards"></div>';
+function clients(main, selected) {
+  main.innerHTML = head('Carnet clients', 'Coordonnées réutilisables dans vos devis.', canEdit() ? button('client', 'Nouveau client', 'plus', 'primary') : '') + '<div class="filters">' + input('Rechercher un client', 'query', selected?.name || '', 'search') + '</div><div id="results" class="cards"></div>';
   function render() {
     const q = $('[name=query]').value.toLowerCase(),
-      result = state.customers.filter(c => [c.name, c.email, c.phone].join(' ').toLowerCase().includes(q));
+      result = state.customers.filter(c => selected ? c.id === selected.id : [c.name, c.email, c.phone].join(' ').toLowerCase().includes(q));
     $('#results').innerHTML = result.map(c => '<article class="tile"><span class="avatar">' + esc(c.name.slice(0, 1)) + '</span><h3>' + esc(c.name) + '</h3><p>' + esc(c.address) + '</p><p>' + esc(c.email) + '<br>' + esc(c.phone) + '</p>' + (canEdit() ? button('client-' + c.id, 'Modifier', 'edit', 'subtle') : '') + '</article>').join('') || '<p class="empty">Aucun client dans cette vue.</p>';
   }
-  main.oninput = render;
+  main.oninput = () => {
+    selected = undefined;
+    render();
+  };
   render();
 }
 function serviceForm(s = {
   id: crypto.randomUUID(),
   version: 0,
   prices: [0, 0, 0, 0]
-}) {
-  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', s.label, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + state.tiers.map((t, i) => input(t + ' (€ HT)', 'p' + i, s.prices[i] / 100, 'number', 'min="0" max="100000" step=".01" required')).join('') + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
+}, { name = s.label, tier, price } = {}) {
+  const prices = state.tiers.map((label, i) => {
+    const cents = i === tier && Number.isSafeInteger(price) ? price : s.prices[i];
+    return input(label + ' (€ HT)', 'p' + i, cents / 100, 'number', 'min="0" max="100000" step=".01" required');
+  }).join('');
+  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', name, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + prices + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
   onForm('#service', async o => {
     replace(state.services, await api('services', {
       ...s,
@@ -168,8 +176,8 @@ function serviceForm(s = {
     toast('Catalogue mis à jour.');
   });
 }
-function catalogue(main) {
-  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
+function catalogue(main, selected) {
+  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', selected?.label || '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
   main.insertAdjacentHTML('beforeend','<details><summary>Rechercher une fourniture</summary>'+input('Produit, format ou référence','produit','','search')+'<div class="actions"><a id="leroy" target="_blank" rel="noopener">Leroy Merlin</a><a id="plateforme" target="_blank" rel="noopener">La Plateforme du Bâtiment</a></div></details>'+priceReference());
   const supplier=()=>{const q=$('[name=produit]').value.trim();$('#leroy').href='https://www.leroymerlin.fr/recherche/?q='+encodeURIComponent(q);
     $('#plateforme').href=q?'https://www.google.com/search?q='+encodeURIComponent('site:laplateforme.com '+q):'https://www.laplateforme.com/';};
@@ -177,10 +185,14 @@ function catalogue(main) {
   function render() {
     const q = $('[name=query]').value.toLowerCase(),
       cat = $('[name=category]').value;
-    const rows = state.services.filter(s => (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
+    const rows = state.services.filter(s => selected ? s.id === selected.id :
+      (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
     $('#results').innerHTML = '<table><thead><tr><th>Prestation</th>' + state.tiers.map(t => '<th>' + t + '</th>').join('') + '</tr></thead><tbody>' + rows.map(s => '<tr><td>' + (admin() ? button('service-' + s.id, s.label, '', 'link') : esc(s.label)) + '<small>' + esc(s.category) + ' · ' + esc(s.unit) + '</small></td>' + s.prices.map(v => '<td>' + euros(v) + '</td>').join('') + '</tr>').join('') + '</tbody></table>' + (rows.length ? '' : '<p class="empty">Aucune prestation correspondante.</p>');
   }
-  main.oninput = render;
+  main.oninput = event => {
+    if (event.target.name !== 'produit') selected = undefined;
+    render();
+  };
   render();
 }
 function activity(main) {
@@ -197,6 +209,28 @@ function updateNotificationPreference() {
     unsupported: 'Ce navigateur ne propose pas les notifications système.'
   }[permission];
   status.parentElement.querySelector('[data-act="notify"]').hidden = permission !== 'default';
+}
+function applyThemePreference(main, value) {
+  const saved = window.rivqoTheme.setPreference(value);
+  main.querySelector('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' :
+    'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
+}
+async function testGemini(main) {
+  const check = main.querySelector('[data-act="gemini-check"]');
+  if (!check || check.disabled) return;
+  const feedback = main.querySelector('#gemini-feedback');
+  check.disabled = true;
+  feedback.textContent = 'Test de connexion en cours…';
+  try {
+    const { model, fallback } = await api('gemini/check', {});
+    feedback.textContent = fallback
+      ? 'Le modèle de secours ' + model + ' a compris la demande d’acompte de test.'
+      : model + ' a compris la demande d’acompte de test de Nilo.';
+  } catch (error) {
+    feedback.textContent = error.message;
+  } finally {
+    check.disabled = false;
+  }
 }
 function preferences(main) {
   const theme = window.rivqoTheme;
@@ -235,26 +269,9 @@ function preferences(main) {
       geminiSettings + '</section>' : '') +
     '</div>';
 
-  main.querySelector('.theme-options').onchange = e => {
-    const saved = theme.setPreference(e.target.value);
-    $('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' : 'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
-  };
+  main.querySelector('.theme-options').onchange = e => applyThemePreference(main, e.target.value);
   const check = main.querySelector('[data-act="gemini-check"]');
-  if (check) check.onclick = async () => {
-    const feedback = main.querySelector('#gemini-feedback');
-    check.disabled = true;
-    feedback.textContent = 'Test de connexion en cours…';
-    try {
-      const { model, fallback } = await api('gemini/check', {});
-      feedback.textContent = fallback
-        ? 'Gemini a répondu avec le modèle de secours ' + model + '.'
-        : model + ' a répondu au message de test.';
-    } catch (error) {
-      feedback.textContent = error.message;
-    } finally {
-      check.disabled = false;
-    }
-  };
+  if (check) check.onclick = () => testGemini(main);
   updateNotificationPreference();
 }
 function administration(main) {
@@ -269,8 +286,8 @@ function administration(main) {
     go('Administration');
   });
 }
-function userForm(m) {
-  dialog(m ? 'Gérer ' + m.name : 'Nouveau membre', '<form id="member">' + (m ? select('Accès', 'active', [['1', 'Actif'], ['0', 'Suspendu']], m.active) : input('Nom', 'name', '', 'text', 'required') + input('Identifiant', 'login', '', 'text', 'required') + select('Rôle', 'role', state.roles.map(s => [s, s]), 'Terrain')) + input(m ? 'Nouveau mot de passe (facultatif)' : 'Mot de passe (12 caractères minimum)', 'password', '', 'password', (m ? '' : 'required ') + 'minlength="12" autocomplete="new-password"') + '<button class="primary wide">Enregistrer</button></form>');
+function userForm(m, name = '') {
+  dialog(m ? 'Gérer ' + m.name : 'Nouveau membre', '<form id="member">' + (m ? select('Accès', 'active', [['1', 'Actif'], ['0', 'Suspendu']], m.active) : input('Nom', 'name', name, 'text', 'required') + input('Identifiant', 'login', '', 'text', 'required') + select('Rôle', 'role', state.roles.map(s => [s, s]), 'Terrain')) + input(m ? 'Nouveau mot de passe (facultatif)' : 'Mot de passe (12 caractères minimum)', 'password', '', 'password', (m ? '' : 'required ') + 'minlength="12" autocomplete="new-password"') + '<button class="primary wide">Enregistrer</button></form>');
   onForm('#member', async o => {
     await api('users', m ? {
       id: m.id,
@@ -284,7 +301,68 @@ function userForm(m) {
   });
 }
 let navigation=0;
+const niloPages = {
+  exportQuotes: 'Devis',
+  createClient: 'Clients', findClient: 'Clients', editClient: 'Clients',
+  createService: 'Catalogue', findService: 'Catalogue', editService: 'Catalogue',
+  companySettings: 'Administration', inviteMember: 'Administration', editMember: 'Administration',
+  appearance: 'Paramètres', notificationSettings: 'Paramètres', geminiCheck: 'Paramètres',
+  markActivityRead: 'Activité'
+};
+
+async function markActivityRead() {
+  const session = epoch;
+  const id = state.events[0]?.id || 0;
+  await api('read', { id });
+  if (session !== epoch) return;
+  state.lastRead = Math.max(state.lastRead, id);
+  if (page === 'Activité') go('Activité');
+}
+
+async function openNiloWorkspaceTask(task, active) {
+  const destination = task.action === 'workspace' ? task.destination : niloPages[task.action];
+  if (![...Object.keys(navs), 'Administration', 'Terrain فارسی', 'Plus'].includes(destination)) {
+    throw Error('Cette action n’est pas disponible dans l’atelier.');
+  }
+  if (!(await navigate(destination, active))) return false;
+  const main = $('#main');
+  if (task.action === 'exportQuotes' && quoteFilters.includes(task.quoteStatus)) docs(main, task.quoteStatus);
+
+  if (task.action === 'createClient' && canEdit()) {
+    clientForm(undefined, { name: task.name, email: task.email });
+  }
+  if (task.action === 'findClient' || task.action === 'editClient') {
+    const client = state.customers.find(record => record.id === task.id);
+    if (!client) throw Error('Cette fiche client est introuvable.');
+    if (task.action === 'findClient') clients(main, client);
+    else if (canEdit()) clientForm(client, { email: task.email });
+  }
+  if (task.action === 'createService' && admin()) serviceForm(undefined, { name: task.name });
+  if (task.action === 'findService' || task.action === 'editService') {
+    const service = state.services.find(record => record.id === task.id);
+    if (!service) throw Error('Cette prestation est introuvable.');
+    if (task.action === 'findService') catalogue(main, service);
+    else if (admin()) serviceForm(service, { tier: task.tier, price: task.price });
+  }
+  if (task.action === 'inviteMember' && admin()) userForm(undefined, task.name);
+  if (task.action === 'editMember' && admin()) {
+    const member = state.members.find(record => record.id === task.id);
+    if (!member) throw Error('Ce compte est introuvable.');
+    userForm(member);
+  }
+  if (task.action === 'appearance' && ['auto', 'light', 'dark'].includes(task.theme)) {
+    applyThemePreference(main, task.theme);
+  }
+  if (task.action === 'notificationSettings') {
+    main.querySelector('#notification-permission')?.parentElement.scrollIntoView({ block: 'nearest' });
+  }
+  if (task.action === 'geminiCheck' && admin()) void testGemini(main);
+  if (task.action === 'markActivityRead') await markActivityRead();
+  return true;
+}
+
 async function openNiloAction(task, active) {
+  if (task.scope && task.scope !== 'quote') return openNiloWorkspaceTask(task, active);
   const session = epoch;
   const from = page;
   if (task.action === 'find' && !task.id) return go('Devis');
@@ -297,11 +375,11 @@ async function openNiloAction(task, active) {
   if (!editor) throw Error('Ouvre un devis pour utiliser cette action.');
   return await editor.openAssistantTask(task, active);
 }
-async function navigate(destination){
+async function navigate(destination, active = () => true){
   const ticket=++navigation,from=page,session=epoch;
   if(dirty()&&!confirm('Quitter sans enregistrer les modifications du devis ?'))return;
   const data=await api('state');
-  if(ticket!==navigation||page!==from||session!==epoch)return;
+  if(ticket!==navigation||page!==from||session!==epoch||!active())return;
   if ((state.events[0]?.id || 0) > (data.events[0]?.id || 0)) data.events = state.events;
   data.lastRead = Math.max(data.lastRead, state.lastRead);
   state=data;go(destination,null,true);
@@ -311,7 +389,7 @@ root.onclick = safe(async e => {
   const a = e.target.closest('[data-act]')?.dataset.act;
   if (!a || !state) return;
   if(page==='Terrain فارسی'&&e.target.closest('.terrain'))return;
-  if(a==='nilo'){openNilo(state, editor?.document, openNiloAction);return;}
+  if(a==='nilo'){openNilo(state, editor?.document, openNiloAction, page);return;}
   if(a==='terrain'){go('Terrain فارسی');return;}
   if (a.startsWith('nav-')||a.startsWith('tab-')) {
     await navigate(a.slice(4));
@@ -346,11 +424,7 @@ root.onclick = safe(async e => {
     for (const d of localDrafts()) sessionStorage.removeItem('ma-draft-' + state.me.id + '-' + d.id);
     login();
   } else if (a === 'service' || a.startsWith('service-')) serviceForm(state.services.find(s => s.id === a.slice(8)));else if (a === 'client' || a.startsWith('client-')) clientForm(state.customers.find(c => c.id === a.slice(7)));else if (a === 'user' || a.startsWith('user-')) userForm(state.members.find(m => m.id === Number(a.slice(5))));else if (a === 'read') {
-    state.lastRead = state.events[0]?.id || 0;
-    await api('read', {
-      id: state.lastRead
-    });
-    go('Activité');
+    await markActivityRead();
   } else if (a === 'notify') {
     if (!('Notification' in window)) return toast('Ce navigateur ne propose pas les notifications système.');
     const p = await Notification.requestPermission();

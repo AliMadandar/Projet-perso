@@ -20,7 +20,7 @@ function rejectResponse(status, error) {
     fail('Le projet Google ne permet pas cet appel à Gemini. Vérifiez la disponibilité de l’API et la facturation dans Google AI Studio.', 502);
   }
   if (status === 400) {
-    fail('Gemini a refusé la demande. Vérifiez que le modèle configuré accepte le format envoyé.', 502);
+    fail('Gemini a refusé la demande (HTTP 400). Vérifiez que le modèle configuré accepte le format envoyé.', 502);
   }
   fail('Gemini est temporairement indisponible (HTTP ' + status + '). Réessayez dans un moment.', 503);
 }

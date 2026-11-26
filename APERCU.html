@@ -2055,28 +2055,31 @@ function invoicePaper(i){
  const rows=i.lines.map(l=>'<tr><td>'+esc(l.label)+'</td><td>'+esc(l.quantity/100)+' '+esc(l.unit)+'</td><td>'+euros(l.price)+'</td><td>'+esc(l.tax/100)+' %</td></tr>').join('');
  return '<article class="sheet couture tone-ambre invoice"><header class="q-head"><div class="q-brand"><img src="'+esc(i.logo||'data:image/png;base64,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')+'" alt=""><b>'+esc(i.company.name)+'</b></div><div><b>'+caption(i.kind)+'</b><span>'+esc(i.number)+'</span></div></header><div class="q-meta"><span>Émission · '+dateLabel(i.issued)+'</span><span>Échéance · '+dateLabel(i.due)+'</span></div><div class="q-parties"><section><small>Entreprise</small>'+party(i.company)+'</section><section><small>Client</small>'+party(i.client)+'</section></div><section class="q-title"><small>Devis '+esc(i.quote)+'</small><h2>'+esc(i.title)+'</h2><p>'+esc(i.site)+'</p></section><p>Prestation ou versement du '+dateLabel(i.service)+'</p><p>'+esc(i.details)+'</p><h3>Prestations du devis de référence</h3><table class="q-items"><thead><tr><th>Désignation</th><th>Quantité</th><th>PU HT</th><th>TVA</th></tr></thead><tbody>'+rows+'</tbody></table><p>Montant contractuel TTC · '+euros(i.quoteTotal)+(i.discount?' · Remise du devis '+esc(i.discount/100)+' %':'')+'</p>'+i.prior.map(p=>'<div>Déjà facturé · '+esc(p.number)+' · '+euros(p.total)+'</div>').join('')+'<h3>Montants de cette facture</h3><table class="q-items"><thead><tr><th>Taux</th><th>Base HT</th><th>TVA</th></tr></thead><tbody>'+i.taxes.map(t=>'<tr><td>'+esc(t.rate/100)+' %</td><td>'+euros(t.base)+'</td><td>'+euros(t.amount)+'</td></tr>').join('')+'</tbody></table><div class="q-sum"><div><span>Total HT</span><b>'+euros(i.taxes.reduce((v,t)=>v+t.base,0))+'</b></div><div class="q-grand"><strong>Total TTC</strong><strong>'+euros(i.total)+'</strong></div></div><h3>Conditions de règlement</h3><p class="preserve">'+esc(i.terms)+'</p></article>';
 }
-async function billingDialog(d, { kind, delivery = false, gmail, active = () => true } = {}) {
+async function billingDialog(d, {
+  operation = 'billing', kind, delivery = false, gmail, invoiceNumber, amount, active = () => true
+} = {}) {
   let book = await api('billing/' + d.id);
   if (!active()) return false;
   const remaining = () => book.total - book.billed;
   const canIssue = () => d.status === 'Accepté' && remaining() > 0;
   const action = name => $('#modal [data-act="' + name + '"]');
   const hint = text => '<p class="hint">' + esc(text) + '</p>';
+  const inCurrentDialog = form => form.isConnected && $('#modal').open;
 
-  function show(feedback = '') {
+  function show(feedback = '', invoices = book.invoices, selectPayment = false) {
     const overview = [['Devis TTC', book.total], ['Facturé', book.billed], ['Encaissé', book.paid], ['Reste à facturer', remaining()]];
     dialog('Factures et règlements', '<p>' + esc(d.number) + ' · ' + esc(d.title) + '</p>' +
       (feedback ? hint(feedback) : '') +
       '<div class="bill-stats">' + overview.map(([label, value]) => '<div><small>' + label + '</small><strong>' + euros(value) + '</strong></div>').join('') + '</div>' +
-      book.invoices.map(i => '<section class="bill-entry"><div><strong>' + esc(i.number) + ' · ' + caption(i.kind) +
+      invoices.map(i => '<section class="bill-entry"><div><strong>' + esc(i.number) + ' · ' + caption(i.kind) +
         '</strong><p>' + euros(i.total) + ' TTC · ' + (paid(i) === i.total ? 'Soldée' : 'À encaisser ' + euros(i.total - paid(i))) +
         '</p></div><div>' + button('view-' + i.seq, 'Ouvrir') +
-        (paid(i) < i.total ? button('pay-' + i.seq, 'Saisir un règlement') : '') + '</div></section>').join('') +
+        (paid(i) < i.total ? button('pay-' + i.seq, 'Saisir un règlement', '', selectPayment ? 'primary' : '') : '') + '</div></section>').join('') +
       (canIssue() ? button('issue', 'Créer une facture', 'plus', 'primary') : ''));
-    for (const i of book.invoices) {
+    for (const i of invoices) {
       action('view-' + i.seq).onclick = () => view(i);
       const settle = action('pay-' + i.seq);
-      if (settle) settle.onclick = () => payment(i);
+      if (settle) settle.onclick = () => payment(i, selectPayment ? amount : undefined);
     }
     const create = action('issue');
     if (create) create.onclick = () => issue();
@@ -2095,7 +2098,7 @@ async function billingDialog(d, { kind, delivery = false, gmail, active = () => 
     const review = gmail !== undefined && !i.mailState
       ? button('prepareInvoiceMail', 'Préparer l’envoi Gmail', 'arrow', delivery ? 'primary' : '') : '';
     dialog(i.number, '<div class="actions">' + button('ledger', 'Revenir au suivi du devis', 'back') +
-      button('printBill', 'Imprimer / PDF', 'print') + review + '</div>' +
+      button('printBill', 'Imprimer / PDF', 'print', operation === 'invoicePdf' ? 'primary' : '') + review + '</div>' +
       (notice ? hint(notice) : '') + invoicePaper(i) + '<h3>Règlements reçus</h3>' +
       i.payments.map(p => '<p>' + dateLabel(p.day) + ' · ' + esc(p.method) + ' · ' + euros(p.amount) + '</p>').join(''));
     back();
@@ -2134,6 +2137,7 @@ async function billingDialog(d, { kind, delivery = false, gmail, active = () => 
       if (!gmail || !to) return;
       if (!confirm('Envoyer ' + i.number + ' à ' + to + ' avec son PDF ?')) return;
       book = await api('invoice/mail', { id: d.id, seq: i.seq, to, message: values.message, confirm: true });
+      if (!inCurrentDialog(form)) return;
       view(book.invoices.find(invoice => invoice.seq === i.seq));
       toast('Facture envoyée par Gmail.', 'sent');
     });
@@ -2171,6 +2175,7 @@ async function billingDialog(d, { kind, delivery = false, gmail, active = () => 
     onForm('#issueForm', async values => {
       if (!confirm('Émettre définitivement cette facture de ' + values.amount + ' € TTC ?')) return;
       book = await api('invoice', { ...values, id: d.id, amount: Math.round(Number(values.amount) * 100), count: book.invoices.length, request: key });
+      if (!inCurrentDialog(form)) return;
       const issued = book.invoices.find(invoice => invoice.seq === book.issuedInvoiceSeq);
       if (delivery && issued) view(issued);
       else show();
@@ -2178,25 +2183,47 @@ async function billingDialog(d, { kind, delivery = false, gmail, active = () => 
     });
   }
 
-  function payment(i) {
+  function payment(i, proposed) {
     const left = i.total - paid(i);
+    if (left <= 0) {
+      show('La facture ' + i.number + ' est déjà soldée.');
+      return;
+    }
+    const invalid = proposed != null && (!Number.isSafeInteger(proposed) || proposed <= 0 || proposed > left);
+    const value = invalid ? '' : (proposed ?? left) / 100;
     const key = crypto.randomUUID();
-    dialog('Règlement · ' + i.number, button('ledger', 'Retour au suivi', 'back') + '<form id="paymentForm">' +
-      input('Montant reçu (€)', 'amount', left / 100, 'number', 'required min=".01" max="' + left / 100 + '" step=".01"') +
+    dialog('Règlement · ' + i.number, button('ledger', 'Retour au suivi', 'back') +
+      (invalid ? hint('Vérifiez le montant reçu. Il doit être positif et ne pas dépasser le solde de ' + euros(left) + '.') : '') +
+      '<form id="paymentForm">' +
+      input('Montant reçu (€)', 'amount', value, 'number', 'required min=".01" max="' + left / 100 + '" step=".01"') +
       input('Date d’encaissement', 'day', today(), 'date', 'required') +
       select('Mode de paiement', 'method', ['Virement', 'Chèque', 'Carte', 'Espèces'].map(value => [value, value]), 'Virement') +
       '<button class="primary">Enregistrer le règlement</button></form>');
     back();
-    onForm('#paymentForm', async values => {
+    onForm('#paymentForm', async (values, form) => {
       book = await api('payment', { ...values, id: d.id, seq: i.seq, amount: Math.round(Number(values.amount) * 100), request: key });
-      show();
+      if (inCurrentDialog(form)) show();
     });
   }
 
-  if (kinds.includes(kind)) {
-    const matches = book.invoices.filter(invoice => invoice.kind === kind);
+  const matches = invoiceNumber
+    ? book.invoices.filter(invoice => invoice.number === invoiceNumber)
+    : kinds.includes(kind) ? book.invoices.filter(invoice => invoice.kind === kind) : book.invoices;
+  if (invoiceNumber && !matches.length) throw Error('Ce numéro de facture ne correspond pas à ce devis.');
+  if (operation === 'invoicePayment' || operation === 'invoicePdf') {
+    const settling = operation === 'invoicePayment';
+    if (matches.length === 1) {
+      if (settling) payment(matches[0], amount);
+      else view(matches[0]);
+    } else {
+      const message = matches.length ? 'Choisissez la facture concernée.' : 'Aucune facture émise ne correspond à cette demande.';
+      show(message, matches, settling);
+    }
+  } else if (invoiceNumber) {
+    view(matches[0]);
+  } else if (kinds.includes(kind)) {
     if (matches.length === 1) view(matches[0]);
-    else if (matches.length > 1) show('Plusieurs factures correspondent. Ouvrez celle que vous souhaitez traiter.');
+    else if (matches.length > 1) show('Plusieurs factures correspondent. Ouvrez celle que vous souhaitez traiter.', matches);
     else if (canIssue()) issue(kind);
     else show(d.status === 'Accepté' ? 'Le devis est déjà entièrement facturé.' : 'Le devis doit être accepté pour émettre une nouvelle facture.');
   } else show(delivery ? 'Ouvrez une facture pour vérifier son destinataire et préparer son envoi.' : '');
@@ -2220,10 +2247,56 @@ const actionLabels = {
   rewrite: 'Ouvrir la rédaction',
   quoteMail: 'Préparer le mail du devis',
   reminder: 'Préparer une relance',
-  billing: 'Ouvrir le suivi'
+  billing: 'Ouvrir le suivi',
+  duplicate: 'Créer une copie du devis',
+  saveQuote: 'Vérifier et enregistrer le brouillon',
+  editQuote: 'Ouvrir le brouillon',
+  addLine: 'Préparer une prestation',
+  quoteDates: 'Ouvrir les dates et conditions',
+  quoteClient: 'Vérifier le client du devis',
+  quoteStyle: 'Personnaliser le devis',
+  quotePhotos: 'Ouvrir les photos',
+  guidedQuote: 'Ouvrir le carrelage guidé',
+  quotePdf: 'Ouvrir l’impression du devis',
+  quoteHistory: 'Consulter les versions',
+  shareQuote: 'Préparer le lien client',
+  revokeShare: 'Vérifier la désactivation du lien',
+  validateQuote: 'Vérifier la validation du devis',
+  markSent: 'Vérifier le statut « Envoyé »',
+  acceptQuote: 'Vérifier le statut « Accepté »',
+  rejectQuote: 'Vérifier le statut « Refusé »',
+  archiveQuote: 'Vérifier l’archivage',
+  signatureProof: 'Télécharger le dossier de signature',
+  quoteDiscount: 'Préparer la remise',
+  invoicePayment: 'Préparer le règlement',
+  invoicePdf: 'Ouvrir le PDF de la facture',
+  exportQuotes: 'Préparer l’export des devis',
+  createClient: 'Préparer une fiche client',
+  editClient: 'Ouvrir la fiche à modifier',
+  findClient: 'Consulter la fiche client',
+  createService: 'Préparer une prestation du catalogue',
+  editService: 'Préparer le tarif à modifier',
+  findService: 'Consulter les tarifs',
+  companySettings: 'Ouvrir la fiche entreprise',
+  inviteMember: 'Préparer un compte membre',
+  editMember: 'Ouvrir le compte à gérer',
+  notificationSettings: 'Ouvrir les réglages des notifications',
+  geminiCheck: 'Tester la connexion Gemini',
+  appearance: 'Ouvrir les réglages d’apparence',
+  markActivityRead: 'Marquer l’activité comme lue'
 };
 
-function shortcuts(state, current) {
+function actionLabel(plan) {
+  if (plan.action === 'workspace') return 'Ouvrir ' + plan.destination;
+  if (plan.action === 'billing' && plan.kind) return 'Préparer la facture · ' + plan.kind;
+  if (plan.action === 'appearance') {
+    const theme = { auto: 'automatique', light: 'clair', dark: 'sombre' }[plan.theme];
+    if (theme) return 'Appliquer le thème ' + theme;
+  }
+  return actionLabels[plan.action] || 'Vérifier l’action';
+}
+
+function shortcuts(state, current, page) {
   const editable = state.me.role !== 'Lecture';
   const admin = state.me.role === 'Administrateur';
   if (editable && current?.status === 'Brouillon') return [
@@ -2242,15 +2315,43 @@ function shortcuts(state, current) {
       ? ['arrow', 'Préparer l’envoi', { action: 'quoteMail', current: true }]
       : ['bell', 'Préparer une relance', { action: 'reminder', current: true }]
   ];
+  if (page === 'Clients' && editable) return [
+    ['users', 'Préparer une fiche client', { scope: 'workspace', action: 'createClient' }]
+  ];
+  if (page === 'Catalogue' && admin) return [
+    ['plus', 'Préparer une prestation', { scope: 'workspace', action: 'createService' }]
+  ];
+  if (page === 'Devis') return [
+    ...(editable ? [['doc', 'Préparer un devis', { action: 'quote', newQuote: true }]] : []),
+    ['download', 'Préparer l’export CSV', { scope: 'workspace', action: 'exportQuotes' }]
+  ];
+  if (page === 'Activité') return [
+    ['check', 'Marquer comme lu', { scope: 'workspace', action: 'markActivityRead' }],
+    ['bell', 'Régler les notifications', { scope: 'workspace', action: 'notificationSettings' }]
+  ];
+  if (page === 'Paramètres') return [
+    ['gear', 'Choisir le thème', { scope: 'workspace', action: 'appearance' }],
+    ...(admin && state.ai ? [['arrow', 'Tester Gemini', { scope: 'workspace', action: 'geminiCheck' }]] : [])
+  ];
   return [
     ...(editable ? [['doc', 'Préparer un devis', { action: 'quote', newQuote: true }]] : []),
     ['book', 'Retrouver un devis', { action: 'find' }]
   ];
 }
 
-function openNilo(state, current, onAction) {
-  const choices = shortcuts(state, current);
+const examples = {
+  Clients: 'Crée une fiche pour Camille Martin',
+  Catalogue: 'Retrouve le tarif de la pose de carrelage',
+  Devis: 'Prépare l’export des devis acceptés',
+  Paramètres: 'Passe l’atelier en mode sombre',
+  Activité: 'Marque l’activité comme lue'
+};
+
+function openNilo(state, current, onAction, page) {
+  const choices = shortcuts(state, current, page);
   const scope = current ? [current.number || 'Brouillon', current.title].filter(Boolean).join(' · ') : '';
+  const example = current?.status === 'Accepté' ? 'Prépare une facture d’acompte pour ce devis' :
+    examples[page] || 'Retrouve le devis de Camille Martin';
   dialog('Nilo', '<div class="nilo-panel"><div class="nilo-intro">' + portrait +
     '<div><h3>Qu’est-ce qu’on prépare ?</h3>' +
     (scope ? '<p>' + esc(scope) + '</p>' : '<p>Ton assistant dans l’atelier Rivqo.</p>') +
@@ -2258,8 +2359,8 @@ function openNilo(state, current, onAction) {
     choices.map(([mark, label], i) => button('nilo-quick-' + i, label, mark)).join('') + '</div>' +
     '<div class="nilo-log" role="log" aria-live="polite" aria-label="Réponse de Nilo"></div>' +
     (state.ai
-      ? '<form class="nilo-compose"><label for="nilo-prompt">Ta demande</label><textarea id="nilo-prompt" rows="2" maxlength="1800" required placeholder="Ex. Prépare une facture d’acompte pour Camille Martin"></textarea>' +
-        '<div class="nilo-compose-footer"><small>Le texte de ta demande est traité par Gemini.</small><button class="primary" type="submit">' + icon('arrow') + 'Envoyer</button></div></form>'
+      ? '<form class="nilo-compose"><label for="nilo-prompt">Ta demande</label><textarea id="nilo-prompt" rows="2" maxlength="1800" required placeholder="Ex. ' + esc(example) + '"></textarea>' +
+        '<div class="nilo-compose-footer"><small>Gemini interprète ta demande et les précisions que tu ajoutes.</small><button class="primary" type="submit">' + icon('arrow') + 'Envoyer</button></div></form>'
       : '<p class="hint">Les raccourcis sont disponibles. Active Gemini dans les paramètres serveur pour écrire une demande à Nilo.</p>') +
     '</div>');
 
@@ -2269,6 +2370,7 @@ function openNilo(state, current, onAction) {
   const form = panel.querySelector('.nilo-compose');
   const field = panel.querySelector('#nilo-prompt');
   let busy = false;
+  let history = [];
 
   function setBusy(value) {
     busy = value;
@@ -2279,6 +2381,14 @@ function openNilo(state, current, onAction) {
     const note = document.createElement('p');
     note.className = 'nilo-reply';
     note.textContent = text;
+    log.append(note);
+    return note;
+  }
+
+  function say(prompt) {
+    const note = document.createElement('p');
+    note.className = 'nilo-request';
+    note.textContent = prompt;
     log.append(note);
   }
 
@@ -2302,38 +2412,48 @@ function openNilo(state, current, onAction) {
   }
 
   function showPlan(plan, prompt) {
-    if (plan.action === 'forbidden') return tell('Cette action demande un autre rôle dans Rivqo.');
+    if (plan.action === 'forbidden') {
+      tell('Cette action demande un autre rôle dans Rivqo.');
+      return;
+    }
+    if (plan.action === 'clarify') {
+      tell(plan.question);
+      return plan.question;
+    }
     if (plan.action === 'help') {
-      return tell('Je peux retrouver un devis, aider à le rédiger ou à le chiffrer, et préparer une facture, un envoi ou une relance selon tes accès.');
+      tell('Je peux t’aider avec les devis, les factures, le carnet clients, le catalogue et les réglages de l’atelier, selon ton rôle.');
+      return;
     }
     if (plan.hint) tell(plan.hint);
     const candidates = plan.candidates || [];
     if (candidates.length) {
-      const label = candidates.length > 1 ? 'Choisis le devis concerné.' : 'Voici le devis que j’ai retrouvé.';
+      const subject = { customer: 'la fiche client concernée', service: 'la prestation concernée', member: 'le compte concerné' }[plan.scope];
+      const label = candidates.length > 1 ? 'Choisis ' + (subject || 'le devis concerné') + '.' : actionLabel(plan);
       tell(label);
       if (plan.action === 'billing' && plan.delivery) {
         tell('Tu pourras vérifier le montant et le destinataire avant l’envoi.');
       }
       const list = document.createElement('div');
       list.className = 'nilo-results';
-      list.innerHTML = candidates.map((quote, index) =>
+      list.innerHTML = candidates.map((record, index) =>
         '<button type="button" data-quote-choice="' + index + '"><span><strong>' +
-        esc(quote.title) + '</strong><small>' + esc([quote.number, quote.clientName].filter(Boolean).join(' · ')) +
-        '</small></span>' + status(quote.status) + icon('arrow') + '</button>'
+        esc(record.title) + '</strong><small>' + esc(record.detail || [record.number, record.clientName].filter(Boolean).join(' · ')) +
+        '</small></span>' + (record.status ? status(record.status) : '') + icon('arrow') + '</button>'
       ).join('');
       log.append(list);
       list.querySelectorAll('button').forEach((control, index) => {
         control.onclick = () => openTask({ ...plan, id: candidates[index].id }, prompt);
       });
+      return candidates.length > 1 ? label : undefined;
+    }
+    if (plan.current || plan.newQuote || (plan.scope === 'workspace' && !plan.hint)) {
+      log.insertAdjacentHTML('beforeend', button('nilo-open', actionLabel(plan), 'arrow', 'primary'));
+      log.querySelector('[data-act="nilo-open"]').onclick = () => openTask(plan, prompt);
       return;
     }
-    if (plan.current || plan.newQuote) {
-      const label = plan.action === 'billing' && plan.kind ? 'Préparer la facture · ' + plan.kind : actionLabels[plan.action];
-      log.insertAdjacentHTML('beforeend', button('nilo-open', label, 'arrow', 'primary'));
-      log.querySelector('[data-act="nilo-open"]').onclick = () => openTask(plan, prompt);
-    } else if (!plan.hint) {
-      tell('Indique le nom du client, le chantier ou le numéro du devis dans ta demande.');
-    }
+    const question = plan.hint || 'Indique le nom du client, le chantier ou le numéro du devis dans ta demande.';
+    if (!plan.hint) tell(question);
+    return question;
   }
 
   choices.forEach(([, , plan], i) => {
@@ -2344,21 +2464,37 @@ function openNilo(state, current, onAction) {
     event.preventDefault();
     const prompt = field.value.trim();
     if (!prompt || busy) return;
-    log.innerHTML = '<p class="nilo-request">' + esc(prompt) + '</p>';
-    tell('Je regarde ta demande…');
+    const actionPrompt = [...history.map(turn => turn.prompt), prompt].join('\n');
+    log.replaceChildren();
+    for (const turn of history) {
+      say(turn.prompt);
+      tell(turn.reply);
+    }
+    say(prompt);
+    const waiting = tell('Je regarde ta demande…');
+    log.scrollTop = log.scrollHeight;
     setBusy(true);
+    let nextTask;
     try {
-      const plan = await api('nilo', { prompt, currentQuoteId: current?.id });
+      const plan = await api('nilo', { prompt, currentQuoteId: current?.id, history });
       if (!panel.isConnected || !modal.open) return;
-      log.lastElementChild.remove();
-      showPlan(plan, prompt);
+      waiting.remove();
+      field.value = '';
+      if (plan.action === 'billing' && plan.current) nextTask = plan;
+      const reply = nextTask ? undefined : showPlan(plan, actionPrompt);
+      history = reply ? [...history, { prompt, reply }].slice(-3) : [];
     } catch (error) {
       if (!panel.isConnected || !modal.open) return;
-      log.lastElementChild.remove();
+      waiting.remove();
       tell(error.message);
     } finally {
-      if (panel.isConnected) setBusy(false);
+      if (panel.isConnected && modal.open) {
+        setBusy(false);
+        log.scrollTop = log.scrollHeight;
+        if (!nextTask) field.focus({ preventScroll: true });
+      }
     }
+    if (nextTask) await openTask(nextTask, actionPrompt);
   };
 }
 
@@ -2378,6 +2514,27 @@ const { writer }=modules.writer;
 const { niloButton }=modules.nilo;
 const decimal = n => Number((n / 100).toFixed(2));
 const percent = n => decimal(n).toLocaleString('fr-FR') + ' %';
+const quoteStatuses = {
+  Brouillon: ['Validé', 'Archivé'],
+  Validé: ['Envoyé', 'Archivé'],
+  Envoyé: ['Accepté', 'Refusé'],
+  Accepté: ['Archivé'],
+  Refusé: ['Archivé']
+};
+const statusLabels = {
+  Validé: 'Valider et figer',
+  Envoyé: 'Marquer comme envoyé',
+  Accepté: 'Marquer accepté',
+  Refusé: 'Marquer refusé',
+  Archivé: 'Archiver'
+};
+const assistantStatuses = {
+  validateQuote: 'Validé',
+  markSent: 'Envoyé',
+  acceptQuote: 'Accepté',
+  rejectQuote: 'Refusé',
+  archiveQuote: 'Archivé'
+};
 function fresh(state) {
   return {
     id: crypto.randomUUID(),
@@ -2423,7 +2580,8 @@ function mountEditor(ctx, d) {
     editable = d.status === 'Brouillon' && state.me.role !== 'Lecture';
   const recoveryKey = 'ma-draft-' + state.me.id + '-' + d.id;
   let dirty = !d.version,
-    busy = false;
+    busy = false,
+    edits = 0;
   const remember = () => {
     if (!editable || location.protocol === 'file:') return;
     try {
@@ -2437,6 +2595,7 @@ function mountEditor(ctx, d) {
   };
   const dirtyFlag = () => {
     dirty = true;
+    edits++;
     remember();
   };
   const qrow = (l, i) => '<div class="linebox"><div class="lineinfo"><b>' + esc(l.label) + '</b><small>' + esc(l.lot || 'Prestation') + ' · ' + esc(state.tiers[l.tier]) + ' · ' + decimal(l.quantity) + ' ' + esc(l.unit) + ' × ' + euros(l.price) + '</small></div><strong>' + euros(Math.round(l.price * l.quantity / 100)) + '</strong>' + (editable ? button('line-' + i, 'Modifier', 'edit', 'icononly') + button('del-' + i, 'Retirer', 'trash', 'icononly') : '') + '</div>';
@@ -2448,7 +2607,7 @@ function mountEditor(ctx, d) {
       for(const field of $('#quoteForm').elements){
         if(['title','site','notes','terms','client.name'].includes(field.name))field.value=field.name==='client.name'?d.client.name:d[field.name];
       }
-    },lineDialog,()=>main.querySelector('[data-act=edition]').click(),(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
+    },lineDialog,openQuoteStyle,(from,to)=>{const [line]=d.lines.splice(from,1);d.lines.splice(to,0,line);dirtyFlag();draw();});
   }
   function draw(changedLine = -1, changedTotal = false) {
     const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
@@ -2468,20 +2627,9 @@ function mountEditor(ctx, d) {
       if (sheetMode) paperRow?.focus();
       else formRow?.querySelector('button')?.focus({ preventScroll: true });
     }
-    const next = {
-      Brouillon: ['Validé', 'Archivé'],
-      Validé: ['Envoyé', 'Archivé'],
-      Envoyé: ['Accepté', 'Refusé'],
-      Accepté: ['Archivé'],
-      Refusé: ['Archivé']
-    };
-    $('#workflow').innerHTML = (d.version && state.me.role==='Administrateur' ? (next[d.status] || []).map(s => button('status-' + s, {
-      Validé: 'Valider et figer',
-      Envoyé: 'Marquer comme envoyé',
-      Accepté: 'Marquer accepté',
-      Refusé: 'Marquer refusé',
-      Archivé: 'Archiver'
-    }[s])).join('') : '') + (d.version && state.me.role !== 'Lecture' ? button('duplicate', 'Dupliquer', 'copy') : '');
+    $('#workflow').innerHTML = (d.version && state.me.role==='Administrateur'
+      ? (quoteStatuses[d.status] || []).map(s => button('status-' + s, statusLabels[s])).join('') : '') +
+      (d.version && state.me.role !== 'Lecture' ? button('duplicate', 'Dupliquer', 'copy') : '');
     if (d.version && state.me.role==='Administrateur' && !['Brouillon', 'Archivé'].includes(d.status)) {
       if (['Validé', 'Envoyé'].includes(d.status)) $('#workflow').insertAdjacentHTML('beforeend', button('share', 'Créer un lien client', 'arrow'));
       $('#workflow').insertAdjacentHTML('beforeend', button('revoke', 'Désactiver le lien'));
@@ -2557,14 +2705,22 @@ function mountEditor(ctx, d) {
     });
   }
   async function save() {
-    if (!$('#quoteForm').reportValidity()) throw Error('Vérifiez les champs du devis.');
+    if (!main.querySelector('#quoteForm').reportValidity()) throw Error('Vérifiez les champs du devis.');
+    const submitted = edits;
     const saved = await api('documents', d);
-    Object.assign(d, saved);
+    if (!main.isConnected) return false;
     done(saved);
+    if (edits !== submitted) {
+      Object.assign(d, { number: saved.number, version: saved.version, updated: saved.updated });
+      remember();
+      toast('Le devis a été enregistré. Vérifiez et enregistrez aussi les modifications saisies depuis.');
+      return false;
+    }
+    Object.assign(d, saved);
     dirty = false;
     forget();
     draw();
-    return saved;
+    return true;
   }
   function openBrief(message) {
     brief(state, items => {
@@ -2595,26 +2751,226 @@ function mountEditor(ctx, d) {
       go('editor', saved, true);
     });
   }
-  async function openAssistantTask(task, active) {
-    if (task.action === 'find') return true;
-    if (task.action === 'quote' || task.action === 'rewrite') {
-      if (!editable) throw Error('Ouvre un brouillon pour préparer ou reformuler le devis.');
-      if (task.action === 'rewrite') openWriter(task.prompt);
-      else if (state.ai) openBrief(task.prompt);
+
+  function openQuoteStyle() {
+    editionDialog(d, state, (edition, deposit) => {
+      d.edition = edition;
+      d.deposit = deposit;
+      dirtyFlag();
+      draw();
+    });
+  }
+
+  function openQuotePhotos() {
+    photoDialog(d.photos || [], photos => {
+      d.photos = photos;
+      dirtyFlag();
+      draw();
+    });
+  }
+
+  function focusQuoteField(name) {
+    sheetMode = false;
+    mobilePane = 'saisie';
+    draw();
+    const field = main.querySelector('#quoteForm').elements.namedItem(name);
+    const group = field.closest('details');
+    if (group) group.open = true;
+    const modal = $('#modal');
+    const focus = () => { if (field.isConnected) field.focus(); };
+    if (modal.open) modal.addEventListener('close', focus, { once: true });
+    else focus();
+  }
+
+  function reviewDiscount(discount) {
+    if (discount == null) return focusQuoteField('discount');
+    if (!Number.isSafeInteger(discount) || discount < 0 || discount > 10000) {
+      throw Error('La remise doit être comprise entre 0 et 100 %.');
+    }
+    const before = amounts(d.lines, d.discount).total;
+    const after = amounts(d.lines, discount).total;
+    dialog('Appliquer une remise', '<p>Remise proposée de ' + percent(discount) +
+      '. Le total TTC passerait de ' + euros(before) + ' à ' + euros(after) + '.</p>' +
+      '<p class="hint">La remise sera modifiée dans le brouillon. Enregistre ensuite le devis après vérification.</p>' +
+      '<form id="discountReview"><button class="primary">Appliquer au brouillon</button></form>');
+    onForm('#discountReview', () => {
+      if (!main.isConnected) return;
+      d.discount = discount;
+      dirtyFlag();
+      $('#modal').close();
+      focusQuoteField('discount');
+    });
+  }
+
+  function duplicateQuote() {
+    const copy = fresh(state);
+    Object.assign(copy, {
+      title: d.title + ' · copie',
+      site: d.site,
+      client: { ...d.client },
+      lines: structuredClone(d.lines),
+      photos: structuredClone(d.photos || []),
+      terms: d.terms,
+      notes: d.notes,
+      discount: d.discount,
+      edition: structuredClone(d.edition),
+      deposit: d.deposit
+    });
+    return go('editor', copy) === true;
+  }
+
+  async function shareQuote(active = () => main.isConnected) {
+    const link = await api('share', { id: d.id });
+    if (!active()) return false;
+    dialog('Lien privé du devis', '<p>Transmettez ce lien au client. Le lien précédent est remplacé. Une réponse est possible au statut « Envoyé », pendant la validité du devis.</p>' +
+      input('Lien valable 30 jours', 'publicLink', new URL(link.path, location.origin).href, 'text', 'readonly') +
+      button('copylink', 'Copier le lien', 'copy'));
+    const field = $('[name=publicLink]');
+    field.select();
+    $('[data-act=copylink]').onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(field.value);
+        toast('Lien copié.');
+      } catch {
+        field.select();
+        toast('Copiez le lien sélectionné.');
+      }
+    };
+    return true;
+  }
+
+  async function revokeShare(active = () => main.isConnected) {
+    if (!confirm('Désactiver le lien de ce devis ?') || !active()) return false;
+    await api('share', { id: d.id, revoke: true });
+    if (active()) toast('Lien désactivé.');
+    return true;
+  }
+
+  async function openQuoteHistory(active = () => main.isConnected) {
+    const versions = await api('history/' + d.id);
+    if (!active()) return false;
+    dialog('Versions de ' + d.number, versions.map(v => '<div class="member"><div><b>Version ' + v.version +
+      ' · ' + esc(v.status) + '</b><small>' + esc(new Date(v.at).toLocaleString('fr-FR')) + '</small></div>' +
+      button('version-' + v.version, 'Consulter') + '</div>').join(''));
+    const modal = $('#modal');
+    modal.querySelectorAll('[data-act^="version-"]').forEach(control => control.onclick = async () => {
+      const stillHere = () => main.isConnected && control.isConnected && modal.open;
+      try {
+        const old = await api('revision/' + d.id + '/' + control.dataset.act.slice(8));
+        if (stillHere()) dialog('Version ' + old.version, paper(old));
+      } catch (error) {
+        if (stillHere()) toast(error.message);
+      }
+    });
+    return true;
+  }
+
+  async function downloadSignature(active = () => main.isConnected) {
+    const data = await api('evidence/' + d.id);
+    if (!active()) return false;
+    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = d.number + '-signature.json';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return true;
+  }
+
+  async function changeQuoteStatus(next, active = () => main.isConnected) {
+    if (!d.version) throw Error('Enregistre le brouillon avant de modifier son statut.');
+    if (!quoteStatuses[d.status]?.includes(next)) throw Error('Ce statut est indisponible pour ce devis.');
+    if (!confirm('Confirmer le statut « ' + next + ' » pour ce devis ?') || !active()) return false;
+    if (dirty && !(await save())) return false;
+    if (!active()) return false;
+    const updated = await api('status', { id: d.id, status: next, version: d.version });
+    if (!main.isConnected) return false;
+    dirty = false;
+    done(updated);
+    go('editor', updated);
+    if (updated.status === 'Envoyé') toast('Devis marqué comme envoyé.', 'sent');
+    return true;
+  }
+
+  const draftTasks = {
+    quote: task => {
+      if (state.ai) openBrief(task.prompt);
       else if (!task.newQuote) openGuidedQuote();
+    },
+    rewrite: task => openWriter(task.prompt),
+    editQuote: () => focusQuoteField('title'),
+    addLine: () => lineDialog(-1),
+    quoteDates: () => focusQuoteField('issued'),
+    quoteClient: () => focusQuoteField('client.name'),
+    quoteStyle: openQuoteStyle,
+    quotePhotos: openQuotePhotos,
+    guidedQuote: openGuidedQuote,
+    quoteDiscount: task => reviewDiscount(task.discount),
+    saveQuote: async (_task, active) => {
+      if (!confirm('Enregistrer ce brouillon et ses modifications ?') || !active()) return false;
+      if (!(await save())) return false;
+      if (active()) toast('Devis enregistré.');
       return true;
     }
-    if (state.me.role !== 'Administrateur') throw Error('Cette action est réservée à l’administration.');
-    if (task.action === 'billing') {
-      if (!['Accepté', 'Archivé'].includes(d.status)) throw Error('Ouvre un devis accepté pour accéder à la facturation.');
-      return billingDialog(d, { kind: task.kind, delivery: task.delivery, gmail: state.gmail, active });
+  };
+
+  async function openAssistantTask(task, active = () => true) {
+    const current = () => main.isConnected && active();
+    if (!current() || busy) return false;
+    busy = true;
+    try {
+      const { action } = task;
+      if (action === 'find') return true;
+      if (action === 'quotePdf') {
+        window.print();
+        return true;
+      }
+      if (action === 'quoteHistory') {
+        if (!d.version) throw Error('Enregistre le devis pour consulter ses versions.');
+        return await openQuoteHistory(current);
+      }
+      if (Object.hasOwn(draftTasks, action)) {
+        if (!editable) throw Error('Ouvre un brouillon modifiable pour cette action.');
+        return (await draftTasks[action](task, current)) !== false;
+      }
+      if (action === 'duplicate') {
+        if (!d.version || state.me.role === 'Lecture') throw Error('Ouvre un devis enregistré avec un rôle qui permet de le dupliquer.');
+        return duplicateQuote();
+      }
+      if (state.me.role !== 'Administrateur') throw Error('Cette action est réservée à l’administration.');
+      if (Object.hasOwn(assistantStatuses, action)) return await changeQuoteStatus(assistantStatuses[action], current);
+      if (['billing', 'invoicePayment', 'invoicePdf'].includes(action)) {
+        if (!['Accepté', 'Archivé'].includes(d.status)) throw Error('Ouvre un devis accepté pour accéder à la facturation.');
+        return await billingDialog(d, {
+          operation: action, kind: task.kind, delivery: task.delivery, gmail: state.gmail,
+          invoiceNumber: task.invoiceNumber, amount: task.amount, active: current
+        });
+      }
+      if (action === 'shareQuote') {
+        if (!['Validé', 'Envoyé'].includes(d.status)) throw Error('Valide le devis avant de créer un lien privé.');
+        if (!confirm('Créer un lien privé pour ce devis ? Le lien précédent sera remplacé.') || !current()) return false;
+        return await shareQuote(current);
+      }
+      if (action === 'revokeShare') {
+        if (['Brouillon', 'Archivé'].includes(d.status)) throw Error('Ce devis ne dispose pas de lien client à désactiver.');
+        return await revokeShare(current);
+      }
+      if (action === 'signatureProof') {
+        if (!d.signature) throw Error('Ce devis ne comporte pas de dossier de signature.');
+        return await downloadSignature(current);
+      }
+      if (action === 'quoteMail' || action === 'reminder') {
+        const reminder = action === 'reminder';
+        if (!(reminder ? ['Validé', 'Envoyé'] : ['Validé']).includes(d.status)) {
+          throw Error('Vérifie le statut du devis avant de préparer le message au client.');
+        }
+        openMail(reminder);
+        return true;
+      }
+      throw Error('Cette action est indisponible dans le devis.');
+    } finally {
+      busy = false;
     }
-    const reminder = task.action === 'reminder';
-    if (!(reminder ? ['Validé', 'Envoyé'] : ['Validé']).includes(d.status)) {
-      throw Error('Vérifie le statut du devis avant de préparer le message au client.');
-    }
-    openMail(reminder);
-    return true;
   }
   main.onclick = async e => {
     const a = e.target.closest('[data-act]')?.dataset.act;
@@ -2623,12 +2979,10 @@ function mountEditor(ctx, d) {
     try {
       if(a.startsWith('pane-')){mobilePane=a.slice(5);if(mobilePane!=='apercu')sheetMode=false;draw();main.querySelector('[data-act="'+a+'"]').focus();}
       if(a==='sheet'){sheetMode=!sheetMode;if(window.innerWidth<=900)mobilePane=sheetMode?'apercu':'saisie';draw();const focus=window.innerWidth<=900&&!sheetMode?'[data-act=pane-saisie]':'[data-act=sheet]';main.querySelector(focus).focus();}
-      if(a==='billing')await billingDialog(d,{gmail:state.gmail});
-      if(a==='evidence'){
-        const data=await api('evidence/'+d.id),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=d.number+'-signature.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-      }
+      if (a === 'billing') await billingDialog(d, { gmail: state.gmail, active: () => main.isConnected });
+      if (a === 'evidence') await downloadSignature();
       if (a === 'return') go('Devis');
-      if(a==='edition')editionDialog(d,state,(edition,deposit)=>{d.edition=edition;d.deposit=deposit;dirtyFlag();draw();});
+      if (a === 'edition') openQuoteStyle();
       if (a === 'writer') openWriter();
       if (a === 'reminder' || a === 'mail') openMail(a === 'reminder');
       if (a === 'addline') lineDialog(-1);
@@ -2639,80 +2993,17 @@ function mountEditor(ctx, d) {
         draw();
       }
       if (a === 'save') {
-        await save();
-        toast('Devis enregistré.');
+        if (await save()) toast('Devis enregistré.');
       }
       if (a === 'brief') openBrief();
       if (a === 'assist') openGuidedQuote();
-      if (a === 'duplicate') {
-        const n = fresh(state);
-        Object.assign(n, {
-          title: d.title + ' · copie',
-          site: d.site,
-          client: {
-            ...d.client
-          },
-          lines: structuredClone(d.lines),
-          photos: structuredClone(d.photos || []),
-          terms: d.terms,
-          notes: d.notes,
-          discount: d.discount,
-          edition:structuredClone(d.edition), deposit: d.deposit
-        });
-        go('editor', n);
-      }
-      if (a === 'share') {
-        const link = await api('share', {
-          id: d.id
-        });
-        dialog('Lien privé du devis', '<p>Transmettez ce lien au client. Le lien précédent est remplacé. Une réponse est possible au statut « Envoyé », pendant la validité du devis.</p>' + input('Lien valable 30 jours', 'publicLink', new URL(link.path, location.origin).href, 'text', 'readonly') + button('copylink', 'Copier le lien', 'copy'));
-        const el = $('[name=publicLink]');
-        el.select();
-        $('[data-act=copylink]').onclick = async () => {
-          try {
-            await navigator.clipboard.writeText(el.value);
-            toast('Lien copié.');
-          } catch {
-            el.select();
-            toast('Copiez le lien sélectionné.');
-          }
-        };
-      }
-      if (a === 'revoke' && confirm('Désactiver le lien de ce devis ?')) {
-        await api('share', {
-          id: d.id,
-          revoke: true
-        });
-        toast('Lien désactivé.');
-      }
-      if (a === 'history') {
-        const versions = await api('history/' + d.id);
-        dialog('Versions de ' + d.number, versions.map(v => '<div class="member"><div><b>Version ' + v.version + ' · ' + esc(v.status) + '</b><small>' + esc(new Date(v.at).toLocaleString('fr-FR')) + '</small></div>' + button('version-' + v.version, 'Consulter') + '</div>').join(''));
-        $('#modal').querySelectorAll('[data-act^="version-"]').forEach(b => b.onclick = async () => {
-          try {
-            const old = await api('revision/' + d.id + '/' + b.dataset.act.slice(8));
-            dialog('Version ' + old.version, paper(old));
-          } catch (err) {
-            toast(err.message);
-          }
-        });
-      }
-      if (a === 'photos') photoDialog(d.photos || [], photos=>{d.photos=photos;dirtyFlag();draw();});
+      if (a === 'duplicate') duplicateQuote();
+      if (a === 'share') await shareQuote();
+      if (a === 'revoke') await revokeShare();
+      if (a === 'history') await openQuoteHistory();
+      if (a === 'photos') openQuotePhotos();
       if (a === 'print') window.print();
-      if (a.startsWith('status-')) {
-        const s = a.slice(7);
-        if (!confirm('Confirmer le statut « ' + s + ' » pour ce devis ?')) return;
-        if (dirty) await save();
-        const updated = await api('status', {
-          id: d.id,
-          status: s,
-          version: d.version
-        });
-        dirty = false;
-        done(updated);
-        go('editor', updated);
-        if (updated.status === 'Envoyé') toast('Devis marqué comme envoyé.', 'sent');
-      }
+      if (a.startsWith('status-')) await changeQuoteStatus(a.slice(7));
     } catch (err) {
       toast(err.message);
     } finally {
@@ -2841,8 +3132,9 @@ function home(main) {
     month: 'long'
   }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
 }
-function docs(main) {
-  main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'].map(s => [s, s]), 'Tous') + '</div><div id="results"></div></section>';
+const quoteFilters = ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'];
+function docs(main, statusFilter = 'Tous') {
+  main.innerHTML = head('Mes devis', 'Retrouvez les chiffrages de toute l’équipe.', actions(button('export', 'Exporter en CSV', 'download'), newButton())) + '<section class="card"><div class="filters">' + input('Recherche', 'query', '', 'search', 'placeholder="Client, chantier, référence…"') + select('Statut', 'filter', quoteFilters.map(s => [s, s]), statusFilter) + '</div><div id="results"></div></section>';
   let view;
   function render() {
     const q = $('[name=query]').value.toLocaleLowerCase('fr'),
@@ -2857,8 +3149,8 @@ function docs(main) {
 function clientForm(c = {
   id: crypto.randomUUID(),
   version: 0
-}) {
-  dialog(c.version ? 'Fiche client' : 'Nouveau client', '<form id="client">' + input('Nom / société', 'name', c.name, 'text', 'required') + area('Adresse de facturation', 'address', c.address) + input('Téléphone', 'phone', c.phone, 'tel') + input('E-mail', 'email', c.email, 'email') + '<button class="primary wide">Enregistrer le client</button></form>');
+}, { name = c.name, email = c.email } = {}) {
+  dialog(c.version ? 'Fiche client' : 'Nouveau client', '<form id="client">' + input('Nom / société', 'name', name, 'text', 'required') + area('Adresse de facturation', 'address', c.address) + input('Téléphone', 'phone', c.phone, 'tel') + input('E-mail', 'email', email, 'email') + '<button class="primary wide">Enregistrer le client</button></form>');
   onForm('#client', async o => {
     replace(state.customers, await api('customers', {
       ...o,
@@ -2869,22 +3161,29 @@ function clientForm(c = {
     go('Clients');
   });
 }
-function clients(main) {
-  main.innerHTML = head('Carnet clients', 'Coordonnées réutilisables dans vos devis.', canEdit() ? button('client', 'Nouveau client', 'plus', 'primary') : '') + '<div class="filters">' + input('Rechercher un client', 'query', '', 'search') + '</div><div id="results" class="cards"></div>';
+function clients(main, selected) {
+  main.innerHTML = head('Carnet clients', 'Coordonnées réutilisables dans vos devis.', canEdit() ? button('client', 'Nouveau client', 'plus', 'primary') : '') + '<div class="filters">' + input('Rechercher un client', 'query', selected?.name || '', 'search') + '</div><div id="results" class="cards"></div>';
   function render() {
     const q = $('[name=query]').value.toLowerCase(),
-      result = state.customers.filter(c => [c.name, c.email, c.phone].join(' ').toLowerCase().includes(q));
+      result = state.customers.filter(c => selected ? c.id === selected.id : [c.name, c.email, c.phone].join(' ').toLowerCase().includes(q));
     $('#results').innerHTML = result.map(c => '<article class="tile"><span class="avatar">' + esc(c.name.slice(0, 1)) + '</span><h3>' + esc(c.name) + '</h3><p>' + esc(c.address) + '</p><p>' + esc(c.email) + '<br>' + esc(c.phone) + '</p>' + (canEdit() ? button('client-' + c.id, 'Modifier', 'edit', 'subtle') : '') + '</article>').join('') || '<p class="empty">Aucun client dans cette vue.</p>';
   }
-  main.oninput = render;
+  main.oninput = () => {
+    selected = undefined;
+    render();
+  };
   render();
 }
 function serviceForm(s = {
   id: crypto.randomUUID(),
   version: 0,
   prices: [0, 0, 0, 0]
-}) {
-  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', s.label, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + state.tiers.map((t, i) => input(t + ' (€ HT)', 'p' + i, s.prices[i] / 100, 'number', 'min="0" max="100000" step=".01" required')).join('') + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
+}, { name = s.label, tier, price } = {}) {
+  const prices = state.tiers.map((label, i) => {
+    const cents = i === tier && Number.isSafeInteger(price) ? price : s.prices[i];
+    return input(label + ' (€ HT)', 'p' + i, cents / 100, 'number', 'min="0" max="100000" step=".01" required');
+  }).join('');
+  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', name, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + prices + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
   onForm('#service', async o => {
     replace(state.services, await api('services', {
       ...s,
@@ -2896,8 +3195,8 @@ function serviceForm(s = {
     toast('Catalogue mis à jour.');
   });
 }
-function catalogue(main) {
-  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
+function catalogue(main, selected) {
+  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', selected?.label || '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
   main.insertAdjacentHTML('beforeend','<details><summary>Rechercher une fourniture</summary>'+input('Produit, format ou référence','produit','','search')+'<div class="actions"><a id="leroy" target="_blank" rel="noopener">Leroy Merlin</a><a id="plateforme" target="_blank" rel="noopener">La Plateforme du Bâtiment</a></div></details>'+priceReference());
   const supplier=()=>{const q=$('[name=produit]').value.trim();$('#leroy').href='https://www.leroymerlin.fr/recherche/?q='+encodeURIComponent(q);
     $('#plateforme').href=q?'https://www.google.com/search?q='+encodeURIComponent('site:laplateforme.com '+q):'https://www.laplateforme.com/';};
@@ -2905,10 +3204,14 @@ function catalogue(main) {
   function render() {
     const q = $('[name=query]').value.toLowerCase(),
       cat = $('[name=category]').value;
-    const rows = state.services.filter(s => (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
+    const rows = state.services.filter(s => selected ? s.id === selected.id :
+      (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
     $('#results').innerHTML = '<table><thead><tr><th>Prestation</th>' + state.tiers.map(t => '<th>' + t + '</th>').join('') + '</tr></thead><tbody>' + rows.map(s => '<tr><td>' + (admin() ? button('service-' + s.id, s.label, '', 'link') : esc(s.label)) + '<small>' + esc(s.category) + ' · ' + esc(s.unit) + '</small></td>' + s.prices.map(v => '<td>' + euros(v) + '</td>').join('') + '</tr>').join('') + '</tbody></table>' + (rows.length ? '' : '<p class="empty">Aucune prestation correspondante.</p>');
   }
-  main.oninput = render;
+  main.oninput = event => {
+    if (event.target.name !== 'produit') selected = undefined;
+    render();
+  };
   render();
 }
 function activity(main) {
@@ -2925,6 +3228,28 @@ function updateNotificationPreference() {
     unsupported: 'Ce navigateur ne propose pas les notifications système.'
   }[permission];
   status.parentElement.querySelector('[data-act="notify"]').hidden = permission !== 'default';
+}
+function applyThemePreference(main, value) {
+  const saved = window.rivqoTheme.setPreference(value);
+  main.querySelector('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' :
+    'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
+}
+async function testGemini(main) {
+  const check = main.querySelector('[data-act="gemini-check"]');
+  if (!check || check.disabled) return;
+  const feedback = main.querySelector('#gemini-feedback');
+  check.disabled = true;
+  feedback.textContent = 'Test de connexion en cours…';
+  try {
+    const { model, fallback } = await api('gemini/check', {});
+    feedback.textContent = fallback
+      ? 'Le modèle de secours ' + model + ' a compris la demande d’acompte de test.'
+      : model + ' a compris la demande d’acompte de test de Nilo.';
+  } catch (error) {
+    feedback.textContent = error.message;
+  } finally {
+    check.disabled = false;
+  }
 }
 function preferences(main) {
   const theme = window.rivqoTheme;
@@ -2963,26 +3288,9 @@ function preferences(main) {
       geminiSettings + '</section>' : '') +
     '</div>';
 
-  main.querySelector('.theme-options').onchange = e => {
-    const saved = theme.setPreference(e.target.value);
-    $('#theme-feedback').textContent = saved ? 'Préférence enregistrée.' : 'Thème appliqué pour cet onglet. Le navigateur bloque son enregistrement.';
-  };
+  main.querySelector('.theme-options').onchange = e => applyThemePreference(main, e.target.value);
   const check = main.querySelector('[data-act="gemini-check"]');
-  if (check) check.onclick = async () => {
-    const feedback = main.querySelector('#gemini-feedback');
-    check.disabled = true;
-    feedback.textContent = 'Test de connexion en cours…';
-    try {
-      const { model, fallback } = await api('gemini/check', {});
-      feedback.textContent = fallback
-        ? 'Gemini a répondu avec le modèle de secours ' + model + '.'
-        : model + ' a répondu au message de test.';
-    } catch (error) {
-      feedback.textContent = error.message;
-    } finally {
-      check.disabled = false;
-    }
-  };
+  if (check) check.onclick = () => testGemini(main);
   updateNotificationPreference();
 }
 function administration(main) {
@@ -2997,8 +3305,8 @@ function administration(main) {
     go('Administration');
   });
 }
-function userForm(m) {
-  dialog(m ? 'Gérer ' + m.name : 'Nouveau membre', '<form id="member">' + (m ? select('Accès', 'active', [['1', 'Actif'], ['0', 'Suspendu']], m.active) : input('Nom', 'name', '', 'text', 'required') + input('Identifiant', 'login', '', 'text', 'required') + select('Rôle', 'role', state.roles.map(s => [s, s]), 'Terrain')) + input(m ? 'Nouveau mot de passe (facultatif)' : 'Mot de passe (12 caractères minimum)', 'password', '', 'password', (m ? '' : 'required ') + 'minlength="12" autocomplete="new-password"') + '<button class="primary wide">Enregistrer</button></form>');
+function userForm(m, name = '') {
+  dialog(m ? 'Gérer ' + m.name : 'Nouveau membre', '<form id="member">' + (m ? select('Accès', 'active', [['1', 'Actif'], ['0', 'Suspendu']], m.active) : input('Nom', 'name', name, 'text', 'required') + input('Identifiant', 'login', '', 'text', 'required') + select('Rôle', 'role', state.roles.map(s => [s, s]), 'Terrain')) + input(m ? 'Nouveau mot de passe (facultatif)' : 'Mot de passe (12 caractères minimum)', 'password', '', 'password', (m ? '' : 'required ') + 'minlength="12" autocomplete="new-password"') + '<button class="primary wide">Enregistrer</button></form>');
   onForm('#member', async o => {
     await api('users', m ? {
       id: m.id,
@@ -3012,7 +3320,68 @@ function userForm(m) {
   });
 }
 let navigation=0;
+const niloPages = {
+  exportQuotes: 'Devis',
+  createClient: 'Clients', findClient: 'Clients', editClient: 'Clients',
+  createService: 'Catalogue', findService: 'Catalogue', editService: 'Catalogue',
+  companySettings: 'Administration', inviteMember: 'Administration', editMember: 'Administration',
+  appearance: 'Paramètres', notificationSettings: 'Paramètres', geminiCheck: 'Paramètres',
+  markActivityRead: 'Activité'
+};
+
+async function markActivityRead() {
+  const session = epoch;
+  const id = state.events[0]?.id || 0;
+  await api('read', { id });
+  if (session !== epoch) return;
+  state.lastRead = Math.max(state.lastRead, id);
+  if (page === 'Activité') go('Activité');
+}
+
+async function openNiloWorkspaceTask(task, active) {
+  const destination = task.action === 'workspace' ? task.destination : niloPages[task.action];
+  if (![...Object.keys(navs), 'Administration', 'Terrain فارسی', 'Plus'].includes(destination)) {
+    throw Error('Cette action n’est pas disponible dans l’atelier.');
+  }
+  if (!(await navigate(destination, active))) return false;
+  const main = $('#main');
+  if (task.action === 'exportQuotes' && quoteFilters.includes(task.quoteStatus)) docs(main, task.quoteStatus);
+
+  if (task.action === 'createClient' && canEdit()) {
+    clientForm(undefined, { name: task.name, email: task.email });
+  }
+  if (task.action === 'findClient' || task.action === 'editClient') {
+    const client = state.customers.find(record => record.id === task.id);
+    if (!client) throw Error('Cette fiche client est introuvable.');
+    if (task.action === 'findClient') clients(main, client);
+    else if (canEdit()) clientForm(client, { email: task.email });
+  }
+  if (task.action === 'createService' && admin()) serviceForm(undefined, { name: task.name });
+  if (task.action === 'findService' || task.action === 'editService') {
+    const service = state.services.find(record => record.id === task.id);
+    if (!service) throw Error('Cette prestation est introuvable.');
+    if (task.action === 'findService') catalogue(main, service);
+    else if (admin()) serviceForm(service, { tier: task.tier, price: task.price });
+  }
+  if (task.action === 'inviteMember' && admin()) userForm(undefined, task.name);
+  if (task.action === 'editMember' && admin()) {
+    const member = state.members.find(record => record.id === task.id);
+    if (!member) throw Error('Ce compte est introuvable.');
+    userForm(member);
+  }
+  if (task.action === 'appearance' && ['auto', 'light', 'dark'].includes(task.theme)) {
+    applyThemePreference(main, task.theme);
+  }
+  if (task.action === 'notificationSettings') {
+    main.querySelector('#notification-permission')?.parentElement.scrollIntoView({ block: 'nearest' });
+  }
+  if (task.action === 'geminiCheck' && admin()) void testGemini(main);
+  if (task.action === 'markActivityRead') await markActivityRead();
+  return true;
+}
+
 async function openNiloAction(task, active) {
+  if (task.scope && task.scope !== 'quote') return openNiloWorkspaceTask(task, active);
   const session = epoch;
   const from = page;
   if (task.action === 'find' && !task.id) return go('Devis');
@@ -3025,11 +3394,11 @@ async function openNiloAction(task, active) {
   if (!editor) throw Error('Ouvre un devis pour utiliser cette action.');
   return await editor.openAssistantTask(task, active);
 }
-async function navigate(destination){
+async function navigate(destination, active = () => true){
   const ticket=++navigation,from=page,session=epoch;
   if(dirty()&&!confirm('Quitter sans enregistrer les modifications du devis ?'))return;
   const data=await api('state');
-  if(ticket!==navigation||page!==from||session!==epoch)return;
+  if(ticket!==navigation||page!==from||session!==epoch||!active())return;
   if ((state.events[0]?.id || 0) > (data.events[0]?.id || 0)) data.events = state.events;
   data.lastRead = Math.max(data.lastRead, state.lastRead);
   state=data;go(destination,null,true);
@@ -3039,7 +3408,7 @@ root.onclick = safe(async e => {
   const a = e.target.closest('[data-act]')?.dataset.act;
   if (!a || !state) return;
   if(page==='Terrain فارسی'&&e.target.closest('.terrain'))return;
-  if(a==='nilo'){openNilo(state, editor?.document, openNiloAction);return;}
+  if(a==='nilo'){openNilo(state, editor?.document, openNiloAction, page);return;}
   if(a==='terrain'){go('Terrain فارسی');return;}
   if (a.startsWith('nav-')||a.startsWith('tab-')) {
     await navigate(a.slice(4));
@@ -3074,11 +3443,7 @@ root.onclick = safe(async e => {
     for (const d of localDrafts()) sessionStorage.removeItem('ma-draft-' + state.me.id + '-' + d.id);
     login();
   } else if (a === 'service' || a.startsWith('service-')) serviceForm(state.services.find(s => s.id === a.slice(8)));else if (a === 'client' || a.startsWith('client-')) clientForm(state.customers.find(c => c.id === a.slice(7)));else if (a === 'user' || a.startsWith('user-')) userForm(state.members.find(m => m.id === Number(a.slice(5))));else if (a === 'read') {
-    state.lastRead = state.events[0]?.id || 0;
-    await api('read', {
-      id: state.lastRead
-    });
-    go('Activité');
+    await markActivityRead();
   } else if (a === 'notify') {
     if (!('Notification' in window)) return toast('Ce navigateur ne propose pas les notifications système.');
     const p = await Notification.requestPermission();

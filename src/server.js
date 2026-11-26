@@ -9,7 +9,7 @@ import { portal } from './portal.js';
 import { auth } from './auth.js';
 import { extract, projectBrief } from './gemini.js';
 import { defaultGeminiModel, generateGemini } from './gemini-api.js';
-import { planNilo } from './nilo.js';
+import { checkNiloGemini, planNilo } from './nilo.js';
 import {correspondence,gmailReady} from './correspondance.js';
 import {rewriteText} from './rewrite.js';
 import { fields, conditions, validate } from './domain.js';
@@ -205,24 +205,28 @@ const server = http.createServer(async (req, res) => {
       });
     }
     if (path === '/api/nilo' && method === 'POST') {
-      return json(200, await withGemini(me.id, () => planNilo(o, {
+      return json(200, await planNilo(o, {
         role: me.role,
         documents: w.summaries(),
+        customers: w.list('customers'),
+        services: w.list('services'),
+        members: me.role === 'Administrateur' ? access.members() : [],
+        quoteForInvoice: number => {
+          if (me.role !== 'Administrateur' || !/^FAC-\d+$/.test(number)) return;
+          const seq = Number(number.slice(4));
+          if (Number.isSafeInteger(seq)) return w.get('SELECT document_id FROM invoices WHERE seq=?', seq)?.document_id;
+        },
         key: geminiKey,
-        model: geminiModel
-      })));
+        model: geminiModel,
+        generate: request => withGemini(me.id, () => generateGemini(request))
+      }));
     }
     edit();
     if(path==='/api/reminder'&&method==='POST'){admin();return json(200,mail.reminder(o,me.name));}
     if(path==='/api/mail'&&method==='POST'){admin();return json(200,await mail.send(o,me.name));}
     if (path === '/api/gemini/check' && method === 'POST') {
       admin();
-      const { model } = await withGemini(me.id, () => generateGemini({
-        key: geminiKey, model: geminiModel,
-        parts: [{ text: 'Réponds uniquement par OK.' }],
-        timeout: 30000
-      }));
-      return json(200, { model, fallback: model !== geminiModel });
+      return json(200, await withGemini(me.id, () => checkNiloGemini({ key: geminiKey, model: geminiModel })));
     }
     if(path==='/api/rewrite'&&method==='POST'){
       const text=str(o.text,4000);

@@ -49,6 +49,64 @@ function mockGemini(t, getPlan) {
 
 const sentRequest = (mock, index = 0) => JSON.parse(mock.mock.calls[index].arguments[1].body);
 
+const tilingRequest = "prepare un devis pour ali, il veut poser 30 m2 dez carrelage dans sa salle de bain, et je dépose l'ancien carrelage et j'applique un primaire";
+
+test('Nilo lance le chiffrage local du carrelage malgré une réponse 503 de Gemini', async t => {
+  const mock = t.mock.method(globalThis, 'fetch', async () => Response.json({
+    error: { status: 'UNAVAILABLE' }
+  }, { status: 503 }));
+  const customers = [{ id: '72ce81dd-2462-490b-b30a-2d1515608687', name: 'Ali', email: 'ali@example.test' }];
+  const options = { ...context, model: 'gemini-3.8-flash', customers };
+  const plan = await planNilo({ prompt: tilingRequest }, options);
+  assert.equal(plan.action, 'quote');
+  assert.equal(plan.newQuote, true);
+  assert.equal(plan.local, true);
+  assert.equal(plan.recipe.customerId, customers[0].id);
+  assert.deepEqual(plan.recipe.facts, { area: 30, room: 'Salle de bains', removal: 'Oui', primer: 'Oui' });
+  assert.equal(mock.mock.callCount(), 2);
+  assert.doesNotMatch(JSON.stringify(sentRequest(mock)), /ali@example\.test|72ce81dd/);
+  assert.deepEqual(await planNilo({ prompt: tilingRequest }, { ...options, role: 'Lecture' }), { action: 'forbidden' });
+  await assert.rejects(() => planNilo({ prompt: 'Que penser du printemps ?' }, options), { status: 503 });
+});
+
+test('un devis de carrelage passe par le même parcours quand Gemini reconnaît la demande', async t => {
+  mockGemini(t, () => ({ action: 'quote', target: 'ali' }));
+  const plan = await planNilo({ prompt: tilingRequest, currentQuoteId: documents[2].id }, context);
+  assert.equal(plan.newQuote, true);
+  assert.equal(plan.recipe.clientName, 'Ali');
+  assert.equal(plan.recipe.facts.area, 30);
+  assert.equal(plan.local, undefined);
+});
+
+test('la préparation locale pendant une panne respecte le statut et les droits', async t => {
+  t.mock.method(globalThis, 'fetch', async () => new Response('', { status: 503 }));
+  const request = { prompt: "prépare une facture d'acompte pour ce devis", currentQuoteId: documents[0].id };
+  const plan = await planNilo(request, context);
+  assert.deepEqual(plan, { action: 'billing', kind: 'Acompte', delivery: false, current: true, local: true });
+  assert.deepEqual(await planNilo(request, { ...context, role: 'Bureau' }), { action: 'forbidden' });
+  const draft = await planNilo({ ...request, currentQuoteId: documents[2].id }, context);
+  assert.deepEqual(draft.candidates, []);
+  assert.match(draft.hint, /devis accepté/);
+});
+
+test('un règlement référencé et une remise explicite restent préparables en cas de panne', async t => {
+  t.mock.method(globalThis, 'fetch', async () => new Response('', { status: 503 }));
+  const payment = await planNilo({ prompt: 'Enregistre un règlement de 65,50 € sur la facture FAC-000004' }, {
+    ...context,
+    quoteForInvoice(number) {
+      assert.equal(number, 'FAC-000004');
+      return documents[0].id;
+    }
+  });
+  assert.equal(payment.amount, 6550);
+  assert.equal(payment.invoiceNumber, 'FAC-000004');
+  assert.equal(payment.candidates[0].id, documents[0].id);
+  assert.equal(payment.local, true);
+  assert.deepEqual(await planNilo({
+    prompt: 'Mets une remise de 10 % sur ce devis', currentQuoteId: documents[2].id
+  }, context), { action: 'quoteDiscount', discount: 1000, current: true, local: true });
+});
+
 test('Nilo retrouve les deux devis admissibles malgré un prénom mal saisi', async t => {
   const mock = mockGemini(t, () => ({ action: 'billing', target: 'cchloe dufart', kind: 'Acompte', delivery: true }));
   const prompt = 'Envoie une facture d’acompte à la cliente « cchloe dufart ».';
@@ -139,7 +197,9 @@ test('Nilo distingue une cible inconnue du brouillon courant et d’un nouveau d
 
   output = { action: 'quote' };
   assert.deepEqual(await planNilo({ prompt: 'Chiffre 12 m² de carrelage en cuisine' }, context),
-    { action: 'quote', newQuote: true });
+    { action: 'quote', newQuote: true, recipe: {
+      type: 'tiling', title: 'Carrelage · Cuisine', facts: { area: 12, room: 'Cuisine' }
+    } });
 
   output = { action: 'rewrite' };
   const unsaved = 'dc10bc94-629c-4d2b-a6bf-c052c6006074';

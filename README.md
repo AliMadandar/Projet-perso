@@ -45,6 +45,10 @@ Le registre d’actions de Nilo couvre la préparation et le suivi des devis, le
 
 Pour chiffrer des travaux, Nilo ouvre l’assistant chantier avec votre demande. Relisez les prestations et choisissez celles à ajouter au brouillon. Pour facturer, Nilo ouvre la facture existante ou prépare le formulaire sur un devis accepté. L’émission et l’envoi Gmail demandent chacun votre confirmation. L’envoi utilise l’adresse figurant sur la facture émise et le PDF de cette facture. Si Gmail est indisponible, le PDF reste accessible depuis la facture.
 
+Pour une zone de carrelage décrite précisément, Rivqo reprend les informations explicites et ouvre **Carrelage guidé** avec ces réponses. Par exemple, « Prépare un devis pour Ali, il veut poser 30 m² de carrelage dans la salle de bains. Je dépose l’ancien carrelage et j’applique un primaire » reprend le client, la surface, la pièce et les deux préparations. Le questionnaire demande les choix manquants et la TVA, puis présente les lignes chiffrées d’après le catalogue. Vérifiez les lignes, ajoutez-les au brouillon, puis enregistrez le devis.
+
+Lors d’une indisponibilité de Gemini, Rivqo reconnaît localement certaines demandes explicites, notamment la création d’un devis de carrelage simple, la préparation d’une facture ou d’une remise sur le devis ouvert et la saisie d’un règlement avec une référence de facture. Les formulations plus libres passent par Gemini.
+
 Depuis un devis accepté, essayez « Prépare une facture d’acompte pour ce devis ». Gemini interprète la demande avec le statut du devis ouvert. Les identifiants, adresses et montants du dossier sont résolus dans Rivqo. Si Nilo vous demande une précision, répondez dans la même fenêtre. Les derniers échanges utiles accompagnent cette réponse, par exemple pour comprendre « Pour Camille Martin » après une demande de facture.
 
 ## Personnaliser le document client

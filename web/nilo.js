@@ -53,6 +53,7 @@ const actionLabels = {
 };
 
 function actionLabel(plan) {
+  if (plan.recipe?.type === 'tiling') return 'Préparer le devis de carrelage';
   if (plan.action === 'workspace') return 'Ouvrir ' + plan.destination;
   if (plan.action === 'billing' && plan.kind) return 'Préparer la facture · ' + plan.kind;
   if (plan.action === 'appearance') {
@@ -189,6 +190,12 @@ export function openNilo(state, current, onAction, page) {
     if (plan.action === 'help') {
       tell('Je peux t’aider avec les devis, les factures, le carnet clients, le catalogue et les réglages de l’atelier, selon ton rôle.');
       return;
+    }
+    if (plan.local) {
+      tell('Gemini est indisponible. Rivqo peut traiter cette demande avec un de ses parcours guidés.');
+    }
+    if (plan.recipe?.type === 'tiling' && (plan.current || plan.newQuote || plan.candidates?.length)) {
+      tell('Je peux reprendre les détails du carrelage et te demander ce qu’il reste à préciser.');
     }
     if (plan.hint) tell(plan.hint);
     const candidates = plan.candidates || [];

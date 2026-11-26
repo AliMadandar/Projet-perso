@@ -227,12 +227,13 @@ export function mountEditor(ctx, d) {
       draw();
     }, message);
   }
-  function openGuidedQuote() {
+  function openGuidedQuote(recipe) {
     assistant(state, items => {
+      if (!main.isConnected) return;
       d.lines.push(...items);
       dirtyFlag();
       draw();
-    });
+    }, recipe);
   }
   function openWriter(instruction) {
     writer(state, d, (target, value) => {
@@ -392,7 +393,8 @@ export function mountEditor(ctx, d) {
 
   const draftTasks = {
     quote: task => {
-      if (state.ai) openBrief(task.prompt);
+      if (task.recipe?.type === 'tiling') openGuidedQuote(task.recipe);
+      else if (state.ai) openBrief(task.prompt);
       else if (!task.newQuote) openGuidedQuote();
     },
     rewrite: task => openWriter(task.prompt),
@@ -402,7 +404,7 @@ export function mountEditor(ctx, d) {
     quoteClient: () => focusQuoteField('client.name'),
     quoteStyle: openQuoteStyle,
     quotePhotos: openQuotePhotos,
-    guidedQuote: openGuidedQuote,
+    guidedQuote: task => openGuidedQuote(task.recipe),
     quoteDiscount: task => reviewDiscount(task.discount),
     saveQuote: async (_task, active) => {
       if (!confirm('Enregistrer ce brouillon et ses modifications ?') || !active()) return false;

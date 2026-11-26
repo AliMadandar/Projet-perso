@@ -367,7 +367,15 @@ async function openNiloAction(task, active) {
   const from = page;
   if (task.action === 'find' && !task.id) return go('Devis');
   if (task.newQuote) {
-    if (!go('editor', fresh(state))) return false;
+    const draft = fresh(state);
+    if (task.recipe?.type === 'tiling') {
+      const { title, clientName, customerId } = task.recipe;
+      draft.title = title;
+      const customer = state.customers.find(record => record.id === customerId);
+      if (customer) draft.client = { ...customer };
+      else if (clientName) draft.client.name = clientName;
+    }
+    if (!go('editor', draft)) return false;
   } else if (task.id && task.id !== editor?.document.id) {
     const quote = await api('document/' + task.id);
     if (!active() || page !== from || epoch !== session || !go('editor', quote)) return false;

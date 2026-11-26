@@ -50,6 +50,110 @@
   color: var(--ink);
   background: var(--bg);
 }
+
+/* Nilo */
+.nilo-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.nilo-portrait {
+  --nilo-size: 26px;
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: var(--nilo-size);
+  height: var(--nilo-size);
+  border-radius: 37% 37% 34% 34%;
+  background: linear-gradient(148deg, #fff5f8 3%, #d5c4e9 27%, #9a84ba 57%, #5b4e76 100%);
+  box-shadow: inset 0 1px 1px #fff9, inset 0 -1px 1px #34254990, 0 2px 4px #20163020;
+}
+.nilo-portrait::before {
+  content: '';
+  position: absolute;
+  inset: 29% 16% 23%;
+  border-radius: 40%;
+  background: linear-gradient(175deg, #484153, #211d29 70%);
+  box-shadow: inset 0 1px 3px #0d0918aa, 0 1px #fff5;
+}
+.nilo-portrait::after {
+  content: '';
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  inset-inline-end: 1%;
+  bottom: 2%;
+  border-radius: 38%;
+  background: linear-gradient(140deg, #fff0d8, #f5c199 55%, #bf745d);
+  box-shadow: 0 1px 2px #311e3466;
+}
+.nilo-eyes {
+  position: absolute;
+  inset: 45% 30% 38%;
+  display: flex;
+  justify-content: space-between;
+}
+.nilo-eyes::before, .nilo-eyes::after {
+  content: '';
+  width: 26%;
+  border-radius: 99px;
+  background: #fff8ef;
+  box-shadow: 0 0 3px #fff6;
+}
+.bar > .nilo-trigger { margin-inline-start: auto; }
+.bar > .nilo-trigger + button:last-child { margin-inline-start: 0; }
+.nilo-context-actions { flex-wrap: wrap; }
+.nilo-context-actions > div { flex: 1 0 100%; }
+.nilo-intro {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  margin: 14px 0;
+  border-radius: 15px;
+  background: linear-gradient(135deg, var(--surface-tint), var(--selected));
+}
+.nilo-intro .nilo-portrait { --nilo-size: 56px; }
+.nilo-intro h3 { font-size: clamp(17px, 4.6vw, 22px); letter-spacing: -.025em; margin: 0; }
+.nilo-intro p { margin: 4px 0 0; overflow-wrap: anywhere; }
+.nilo-shortcuts { display: flex; flex-wrap: wrap; gap: 8px; }
+.nilo-shortcuts button { min-height: 44px; white-space: normal; }
+.nilo-log:not(:empty) {
+  display: grid;
+  gap: 9px;
+  max-height: min(40dvh, 330px);
+  overflow-y: auto;
+  margin-block: 16px 10px;
+  padding: 2px 3px 3px 2px;
+}
+.nilo-log p { margin: 0; overflow-wrap: anywhere; }
+.nilo-request, .nilo-reply { border-radius: 12px; padding: 9px 12px; white-space: pre-wrap; }
+.nilo-request { justify-self: end; max-width: 90%; background: var(--selected); }
+.nilo-reply { justify-self: start; max-width: 96%; background: var(--surface-tint); }
+.nilo-results { display: grid; gap: 6px; }
+.nilo-results button { min-height: 49px; text-align: start; justify-content: space-between; white-space: normal; }
+.nilo-results button > span:first-child { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.nilo-results small { font-size: .78rem; }
+.nilo-compose { margin-top: 14px; }
+.nilo-compose label { margin: 0 0 4px; }
+.nilo-compose textarea { display: block; max-height: 26dvh; }
+.nilo-compose-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.nilo-compose-footer button { min-height: 44px; }
+@media screen and (min-width: 901px) {
+  .shell .bar { position: sticky; top: 0; z-index: 15; }
+  .shell .preview { top: 79px; }
+}
+@media screen and (max-width: 900px) {
+  .shell .bar { position: sticky; top: 0; z-index: 15; }
+  .shell .bar > .nilo-trigger { margin-inline-start: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nilo-eyes { transition: transform 180ms ease-out; }
+  .nilo-trigger:is(:hover, :focus-visible) .nilo-eyes { transform: translateX(10%); }
+  .nilo-intro .nilo-portrait { animation: nilo-appear 380ms cubic-bezier(.25,.7,.25,1.1) both; }
+  @keyframes nilo-appear { from { opacity: .4; transform: translateY(4px) scale(.9); } }
+}
 @media screen {
   :root[data-theme="dark"] {
     --ink: #f1f2f5;

@@ -1,7 +1,7 @@
 import { $, esc, button, dialog, input, toast, api } from './ui.js';
 import { startRecording, wavBase64 } from './voice.js';
 import { euros } from './money.js';
-export function brief(state, apply) {
+export function brief(state, apply, initialMessage = '') {
   const history = [];
   let proposal = {
       questions: [],
@@ -12,7 +12,7 @@ export function brief(state, apply) {
     blob = null,
     stop = null,
     recording = false,
-    message = '',
+    message = initialMessage,
     feedback = '',
     playUrl = '';
   const modal = $('#modal');

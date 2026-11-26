@@ -20,7 +20,7 @@ export async function extract({
       data: audio
     }
   });
-  const response = await generateGemini({
+  const { text: response } = await generateGemini({
     key: apiKey, model, prompt, parts,
     generationConfig: { responseMimeType: 'application/json', temperature: 0 }
   });
@@ -54,7 +54,7 @@ export async function projectBrief({
       data: audio
     }
   });
-  const response = await generateGemini({
+  const { text: response } = await generateGemini({
     key, model, prompt: system, parts,
     generationConfig: { responseMimeType: 'application/json', temperature: 0 }
   });

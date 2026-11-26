@@ -4,8 +4,10 @@ import { priceReference } from './references.js';
 import { $, esc, input, select, area, button, icon, dialog, api, onForm, toast, status, dateLabel, csv, today } from './ui.js';
 import { euros, amounts } from './money.js';
 import { fresh, mountEditor } from './editor.js';
+import { niloButton, openNilo } from './nilo.js';
 let state,
   page,
+  editor = null,
   dirty = () => false,
   poll,
   epoch = 0;
@@ -42,6 +44,7 @@ function login() {
   clearInterval(poll);
   epoch++;
   state = null;
+  editor = null;
   dirty = () => false;
   replyNotice.hidden = true;
   replyNotice.innerHTML = '';
@@ -59,26 +62,29 @@ function nav() {
 }
 function shell() {
   const unread = state.events.filter(e => e.id > state.lastRead).length;
-  root.innerHTML = '<div class="shell"><aside id="sidebar">' + brand + '<nav aria-label="Navigation principale">' + nav() + '</nav><div class="profile"><span class="avatar">' + esc(state.me.name.slice(0, 1)) + '</span><div><b>' + esc(state.me.name) + '</b><small>' + esc(state.me.role) + '</small></div>' + button('logout', 'Déconnexion', 'logout', 'icononly') + '</div></aside><div class="workspace"><header class="bar">' + '<span class="mobile-brand">'+brand+'</span>' + '<span>Espace de travail <i>/</i> <b>' + esc(page === 'editor' ? 'Devis' : page) + '</b></span>' + button('terrain','فارسی','users','subtle') + button('nav-Activité', 'Activité' + (unread ? ' (' + unread + ')' : ''), 'bell', 'subtle') + '</header><main id="main" tabindex="-1"></main></div>'+mobileNav(page)+'</div>';
+  root.innerHTML = '<div class="shell"><aside id="sidebar">' + brand + '<nav aria-label="Navigation principale">' + nav() + '</nav><div class="profile"><span class="avatar">' + esc(state.me.name.slice(0, 1)) + '</span><div><b>' + esc(state.me.name) + '</b><small>' + esc(state.me.role) + '</small></div>' + button('logout', 'Déconnexion', 'logout', 'icononly') + '</div></aside><div class="workspace"><header class="bar">' + '<span class="mobile-brand">'+brand+'</span>' + '<span>Espace de travail <i>/</i> <b>' + esc(page === 'editor' ? 'Devis' : page) + '</b></span>' + button('terrain','فارسی','users','subtle') + niloButton() + button('nav-Activité', 'Activité' + (unread ? ' (' + unread + ')' : ''), 'bell', 'subtle') + '</header><main id="main" tabindex="-1"></main></div>'+mobileNav(page)+'</div>';
 }
 function go(p, d, force = false) {
   if (!force && dirty() && !confirm('Quitter sans enregistrer les modifications du devis ?')) return;
   if (p === 'Administration' && !admin()) p = 'Paramètres';
   dirty = () => false;
+  editor = null;
   page = p;
   shell();
   const main = $('#main');
   if(p==='Terrain فارسی'){dirty=terrain({state,main,go,done:v=>replace(state.documents,v),fresh},d);}
   else if (p === 'editor') {
-    dirty = mountEditor({
+    editor = mountEditor({
       state,
       main,
       go,
       done: v => replace(state.documents, v)
     }, structuredClone(d));
+    dirty = editor.dirty;
   } else if(p==='Plus')main.innerHTML=mobileMore(state);else if (p === 'Accueil') home(main);else if (p === 'Devis') docs(main);else if (p === 'Clients') clients(main);else if (p === 'Catalogue') catalogue(main);else if (p === 'Activité') activity(main);else if (p === 'Administration') administration(main);else if (p === 'Paramètres') preferences(main);
   bindPageSwipe(main,p,next=>safe(navigate)(next));
   window.scrollTo(0, 0);
+  return true;
 }
 const docTable = docs => docs.length ? '<div class="tablewrap quote-list"><table><thead><tr><th>Devis / chantier</th><th>Client</th><th>Statut</th><th class="num">Montant TTC</th></tr></thead><tbody>' + docs.map(d => '<tr><td><button class="link" data-act="open-' + esc(d.id) + '">' + esc(d.title) + '</button><small>' + esc(d.number) + ' · ' + dateLabel(d.issued) + '</small></td><td>' + esc(d.client.name || 'À renseigner') + '</td><td>' + status(d.status) + '</td><td class="num"><b>' + euros(total(d)) + '</b></td></tr>').join('') + '</tbody></table></div>' : '<div class="empty"><b>Aucun devis à afficher</b><p>Les devis correspondant à cette vue apparaîtront ici.</p></div>';
 function localDrafts() {
@@ -201,11 +207,11 @@ function preferences(main) {
   ).join('');
   const integrations = [
     ['Gmail', state.gmail],
-    ['Gemini', state.ai],
+    ['Gemini', state.ai, 'Clé chargée'],
     ['Notifications ntfy', state.mobileNotifications]
-  ].map(([name, configured]) =>
+  ].map(([name, configured, readyLabel = 'Configuré']) =>
     '<div><dt>' + name + '</dt><dd class="badge' + (configured ? ' b1' : '') + '">' +
-    (configured ? 'Configuré' : 'À configurer') + '</dd></div>'
+    (configured ? readyLabel : 'À configurer') + '</dd></div>'
   ).join('');
   const geminiSettings = state.geminiModel ? '<p>Modèle Gemini <strong>' + esc(state.geminiModel) + '</strong></p>' +
     (state.ai ? button('gemini-check', 'Tester la connexion Gemini', 'arrow') + '<p id="gemini-feedback" role="status"></p>'
@@ -239,8 +245,10 @@ function preferences(main) {
     check.disabled = true;
     feedback.textContent = 'Test de connexion en cours…';
     try {
-      await api('gemini/check', {});
-      feedback.textContent = 'Gemini a répondu au message de test.';
+      const { model, fallback } = await api('gemini/check', {});
+      feedback.textContent = fallback
+        ? 'Gemini a répondu avec le modèle de secours ' + model + '.'
+        : model + ' a répondu au message de test.';
     } catch (error) {
       feedback.textContent = error.message;
     } finally {
@@ -276,6 +284,19 @@ function userForm(m) {
   });
 }
 let navigation=0;
+async function openNiloAction(task, active) {
+  const session = epoch;
+  const from = page;
+  if (task.action === 'find' && !task.id) return go('Devis');
+  if (task.newQuote) {
+    if (!go('editor', fresh(state))) return false;
+  } else if (task.id && task.id !== editor?.document.id) {
+    const quote = await api('document/' + task.id);
+    if (!active() || page !== from || epoch !== session || !go('editor', quote)) return false;
+  }
+  if (!editor) throw Error('Ouvre un devis pour utiliser cette action.');
+  return await editor.openAssistantTask(task, active);
+}
 async function navigate(destination){
   const ticket=++navigation,from=page,session=epoch;
   if(dirty()&&!confirm('Quitter sans enregistrer les modifications du devis ?'))return;
@@ -290,6 +311,7 @@ root.onclick = safe(async e => {
   const a = e.target.closest('[data-act]')?.dataset.act;
   if (!a || !state) return;
   if(page==='Terrain فارسی'&&e.target.closest('.terrain'))return;
+  if(a==='nilo'){openNilo(state, editor?.document, openNiloAction);return;}
   if(a==='terrain'){go('Terrain فارسی');return;}
   if (a.startsWith('nav-')||a.startsWith('tab-')) {
     await navigate(a.slice(4));

@@ -9,6 +9,7 @@ import { bindSheet } from './sheet.js';
 import { billingDialog } from './billing.js';
 import { signatureProof } from './signature.js';
 import { writer } from './writer.js';
+import { niloButton } from './nilo.js';
 const decimal = n => Number((n / 100).toFixed(2));
 const percent = n => decimal(n).toLocaleString('fr-FR') + ' %';
 export function fresh(state) {
@@ -85,7 +86,7 @@ export function mountEditor(ctx, d) {
   }
   function draw(changedLine = -1, changedTotal = false) {
     const clientFields = input('Nom / société', 'client.name', d.client.name) + input('Adresse de facturation', 'client.address', d.client.address) + input('E-mail', 'client.email', d.client.email, 'email') + input('Téléphone', 'client.phone', d.client.phone, 'tel');
-    main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar"><div><b>Assistant chantier</b><small>' + (state.ai ? 'À l’écrit ou à la voix, avec Gemini' : 'Chiffrer une pièce à partir du catalogue') + '</small></div>' + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Décrire ou dicter', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
+    main.innerHTML = '<div class="topline">' + button('return', 'Mes devis', 'back', 'subtle') + status(d.status) + '</div><div class="pagehead"><div><p class="eyebrow">' + esc(d.number || 'Nouveau devis') + '</p><h1>' + esc(editable ? 'Atelier de devis' : d.title) + '</h1></div><div class="actions">' + button('print', 'Imprimer / PDF', 'print') + (editable ? button('save', 'Enregistrer', 'check', 'primary') : '') + '</div></div>'+panes()+'<div class="edgrid" data-pane="'+mobilePane+'"><section class="editor">' + (editable ? '<div class="assistbar nilo-context-actions"><div><b>Assistant chantier</b><small>' + (state.ai ? 'À l’écrit ou à la voix, avec Gemini' : 'Chiffrer une pièce à partir du catalogue') + '</small></div>' + niloButton('Demander à Nilo') + button('assist', 'Carrelage guidé', 'book') + (state.ai ? button('brief', 'Décrire ou dicter', 'mic') : '') + '</div>' : '') + (editable?'<div class="doc-controls">'+button('edition','Personnaliser le devis','gear')+button('writer','Assistant de rédaction','edit')+'</div>':'') + '<form id="quoteForm"><fieldset ' + (editable ? '' : 'disabled') + '><details open><summary>Chantier et client</summary>' + input('Objet du devis', 'title', d.title, 'text', 'required maxlength="160"') + input('Adresse du chantier', 'site', d.site) + (editable ? select('Reprendre un client', 'pick', [['', 'Saisie libre'], ...state.customers.map(c => [c.id, c.name])], '') : '') + '<div class="fields">' + clientFields + '</div></details><section class="panel"><h3>Prestations</h3><div id="lineList">' + (d.lines.map(qrow).join('') || '<p class="empty">Ajoutez une prestation pour commencer le chiffrage.</p>') + '</div>' + (editable ? button('addline', 'Ajouter une prestation', 'plus', 'wide') : '') + '</section><details><summary>Dates et conditions</summary><div class="fields">' + input('Date d’émission', 'issued', d.issued, 'date', 'required') + input('Valable jusqu’au', 'valid', d.valid, 'date', 'required') + input('Remise globale (%)', 'discount', decimal(d.discount), 'number', 'min="0" max="100" step=".01" required') + (d.edition?'':input('Acompte (%)', 'deposit', decimal(d.deposit), 'number', 'min="0" max="100" step=".01" required')) + '</div>' + area('Précisions pour le client', 'notes', d.notes) + area('Conditions de vente et de paiement', 'terms', d.terms) + '</details>' + (editable ? button('photos','Photos du chantier ('+(d.photos?.length || 0)+'/4)') : '') + '</fieldset></form><div class="actions" id="workflow"></div></section><section class="preview"><div class="previewtitle"><span class="dot"></span>Aperçu du devis <small>En direct</small></div><div id="paper">' + paper(d) + '</div></section></div>';
     if(editable&&d.edition){
       const grid=main.querySelector('.edgrid');grid.classList.toggle('sheet-mode',sheetMode);
       const bar=main.querySelector('.previewtitle');bar.insertAdjacentHTML('beforeend',button('sheet',sheetMode?'Revenir au formulaire':'Modifier sur la feuille','edit',sheetMode?'':'primary'));
@@ -124,6 +125,9 @@ export function mountEditor(ctx, d) {
       $('#workflow').insertAdjacentHTML('beforeend',button('reminder','Relance client','bell'));
     }
     if(state.me.role==='Administrateur'&&['Accepté','Archivé'].includes(d.status))$('#workflow').insertAdjacentHTML('afterbegin',button('billing','Factures et règlements','doc','primary'));
+    if (state.me.role === 'Administrateur' && ['Validé', 'Envoyé', 'Accepté', 'Archivé'].includes(d.status)) {
+      $('#workflow').insertAdjacentHTML('beforeend', niloButton('Demander à Nilo'));
+    }
     if(d.signature&&state.me.role==='Administrateur')$('#workflow').insertAdjacentHTML('beforeend',button('evidence','Télécharger le dossier de signature','download'));
     if (d.version) $('#workflow').insertAdjacentHTML('beforeend', button('history', 'Historique des versions', 'doc'));
     $('#quoteForm').onsubmit = e => e.preventDefault();
@@ -196,6 +200,56 @@ export function mountEditor(ctx, d) {
     draw();
     return saved;
   }
+  function openBrief(message) {
+    brief(state, items => {
+      d.lines.push(...items);
+      dirtyFlag();
+      draw();
+    }, message);
+  }
+  function openGuidedQuote() {
+    assistant(state, items => {
+      d.lines.push(...items);
+      dirtyFlag();
+      draw();
+    });
+  }
+  function openWriter(instruction) {
+    writer(state, d, (target, value) => {
+      if (target.startsWith('line')) d.lines[Number(target.slice(4))].label = value;
+      else if (['intro', 'spec'].includes(target)) d.edition[target] = value;
+      else d[target] = value;
+      dirtyFlag();
+      draw();
+    }, instruction);
+  }
+  function openMail(reminder) {
+    courrier(state, d, reminder, saved => {
+      done(saved);
+      go('editor', saved, true);
+    });
+  }
+  async function openAssistantTask(task, active) {
+    if (task.action === 'find') return true;
+    if (task.action === 'quote' || task.action === 'rewrite') {
+      if (!editable) throw Error('Ouvre un brouillon pour préparer ou reformuler le devis.');
+      if (task.action === 'rewrite') openWriter(task.prompt);
+      else if (state.ai) openBrief(task.prompt);
+      else if (!task.newQuote) openGuidedQuote();
+      return true;
+    }
+    if (state.me.role !== 'Administrateur') throw Error('Cette action est réservée à l’administration.');
+    if (task.action === 'billing') {
+      if (!['Accepté', 'Archivé'].includes(d.status)) throw Error('Ouvre un devis accepté pour accéder à la facturation.');
+      return billingDialog(d, { kind: task.kind, delivery: task.delivery, gmail: state.gmail, active });
+    }
+    const reminder = task.action === 'reminder';
+    if (!(reminder ? ['Validé', 'Envoyé'] : ['Validé']).includes(d.status)) {
+      throw Error('Vérifie le statut du devis avant de préparer le message au client.');
+    }
+    openMail(reminder);
+    return true;
+  }
   main.onclick = async e => {
     const a = e.target.closest('[data-act]')?.dataset.act;
     if (!a || busy) return;
@@ -203,15 +257,14 @@ export function mountEditor(ctx, d) {
     try {
       if(a.startsWith('pane-')){mobilePane=a.slice(5);if(mobilePane!=='apercu')sheetMode=false;draw();main.querySelector('[data-act="'+a+'"]').focus();}
       if(a==='sheet'){sheetMode=!sheetMode;if(window.innerWidth<=900)mobilePane=sheetMode?'apercu':'saisie';draw();const focus=window.innerWidth<=900&&!sheetMode?'[data-act=pane-saisie]':'[data-act=sheet]';main.querySelector(focus).focus();}
-      if(a==='billing')await billingDialog(d);
+      if(a==='billing')await billingDialog(d,{gmail:state.gmail});
       if(a==='evidence'){
         const data=await api('evidence/'+d.id),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=d.number+'-signature.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
       }
       if (a === 'return') go('Devis');
       if(a==='edition')editionDialog(d,state,(edition,deposit)=>{d.edition=edition;d.deposit=deposit;dirtyFlag();draw();});
-      if(a==='writer')writer(state,d,(target,value)=>{if(target.startsWith('line'))d.lines[Number(target.slice(4))].label=value;
-        else if(['intro','spec'].includes(target))d.edition[target]=value;else d[target]=value;dirtyFlag();draw();});
-      if(a==='reminder'||a==='mail')courrier(state,d,a==='reminder',saved=>{done(saved);go('editor',saved,true);});
+      if (a === 'writer') openWriter();
+      if (a === 'reminder' || a === 'mail') openMail(a === 'reminder');
       if (a === 'addline') lineDialog(-1);
       if (a.startsWith('line-')) lineDialog(Number(a.slice(5)));
       if (a.startsWith('del-')) {
@@ -223,16 +276,8 @@ export function mountEditor(ctx, d) {
         await save();
         toast('Devis enregistré.');
       }
-      if (a === 'brief') brief(state, items => {
-        d.lines.push(...items);
-        dirtyFlag();
-        draw();
-      });
-      if (a === 'assist') assistant(state, items => {
-        d.lines.push(...items);
-        dirtyFlag();
-        draw();
-      });
+      if (a === 'brief') openBrief();
+      if (a === 'assist') openGuidedQuote();
       if (a === 'duplicate') {
         const n = fresh(state);
         Object.assign(n, {
@@ -309,5 +354,5 @@ export function mountEditor(ctx, d) {
     }
   };
   draw();
-  return () => dirty;
+  return { dirty: () => dirty, document: d, openAssistantTask };
 }

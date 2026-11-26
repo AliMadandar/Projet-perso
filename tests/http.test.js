@@ -57,6 +57,7 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
     }
     assert.equal((await call('state')).status, 401);
     assert.equal((await call('gemini/check', {})).status, 401);
+    assert.equal((await call('nilo', { prompt: 'Retrouve un devis' })).status, 401);
     const a = await call('login', {
       login: 'admin',
       password
@@ -91,6 +92,7 @@ test('authentification, révocation, isolation des rôles et des origines', asyn
     assert.equal((await call('documents', {}, lc)).status, 403);
     assert.equal((await call('billing/00000000-0000-4000-8000-000000000000',null,lc)).status,403);
     assert.equal((await call('invoice',{},lc)).status,403);
+    assert.equal((await call('invoice/mail',{},lc)).status,403);
     assert.equal((await call('payment',{},lc)).status,403);
     const members = (await (await call('state', null, ac)).json()).members;
     assert.equal((await call('users', {

@@ -1,5 +1,6 @@
 import {amounts} from '../web/money.js';
 import {uuid,fail,num,str} from './workspace.js';
+export const invoiceMailPrefix = 'facture-';
 const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Paris'}).format(new Date());
 function day(v){
  if(typeof v!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(v)||isNaN(Date.parse(v))||new Date(v).toISOString().slice(0,10)!==v)fail('Date incorrecte.');
@@ -17,14 +18,17 @@ function allocate(target,weights){
 }
 export function billing(w){
  function ledger(id){
-  const d=w.findDoc(uuid(id)),rows=w.all('SELECT * FROM invoices WHERE document_id=? ORDER BY seq',id);
-  const invoices=rows.map(r=>({...JSON.parse(r.data),seq:r.seq,number:'FAC-'+String(r.seq).padStart(6,'0'),payments:w.all('SELECT amount,day,method FROM settlements WHERE invoice=? ORDER BY day,rowid',r.seq)}));
+  const d=w.findDoc(uuid(id)),rows=w.all(
+    'SELECT i.*, m.state AS mailState FROM invoices i LEFT JOIN mail_actions m ON m.id=? || i.seq WHERE i.document_id=? ORDER BY i.seq',
+    invoiceMailPrefix, id
+  );
+  const invoices=rows.map(r=>({...JSON.parse(r.data),seq:r.seq,number:'FAC-'+String(r.seq).padStart(6,'0'),mailState:r.mailState,payments:w.all('SELECT amount,day,method FROM settlements WHERE invoice=? ORDER BY day,rowid',r.seq)}));
   const total=amounts(d.lines,d.discount).total,billed=invoices.reduce((v,i)=>v+i.total,0),paid=invoices.reduce((v,i)=>v+i.payments.reduce((s,p)=>s+p.amount,0),0);
   return {invoices,total,billed,paid};
  }
  function issue(o,actor){return w.atomic(()=>{
-  const d=w.findDoc(uuid(o.id)),key=uuid(o.request),existing=w.get('SELECT document_id FROM invoices WHERE request_id=?',key);
-  if(existing){if(existing.document_id!==d.id)fail('Référence déjà utilisée.',409);return ledger(d.id);}
+  const d=w.findDoc(uuid(o.id)),key=uuid(o.request),existing=w.get('SELECT seq,document_id FROM invoices WHERE request_id=?',key);
+  if(existing){if(existing.document_id!==d.id)fail('Référence déjà utilisée.',409);return {...ledger(d.id),issuedInvoiceSeq:existing.seq};}
   if(d.status!=='Accepté')fail('Acceptez le devis avant de facturer.',409);
   const book=ledger(d.id),remaining=book.total-book.billed;
   if(book.invoices.length!==o.count||!remaining)fail('Facturation modifiée ou terminée. Rouvrez le suivi.',409);
@@ -41,7 +45,8 @@ export function billing(w){
   const shares=allocate(total,taxes.flatMap(g=>[g.base,g.amount]));
   taxes.forEach((g,i)=>{g.base=shares[2*i];g.amount=shares[2*i+1];});
   const data={kind,total,taxes,terms,due,service,issued,client,company,logo:d.edition?.logo||'',site:d.site,title:d.title,quote:d.number,quoteId:d.id,quoteTotal:book.total,lines:d.lines,discount:d.discount,prior:book.invoices.map(i=>({number:i.number,total:i.total})),details:str(o.details||'',2000)};
-  w.run('INSERT INTO invoices(document_id,request_id,data) VALUES(?,?,?)',d.id,key,JSON.stringify(data));w.event(actor,'Facture émise · '+kind,d.id);return ledger(d.id);
+  const inserted=w.run('INSERT INTO invoices(document_id,request_id,data) VALUES(?,?,?)',d.id,key,JSON.stringify(data));
+  w.event(actor,'Facture émise · '+kind,d.id);return {...ledger(d.id),issuedInvoiceSeq:Number(inserted.lastInsertRowid)};
  });}
  function payment(o,actor){return w.atomic(()=>{
   const id=uuid(o.id),key=uuid(o.request),book=ledger(id),inv=book.invoices.find(i=>i.seq===o.seq);

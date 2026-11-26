@@ -9,6 +9,7 @@ import { portal } from './portal.js';
 import { auth } from './auth.js';
 import { extract, projectBrief } from './gemini.js';
 import { defaultGeminiModel, generateGemini } from './gemini-api.js';
+import { planNilo } from './nilo.js';
 import {correspondence,gmailReady} from './correspondance.js';
 import {rewriteText} from './rewrite.js';
 import { fields, conditions, validate } from './domain.js';
@@ -24,7 +25,7 @@ if (prod && (!origin || !origin.startsWith('https://'))) throw Error('APP_ORIGIN
 const pages = new Map([['/', 'vitrine.html'], ['/atelier', 'index.html'], ['/client', 'client.html']]);
 const assets = new Set([
   'index.html','theme.js','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js','fonts/inter-latin.woff2','fonts/OFL-Inter.txt',
-  'vitrine.html', 'vitrine.css', 'vitrine.js', 'vitrine/atelier.webp', 'vitrine/devis.webp',
+  'nilo.js', 'vitrine.html', 'vitrine.css', 'vitrine.js', 'vitrine/atelier.webp', 'vitrine/devis.webp',
   'vitrine/signature.webp', 'vitrine/reglements.webp', 'vitrine/chantier.webp', 'vitrine/mobile.webp'
 ]);
 const types = {
@@ -194,6 +195,7 @@ const server = http.createServer(async (req, res) => {
     }
     const o = await body(req);
     if(path==='/api/invoice'&&method==='POST'){admin();return json(200,accounts.issue(o,me.name));}
+    if(path==='/api/invoice/mail'&&method==='POST'){admin();return json(200,await mail.sendInvoice(o,me.name));}
     if(path==='/api/payment'&&method==='POST'){admin();return json(200,accounts.payment(o,me.name));}
     if (path === '/api/read' && method === 'POST') {
       const id = num(o.id, 0, w.get('SELECT COALESCE(MAX(id),0) AS n FROM events').n);
@@ -202,17 +204,25 @@ const server = http.createServer(async (req, res) => {
         ok: true
       });
     }
+    if (path === '/api/nilo' && method === 'POST') {
+      return json(200, await withGemini(me.id, () => planNilo(o, {
+        role: me.role,
+        documents: w.summaries(),
+        key: geminiKey,
+        model: geminiModel
+      })));
+    }
     edit();
     if(path==='/api/reminder'&&method==='POST'){admin();return json(200,mail.reminder(o,me.name));}
     if(path==='/api/mail'&&method==='POST'){admin();return json(200,await mail.send(o,me.name));}
     if (path === '/api/gemini/check' && method === 'POST') {
       admin();
-      await withGemini(me.id, () => generateGemini({
+      const { model } = await withGemini(me.id, () => generateGemini({
         key: geminiKey, model: geminiModel,
         parts: [{ text: 'Réponds uniquement par OK.' }],
         timeout: 30000
       }));
-      return json(200, { model: geminiModel });
+      return json(200, { model, fallback: model !== geminiModel });
     }
     if(path==='/api/rewrite'&&method==='POST'){
       const text=str(o.text,4000);

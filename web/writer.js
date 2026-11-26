@@ -9,11 +9,11 @@ export function localRewrite(raw,tone){
   if(tone==='Plus lisible')s=s.replace(/\s*;\s*/g,'.\n').replace(/, puis /g,'.\nPuis ');
   return s.split('\n').map(line=>line[0]?.toLocaleUpperCase('fr')+line.slice(1)).join('\n').replace(/([^.!?])$/,'$1.');
 }
-export function writer(state,d,apply){
+export function writer(state,d,apply,initialInstruction=''){
   const targets=[['title','Objet du devis'],['notes','Précisions'],['terms','Conditions particulières'],...(d.edition?[['intro','Présentation du chantier'],['spec','Détail technique']]:[]),...d.lines.map((l,i)=>['line'+i,l.label])];
   const get=k=>k.startsWith('line')?d.lines[Number(k.slice(4))].label:(d.edition?.[k]??d[k]??'');
   let target=d.edition?'intro':'notes',history=[],source=get(target),candidate='',busy=false,generation=0;
-  const gemini = state.ai ? input('Consigne pour Gemini (facultative)', 'instruction', '', 'text',
+  const gemini = state.ai ? input('Consigne pour Gemini (facultative)', 'instruction', initialInstruction.slice(0,600), 'text',
     'maxlength="600" placeholder="Ex. Précise qui fournit le carrelage"') : '';
   const hint = !state.ai && state.geminiModel ? '<p class="hint">Gemini est désactivé. Retrouvez sa configuration dans Paramètres → Intégrations.</p>' : '';
   dialog('Assistant de rédaction', '<div class="writing-chat">' + select('Texte à modifier', 'target', targets, target) +

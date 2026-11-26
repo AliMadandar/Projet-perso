@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { projectBrief } from '../src/gemini.js';
+import { defaultGeminiModel, generateGemini } from '../src/gemini-api.js';
 import { rewriteText } from '../src/rewrite.js';
 import { catalog } from '../src/catalog.js';
 test('la proposition IA utilise exclusivement les références et tarifs du catalogue', async t => {
@@ -76,4 +77,35 @@ test('les erreurs de Gemini sont exploitables sans transmettre le détail de Goo
     parts: [{ text: 'Texte tronqué' }]
   } }] });
   await assert.rejects(ask, { status: 502, message: /réponse incomplète/ });
+});
+
+test('une surcharge du modèle par défaut bascule une fois vers le modèle de secours', async t => {
+  const mock = t.mock.method(globalThis, 'fetch', async url => {
+    if (url.endsWith('/' + defaultGeminiModel + ':generateContent')) {
+      return Response.json({ error: { status: 'UNAVAILABLE' } }, { status: 503 });
+    }
+    assert.match(url, /\/gemini-3\.5-flash-lite:generateContent$/);
+    return Response.json({ candidates: [{ content: { parts: [{ text: 'OK' }] } }] });
+  });
+  const result = await generateGemini({ model: defaultGeminiModel, key: 'cle-test', parts: [{ text: 'Test' }] });
+  assert.deepEqual(result, { text: 'OK', model: 'gemini-3.5-flash-lite' });
+  assert.equal(mock.mock.callCount(), 2);
+  const [first, second] = mock.mock.calls.map(call => call.arguments[1]);
+  assert.equal(first.body, second.body);
+  assert.equal(first.signal, second.signal);
+});
+
+test('Gemini garde le modèle choisi et distingue un quota d’une indisponibilité', async t => {
+  let providerStatus = 429;
+  const mock = t.mock.method(globalThis, 'fetch', async () => Response.json({}, { status: providerStatus }));
+  const ask = model => generateGemini({ model, key: 'cle-test', parts: [{ text: 'Test' }] });
+  await assert.rejects(() => ask(defaultGeminiModel), { status: 429, message: /Quota/ });
+  assert.equal(mock.mock.callCount(), 1);
+
+  providerStatus = 503;
+  await assert.rejects(() => ask('modele-personnalise'), { status: 503, message: /HTTP 503/ });
+  assert.equal(mock.mock.callCount(), 2);
+
+  await assert.rejects(() => ask(defaultGeminiModel), { status: 503, message: /HTTP 503/ });
+  assert.equal(mock.mock.callCount(), 4);
 });

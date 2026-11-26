@@ -28,6 +28,12 @@ Ouvrez **Paramètres** dans le menu ou **Plus → Paramètres** sur téléphone.
 
 Cette page donne aussi accès aux notifications du navigateur et aux informations de votre compte. Les administrateurs y retrouvent l’accès aux réglages de l’entreprise et de l’équipe ainsi que l’état de Gmail, Gemini et ntfy.
 
+## Travailler avec Nilo
+
+Ouvrez **Nilo** dans la barre de l’atelier, ou **Demander à Nilo** depuis un devis. Les raccourcis dépendent du dossier ouvert et de votre rôle. Avec Gemini configuré, vous pouvez écrire une demande comme « Retrouve le devis de Camille Martin » ou « Prépare une facture d’acompte pour le devis DEV-00001 ». Gemini interprète le texte saisi et Rivqo recherche les dossiers sur le serveur. Si plusieurs devis conviennent, choisissez celui qui correspond à votre demande.
+
+Pour chiffrer des travaux, Nilo ouvre l’assistant chantier avec votre demande. Relisez les prestations et choisissez celles à ajouter au brouillon. Pour facturer, Nilo ouvre la facture existante ou prépare le formulaire sur un devis accepté. L’émission et l’envoi Gmail demandent chacun votre confirmation. L’envoi utilise l’adresse figurant sur la facture émise et le PDF de cette facture. Si Gmail est indisponible, le PDF reste accessible depuis la facture.
+
 ## Personnaliser le document client
 
 Dans l’atelier, ouvrez **Personnaliser le devis**. Le domaine adapte la couleur proposée, les spécifications et les lots suggérés à la saisie des prestations. Vous pouvez choisir le modèle Atelier ou Compact et une des quatre couleurs. Les textes de présentation, fournitures, déchets, délais, frais et règlements sont modifiables. **Appliquer au devis** actualise l’aperçu. Enregistrez ensuite le brouillon. Les PDF et le portail utilisent le même rendu.
@@ -69,6 +75,8 @@ GEMINI_MODEL=gemini-3.8-flash
 ```
 
 Redémarrez le processus Node. Avec Docker, relancez `docker compose up -d app` pour reprendre la configuration. Connectez-vous en administrateur et ouvrez **Paramètres → Intégrations → Tester la connexion Gemini**. Rivqo envoie un court message de test et affiche le résultat. La clé reste côté serveur.
+
+Si le modèle par défaut répond par une erreur serveur temporaire, Rivqo essaie une fois avec `gemini-3.5-flash-lite`. Le test indique quel modèle a répondu. Vous pouvez aussi choisir ce modèle directement en renseignant `GEMINI_MODEL=gemini-3.5-flash-lite` dans `.env`.
 
 L’enregistrement et le texte du chantier sont envoyés à Google lorsque l’utilisateur choisit **Analyser avec Gemini**. Le dialogue actif reste dans la fenêtre de l’assistant. Fermer cette fenêtre libère l’enregistrement local. Les prix des suggestions proviennent du catalogue de l’entreprise. Le questionnaire, l’éditeur manuel et la reformulation locale restent disponibles en cas d’erreur Gemini.
 

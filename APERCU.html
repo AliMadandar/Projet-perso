@@ -1,4 +1,4 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f6f8"><title>Rivqo · Devis et facturation</title><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIj4KICA8dGl0bGU+Uml2cW88L3RpdGxlPgogIDxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE0IiBmaWxsPSIjMzAyMjRhIi8+CiAgPHBhdGggZmlsbD0iI2ZmZjRlNSIgZD0iTTE1IDQ2VjI5QzE1IDIxIDIxIDE1IDI5IDE1SDQ2UTQ5IDE1IDQ5IDE4VjIzUTQ5IDI2IDQ2IDI2SDMyUTI2IDI2IDI2IDMyVjQ2UTI2IDQ5IDIzIDQ5SDE4UTE1IDQ5IDE1IDQ2WiIvPgogIDxyZWN0IHg9IjM0IiB5PSIzNCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1IiByeD0iMi44IiBmaWxsPSIjZmZiYTkxIi8+Cjwvc3ZnPgo="><script>(() => {
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7f8f4"><title>Rivqo · Devis et facturation</title><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgcm9sZT0iaW1nIj4KICA8dGl0bGU+Uml2cW88L3RpdGxlPgogIDxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjE0IiBmaWxsPSIjMzAyMjRhIi8+CiAgPHBhdGggZmlsbD0iI2ZmZjRlNSIgZD0iTTE1IDQ2VjI5QzE1IDIxIDIxIDE1IDI5IDE1SDQ2UTQ5IDE1IDQ5IDE4VjIzUTQ5IDI2IDQ2IDI2SDMyUTI2IDI2IDI2IDMyVjQ2UTI2IDQ5IDIzIDQ5SDE4UTE1IDQ5IDE1IDQ2WiIvPgogIDxyZWN0IHg9IjM0IiB5PSIzNCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1IiByeD0iMi44IiBmaWxsPSIjZmZiYTkxIi8+Cjwvc3ZnPgo="><script>(() => {
   const dayStart = 7;
   const nightStart = 20;
   const storageKey = 'rivqo-theme-preference';
@@ -14,7 +14,7 @@
     const nighttime = hour < dayStart || hour >= nightStart;
     const dark = preference === 'dark' || (preference === 'auto' && nighttime);
     root.dataset.theme = dark ? 'dark' : 'light';
-    if (themeColor) themeColor.content = dark ? '#17181c' : '#f5f6f8';
+    if (themeColor) themeColor.content = dark ? '#14251e' : '#f7f8f4';
 
     if (preference !== 'auto') return;
     const next = new Date(now);
@@ -162,42 +162,42 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 /* Typographie et couleurs de l’interface et du document imprimable. */
 :root {
-  --font-ui: -apple-system, BlinkMacSystemFont, "Inter UI", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-ui: "Inter UI", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --paper-ink: #282038;
   --paper-muted: #62596c;
   --paper-rule: #e6dfe9;
   --plum: #654888;
   --apricot: #ffba91;
-  --ink: #22242b;
-  --muted: #505663;
-  --rule: #e0e3ea;
-  --bg: #f5f6f8;
+  --ink: #203a32;
+  --muted: #586a62;
+  --rule: #dce3db;
+  --bg: #f7f8f4;
   --surface: #fff;
-  --surface-tint: #eceef3;
-  --selected: #e5ebfd;
-  --field-border: #7d8291;
-  --action: #3153c3;
-  --action-hover: #3457c8;
+  --surface-tint: #edf1e9;
+  --selected: #e0ebdc;
+  --field-border: #8c9d92;
+  --action: #24634e;
+  --action-hover: #194b3a;
   --on-action: #fff;
   --button-sheen: #ffffff24;
-  --button-halo: #3153c32e;
-  --accent-text: #2c469f;
-  --focus: #3c58b8;
-  --feature-start: #edebfa;
-  --feature-end: #ffece5;
-  --feature-decoration: #b49bec;
+  --button-halo: #24634e25;
+  --accent-text: #24634e;
+  --focus: #32765e;
+  --feature-start: #e6eddc;
+  --feature-end: #f3f2e6;
+  --feature-decoration: #8da785;
   --metal-mark: linear-gradient(142deg, #9c80cd 4%, #d5c5f4 25%, #f9f2ff 36%, #bca9e4 49%, #ddd1f7 66%, #9a7dce 100%);
   --metal-tile: linear-gradient(150deg, #ffe4cb 4%, #fff1e4 28%, #ffc09a 56%, #e68e6e 100%);
   --satin-reflection: #ffffffbd;
-  --draft-card: #e8dfff;
-  --draft-edge: #a382e5;
-  --draft-accent: #563392;
-  --sent-card: #d8eeff;
+  --draft-card: #f3ebda;
+  --draft-edge: #c2a56e;
+  --draft-accent: #72551d;
+  --sent-card: #e4edf5;
   --sent-edge: #70b7f0;
-  --sent-accent: #195491;
-  --accepted-card: #daf5e7;
+  --sent-accent: #315a79;
+  --accepted-card: #e0eddf;
   --accepted-edge: #6cc8a4;
-  --accepted-accent: #1e6249;
+  --accepted-accent: #2c6045;
   --radius: 14px;
   color-scheme: light;
   font: 15px/1.5 var(--font-ui);
@@ -310,23 +310,23 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 }
 @media screen {
   :root[data-theme="dark"] {
-    --ink: #f1f2f5;
-    --muted: #bfc3cf;
-    --rule: #383a43;
-    --bg: #17181c;
-    --surface: #212228;
-    --surface-tint: #282a31;
-    --selected: #29354f;
-    --field-border: #858a9b;
-    --action: #adc2ff;
-    --action-hover: #c6d5ff;
-    --on-action: #20283f;
+    --ink: #e7eee6;
+    --muted: #b8c8bd;
+    --rule: #354c41;
+    --bg: #14251e;
+    --surface: #1c3027;
+    --surface-tint: #253c31;
+    --selected: #324f3d;
+    --field-border: #7e9685;
+    --action: #c4dfa4;
+    --action-hover: #d7ebbf;
+    --on-action: #173b2b;
     --button-sheen: #ffffff3b;
-    --button-halo: #adc2ff3d;
-    --accent-text: #b7caff;
-    --focus: #a1b8ff;
-    --feature-start: #252437;
-    --feature-end: #302624;
+    --button-halo: #c4dfa425;
+    --accent-text: #c4dfa4;
+    --focus: #c4dfa4;
+    --feature-start: #294034;
+    --feature-end: #243a2e;
     --feature-decoration: #766199;
     --metal-mark: linear-gradient(142deg, #564169 4%, #8b74a8 25%, #c2b2d5 36%, #76618d 49%, #a48bb9 66%, #5b466f 100%);
     --metal-tile: linear-gradient(150deg, #ad735e 4%, #efbba6 28%, #c08065 56%, #87513e 100%);
@@ -946,6 +946,83 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
 }
 
 #lineForm label[hidden], #faQuote label[hidden] { display: none; }
+
+
+/* Rivqo workspace refresh: screen-only rules keep client PDFs stable. */
+@media screen {
+  .shell { grid-template-columns:232px minmax(0,1fr); }
+  #sidebar { background:var(--surface); padding:28px 18px 20px; overflow-y:auto; }
+  #sidebar>* { flex-shrink:0; }
+  #sidebar .brand { font-size:25px; letter-spacing:-1px; padding-inline:10px; }
+  #sidebar .brand img { width:35px; height:35px; box-shadow:none; }
+  #sidebar nav { margin-top:42px; gap:7px; }
+  #sidebar .nav { min-height:46px; border-radius:9px; gap:13px; font-weight:500; }
+  #sidebar .nav.active { box-shadow:none; font-weight:650; }
+  #sidebar .nav.active::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent-text); margin-inline-start:auto; }
+  .sidebar-note { margin-top:35px; padding:17px 13px; border-top:1px solid var(--rule); }
+  .sidebar-note small { font-size:10px; letter-spacing:.1em; text-transform:uppercase; }
+  .sidebar-note p { font-size:12px; margin-top:9px; line-height:1.7; }
+  .profile { gap:9px; }.profile>div { min-width:0; overflow-wrap:anywhere; }
+  .bar { background:var(--bg); height:76px; }
+  .workspace main#main { max-width:1480px; padding-top:32px; }
+  .workspace h1 { font-size:clamp(28px,3vw,40px); font-weight:600; letter-spacing:-.05em; }
+  .workspace h2:not(.sheet *) { font-size:19px; font-weight:600; }
+  .workspace button,dialog button { border-radius:9px; min-height:40px; }
+  .workspace button.primary,dialog button.primary { background-image:none; box-shadow:0 2px 3px #183e3210; }
+  .workspace button:where(:enabled):hover,dialog button:where(:enabled):hover { transform:none; }
+  .workspace .hero { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:0 0 28px; background:none; border:0; border-radius:0; overflow:visible; }
+  .workspace .hero .eyebrow { font-size:10px; font-weight:550; color:var(--muted); }
+  .workspace .hero h1 { margin:10px 0; }
+  .workspace .hero p:not(.eyebrow) { font-size:14px; }
+  .workspace .hero>.primary { flex-shrink:0; margin:0; }
+  .workspace .kpis { margin:0 0 24px; gap:18px; }
+  .workspace .kpis .kpi { padding:23px; background:var(--surface); border:1px solid var(--rule); border-radius:13px; box-shadow:none; }
+  .workspace .kpis strong { font-size:32px; font-weight:550; margin:16px 0 8px; color:var(--ink); }
+  .workspace .kpi-label { color:var(--muted); font-size:12px; font-weight:500; }
+  .workspace .kpi-label svg { background:var(--kpi-card); color:var(--kpi-accent); box-sizing:content-box; padding:7px; border-radius:8px; }
+  .workspace .kpi--accepted { background:var(--surface-tint); }
+  .workspace .card { box-shadow:none; border-radius:13px; }
+  .workspace .card>header { padding:22px 24px; }.workspace .card.pad>header { padding:0 0 16px; }
+  .workspace .quote-list th { background:var(--bg); padding-block:12px; font-size:10px; font-weight:550; }
+  .workspace .quote-list td { padding-block:19px; }
+  .workspace .quote-list tr:hover { background:var(--bg); }
+  .workspace .quote-list .link { color:var(--ink); font-size:13px; font-weight:600; min-height:32px; }
+  .workspace .quote-list td small { font-size:10px; margin-top:3px; }
+  .workspace .badge { font-size:10px; font-weight:550; padding:5px 10px; }
+  .workspace .badge::before { content:'•'; margin-inline-end:5px; }
+  .nilo-welcome { display:flex; align-items:center; gap:18px; border:1px solid var(--rule); background:var(--surface-tint); border-radius:13px; padding:22px 24px; margin-bottom:24px; }
+  .nilo-welcome>div { flex:1; }.nilo-welcome h2 { margin-bottom:5px; font-size:17px; }.nilo-welcome p { font-size:12px; line-height:1.65; }
+  .welcome-spark { flex:0 0 43px; width:43px; height:43px; display:grid; place-items:center; border-radius:12px; background:var(--selected); color:var(--accent-text); font-size:27px; }
+  .nilo-trigger { background:var(--surface); font-size:12px; }
+  .workspace .quick { gap:12px; }.workspace .quick button { background:var(--surface); padding:15px 20px; font-size:12px; }
+  .workspace .panel,.workspace details { padding:22px; border-radius:13px; }
+  .workspace label,dialog label { font-size:12px; font-weight:550; gap:7px; }
+  .workspace input,.workspace select,.workspace textarea,dialog input,dialog select,dialog textarea { padding:11px 12px; border-radius:8px; }
+  .workspace .preview { padding:18px; background:var(--surface-tint); border-radius:13px; }
+  .workspace .previewtitle { font-size:10px; letter-spacing:.07em; }
+  .workspace .assistbar { border-color:var(--rule); background:var(--surface-tint); padding:18px; }
+  .workspace .linebox { padding-block:16px; }
+  .workspace .empty { padding:45px 24px; }
+  .signart { background:#1c493b; color:#f2f6e8; }
+  .signart .brand { font-size:27px; }.signart .brand img { background:#f5f8ed; border-radius:10px; }
+  .signart h1 { font-size:clamp(45px,5.5vw,80px); font-weight:550; letter-spacing:-.065em; }
+  .signart p { color:#cfdecb; max-width:330px; margin-top:22px; line-height:1.8; }
+  .signart .drafting { display:none; }
+  .signform { background:var(--bg); }.signform h2 { font-size:34px; letter-spacing:-.05em; }.signform label { margin-block:20px; }
+  .signform input { min-height:48px; }.signform .primary { min-height:48px; background-image:none; }
+  .sign-back { display:inline-flex; min-height:44px; align-items:center; font-size:12px; margin-top:24px; text-decoration:none; }
+}
+@media screen and (max-width:1180px) and (min-width:901px) {
+  .shell { grid-template-columns:190px minmax(0,1fr); }
+  #sidebar { padding-inline:12px; }.workspace .kpis .kpi { padding:18px; }
+}
+@media screen and (max-width:900px) {
+  .shell { display:block; }.workspace .hero { display:none; }
+}
+
+@media screen and (min-width:901px) and (max-height:700px) {
+  .sidebar-note { display:none; }
+}
 .mobile-home,.mobile-tabs,.bar .mobile-brand,.quote-switch{display:none}
 @media screen and (max-width:900px){
   .mobile-home{display:grid;grid-template-columns:1fr auto;gap:14px 6px;align-items:center}.mobile-home h1{font-size:clamp(26px,6vw,38px)}.mobile-home>.primary{font-size:13px}
@@ -973,6 +1050,54 @@ dialog{width:min(540px,94vw);max-height:90dvh;padding:24px;border:1px solid var(
   .workspace main{animation:enter-mobile .16s ease-out}@keyframes enter-mobile{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:none}}
   .mobile-tabs [aria-current=page] span{animation:tab-selected 260ms cubic-bezier(.2,.78,.29,1.15)}
   @keyframes tab-selected{from{opacity:.65;transform:translateY(3px) scale(.86)}}
+}
+
+/* Comfortable, compact layouts for on-site use. */
+@media screen and (max-width:900px) {
+  .workspace .bar { min-height:66px; }
+  .bar .mobile-brand .brand { font-size:20px; letter-spacing:-.8px; color:var(--ink); }
+  .bar .mobile-brand .brand img { width:28px; height:28px; }
+  .workspace main#main { padding-top:25px; }
+  .mobile-home { gap:20px 10px; margin-bottom:22px; }
+  .mobile-greeting { font-size:9px; letter-spacing:.12em; margin-bottom:6px; }
+  .mobile-home h1 { font-size:29px; }
+  .mobile-home>.primary { font-size:12px; padding-inline:12px; }
+  .resume-card { background:var(--surface); border:1px solid var(--rule); border-radius:14px; padding:20px; box-shadow:none; }
+  .resume-card small { font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); }
+  .resume-card strong { font-size:23px; margin-top:12px; }.resume-card p { font-size:12px; margin:9px 0 16px; }
+  .resume-card button { width:100%; justify-content:space-between; color:var(--accent-text); background:var(--selected); border-color:transparent; }
+  .workspace .kpis { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-bottom:18px; }
+  .workspace .kpis .kpi { padding:16px; }
+  .workspace .kpis strong { font-size:27px; margin:10px 0 5px; }
+  .workspace .kpi-label { font-size:11px; }
+  .workspace .kpi-label svg { padding:5px; width:14px; height:14px; }
+  .workspace .kpis span { font-size:10px; }
+  .workspace .kpis .kpi--accepted { grid-column:1/-1; display:grid; grid-template-columns:1fr auto; align-items:center; gap:5px 10px; background:var(--surface-tint); }
+  .workspace .kpi--accepted strong { grid-column:2; grid-row:1/3; margin:0; }
+  .nilo-welcome { padding:18px; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .nilo-welcome>div { flex-basis:calc(100% - 60px); }.nilo-welcome h2 { font-size:16px; }.nilo-welcome p { font-size:12px; }
+  .nilo-welcome>.nilo-trigger { width:100%; }
+  .workspace .quote-list tr { padding:17px 14px; gap:6px 9px; }
+  .workspace .quote-list td { padding:0; }.workspace .quote-list .link { font-size:12px; line-height:1.45; min-height:34px; }
+  .workspace .quote-list td:last-child { font-size:12px; }.workspace .quote-list td:nth-child(2) { font-size:11px; }
+  .workspace .card>header { padding:17px 14px; }.workspace .card>header h2 { font-size:17px; }.workspace .card>header button { font-size:11px; }
+  .workspace .quick { display:grid; grid-template-columns:1fr; }.workspace .quick button { justify-content:flex-start; padding:14px; }
+  .workspace .panel,.workspace details { padding:18px; }
+  .workspace .pagehead h1 { font-size:28px; }.workspace .pagehead .actions { width:100%; }
+  .workspace .pagehead .actions>.primary { margin-inline-start:auto; }
+  .workspace input,.workspace select,.workspace textarea,dialog input,dialog select,dialog textarea { font-size:16px; min-height:46px; }
+  .workspace button,dialog button { min-height:44px; }
+  .mobile-tabs { margin:0; padding-top:7px; padding-bottom:calc(7px + env(safe-area-inset-bottom)); box-shadow:0 -4px 24px #203c3208; }
+  .mobile-tabs button { font-size:10px; gap:4px; }.mobile-tabs button span { height:28px; width:48px; border-radius:9px; }
+  .quote-switch { position:sticky; top:66px; z-index:10; border:1px solid var(--rule); padding:4px; }
+  .quote-switch button { font-size:12px; }
+  .workspace .edgrid[data-pane] .preview { padding:7px; }
+}
+@media screen and (max-width:370px) {
+  .bar .mobile-brand .brand { font-size:17px; }.bar .mobile-brand .brand img { width:25px; height:25px; }
+  .bar .nilo-trigger { padding-inline:7px; gap:5px; }
+  .mobile-home { grid-template-columns:1fr; }.mobile-home>.primary { width:100%; }
+  .workspace .quote-list tr { grid-template-columns:minmax(0,1fr); }.workspace .quote-list td { grid-column:1; grid-row:auto; text-align:start; }.workspace .quote-list td:nth-child(3) { text-align:start; }
 }
 
 .demoband{background:var(--surface-tint);color:var(--muted);border-bottom:1px solid var(--rule);text-align:center;padding:6px;font-size:12px}@media print{.demoband{display:none}}</style></head><body><div class="demoband">Aperçu interactif · Données fictives · Les modifications disparaissent à la fermeture ou au rechargement.</div><a class="skip" href="#main">Aller au contenu</a><div class="rivqo-launch" aria-hidden="true"><div class="launch-lockup"><svg viewBox="0 0 64 64"><path d="M15 46V29C15 21 21 15 29 15H46Q49 15 49 18V23Q49 26 46 26H32Q26 26 26 32V46Q26 49 23 49H18Q15 49 15 46Z"/><rect x="34" y="34" width="15" height="15" rx="2.8"/></svg><b>Rivqo</b></div></div><div id="root"></div><div id="reply-announcement" class="reply-announcement" role="status" aria-atomic="true"></div><section id="reply-notice" hidden aria-label="Nouvelle réponse client"></section><div id="toast" role="status"></div><dialog id="modal"><div id="modalContent"></div></dialog><script type="module">const modules={};let demoApi;
@@ -1252,7 +1377,7 @@ function mobileNav(page){
 }
 function mobileHome(documents,canEdit){
  const draft=documents.find(d=>d.status==='Brouillon');
- return '<section class="mobile-home"><h1>Mes chantiers</h1>'+(canEdit?button('new','Créer un devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
+ return '<section class="mobile-home"><div><p class="mobile-greeting">VOTRE ESPACE RIVQO</p><h1>Mes projets</h1></div>'+(canEdit?button('new','Nouveau devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
 }
 function mobileMore(state){
  const links=[['terrain','Saisie chantier · فارسی','users'],['nav-Catalogue','Catalogue des prix','book'],['nav-Activité','Activité de l’équipe','bell'],['nav-Paramètres','Paramètres','gear']];
@@ -3193,7 +3318,7 @@ function login() {
   replyNotice.innerHTML = '';
   $('#reply-announcement').textContent = '';
   if (modal.open) modal.close();
-  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><h1>Devis et<br>facturation.</h1></div></section><section class="signform"><div><h2>Connexion</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form></div></section></main>';
+  root.innerHTML = '<main class="signin" id="main"><section class="signart">' + brand + '<div class="drafting" aria-hidden="true"></div><div><h1>Votre métier. <br>L’esprit libre.</h1><p>Vos devis et vos factures, dans un espace pensé pour vous simplifier la journée.</p></div></section><section class="signform"><div><p class="eyebrow">VOTRE ESPACE RIVQO</p><h2>Heureux de vous revoir.</h2><p>Accédez aux chantiers et aux devis de votre équipe.</p><form id="login">' + input('Identifiant', 'login', '', 'text', 'autocomplete="username" required autofocus') + input('Mot de passe', 'password', '', 'password', 'autocomplete="current-password" required') + '<button class="primary wide">Ouvrir mon espace ' + icon('arrow') + '</button></form><a class="sign-back" href="/">← Retour à l’accueil</a></div></section></main>';
   onForm('#login', async o => {
     await api('login', o);
     await start();
@@ -3205,7 +3330,7 @@ function nav() {
 }
 function shell() {
   const unread = state.events.filter(e => e.id > state.lastRead).length;
-  root.innerHTML = '<div class="shell"><aside id="sidebar">' + brand + '<nav aria-label="Navigation principale">' + nav() + '</nav><div class="profile"><span class="avatar">' + esc(state.me.name.slice(0, 1)) + '</span><div><b>' + esc(state.me.name) + '</b><small>' + esc(state.me.role) + '</small></div>' + button('logout', 'Déconnexion', 'logout', 'icononly') + '</div></aside><div class="workspace"><header class="bar">' + '<span class="mobile-brand">'+brand+'</span>' + '<span>Espace de travail <i>/</i> <b>' + esc(page === 'editor' ? 'Devis' : page) + '</b></span>' + button('terrain','فارسی','users','subtle') + niloButton() + button('nav-Activité', 'Activité' + (unread ? ' (' + unread + ')' : ''), 'bell', 'subtle') + '</header><main id="main" tabindex="-1"></main></div>'+mobileNav(page)+'</div>';
+  root.innerHTML = '<div class="shell"><aside id="sidebar">' + brand + '<nav aria-label="Navigation principale">' + nav() + '</nav><div class="sidebar-note"><small>Votre espace Rivqo</small><p>Vos devis, vos clients.<br>Tout simplement.</p></div><div class="profile"><span class="avatar">' + esc(state.me.name.slice(0, 1)) + '</span><div><b>' + esc(state.me.name) + '</b><small>' + esc(state.me.role) + '</small></div>' + button('logout', 'Déconnexion', 'logout', 'icononly') + '</div></aside><div class="workspace"><header class="bar">' + '<span class="mobile-brand">'+brand+'</span>' + '<span>Espace de travail <i>/</i> <b>' + esc(page === 'editor' ? 'Devis' : page) + '</b></span>' + button('terrain','فارسی','users','subtle') + niloButton() + button('nav-Activité', 'Activité' + (unread ? ' (' + unread + ')' : ''), 'bell', 'subtle') + '</header><main id="main" tabindex="-1"></main></div>'+mobileNav(page)+'</div>';
 }
 function go(p, d, force = false) {
   if (!force && dirty() && !confirm('Quitter sans enregistrer les modifications du devis ?')) return;
@@ -3250,11 +3375,11 @@ function home(main) {
     '<div class="kpi kpi--' + kind + '"><small class="kpi-label">' + icon(mark) + label + '</small>' +
     '<strong>' + value + '</strong><span>' + detail + '</span></div>'
   ).join('');
-  main.innerHTML = mobileHome(docs,canEdit())+'<section class="hero"><div class="drafting" aria-hidden="true"></div><div><p class="eyebrow">' + esc(new Intl.DateTimeFormat('fr-FR', {
+  main.innerHTML = mobileHome(docs,canEdit())+'<section class="hero"><div><p class="eyebrow">' + esc(new Intl.DateTimeFormat('fr-FR', {
     weekday: 'long',
     day: 'numeric',
     month: 'long'
-  }).format(new Date())) + '</p><h1>Atelier des devis</h1><p>Préparez vos chiffrages et suivez les réponses clients.</p>' + newButton() + '</div></section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section><section class="card"><header><h2>Derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
+  }).format(new Date())) + '</p><h1>Votre activité, en clair.</h1><p>Un nouveau projet ? Tout commence par un devis.</p></div>' + newButton() + '</section>' + (state.reminders||[]).filter(r=>!r.completed&&r.due<=today()).map(r=>'<div class="assistbar"><div><b>Relance à préparer</b><small>'+esc(state.documents.find(d=>d.id===r.id)?.title||'Devis')+' · '+dateLabel(r.due)+'</small></div>'+button('open-'+r.id,'Ouvrir le devis','arrow')+'</div>').join('') + localDrafts().map(d => '<div class="assistbar"><div><b>Saisie à reprendre</b><small>' + esc(d.title) + '</small></div>' + actions(button('recover-' + d.id, 'Reprendre'), button('forget-' + d.id, 'Écarter')) + '</div>').join('') + '<section class="kpis">' + figures + '</section>' + (canEdit() ? '<section class="nilo-welcome"><span class="welcome-spark" aria-hidden="true">✦</span><div><h2>Un coup de main pour votre devis ?</h2><p>Décrivez votre projet à Nilo. Avancez étape par étape, à votre rythme.</p></div>' + niloButton('Demander à Nilo') + '</section>' : '') + '<section class="card"><header><h2>Vos derniers devis</h2>' + button('nav-Devis', 'Tous les devis', 'arrow', 'subtle') + '</header>' + docTable(docs.slice(0, 6)) + '</section><div class="quick">' + button('nav-Catalogue', 'Consulter les tarifs', 'book') + button('nav-Clients', 'Ouvrir le carnet clients', 'users') + '</div>';
 }
 const quoteFilters = ['Tous', 'Brouillon', 'Validé', 'Envoyé', 'Accepté', 'Refusé', 'Archivé'];
 function docs(main, statusFilter = 'Tous') {

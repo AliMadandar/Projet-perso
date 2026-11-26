@@ -3,157 +3,65 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f6f8">
-  <meta name="description" content="Rivqo réunit les devis, la signature client et le suivi des règlements pour les entreprises de rénovation. Essayez la démo sans compte.">
-  <title>Rivqo · Du chantier au règlement</title>
+  <meta name="theme-color" content="#f7f8f4">
+  <meta name="description" content="Préparez vos devis, retrouvez vos clients et suivez vos factures avec Rivqo. Un espace simple, du premier chiffrage au règlement. Essayez la démo sans compte.">
+  <title>Rivqo · Vos devis, simplement.</title>
   <link rel="icon" href="/icon.svg">
   <script src="/theme.js"></script>
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/vitrine.css">
-  <script src="/vitrine.js" defer></script>
 </head>
 <body class="vitrine" id="haut">
   <a class="skip" href="#contenu">Aller au contenu</a>
   <header class="site-header">
     <div class="site-width site-header-content">
-      <a class="site-brand" href="#haut" aria-label="Rivqo, haut de page">
-        <img src="/icon.svg" width="36" height="36" alt="">
-        <span>Rivqo</span>
-      </a>
-      <nav class="site-nav" aria-label="Navigation du site">
-        <a href="#parcours">Le parcours</a>
-        <a href="#terrain">Sur chantier</a>
-      </nav>
-      <a class="site-button site-button-secondary site-login" href="/atelier">Se connecter <span class="site-arrow" aria-hidden="true"></span></a>
+      <a class="site-brand" href="#haut" aria-label="Rivqo, accueil"><img src="/icon.svg" width="36" height="36" alt=""><span>Rivqo<span class="brand-period">.</span></span></a>
+      <nav class="site-nav" aria-label="Navigation du site"><a href="#parcours">Comment ça marche</a><a href="#nilo">L’assistant Nilo</a><a href="#terrain">Sur mobile</a></nav>
+      <a class="site-button site-button-secondary" href="/atelier">Se connecter <span class="site-arrow" aria-hidden="true"></span></a>
     </div>
   </header>
-
   <main id="contenu">
     <section class="site-width intro" aria-labelledby="accroche">
       <div class="intro-copy">
-        <p class="site-kicker">Devis et facturation pour la rénovation</p>
-        <h1 id="accroche">Du chantier<br><span>au règlement.</span></h1>
-        <p class="intro-lead">Préparez vos devis sur chantier, faites-les signer par lien privé et suivez les paiements depuis le même dossier.</p>
-        <div class="site-actions">
-          <a class="site-button site-button-primary" href="/demo">Essayer la démo <span class="site-arrow" aria-hidden="true"></span></a>
-          <a class="site-text-link" href="#parcours">Découvrir le parcours <span aria-hidden="true">↓</span></a>
-        </div>
-        <p class="intro-note">Sans compte, avec des données fictives.</p>
+        <p class="site-kicker"><span class="status-dot" aria-hidden="true"></span> Moins d’administratif. Plus de métier.</p>
+        <h1 id="accroche">Votre savoir-faire.<br>Vos devis.<br><em>Tout simplement.</em></h1>
+        <p class="intro-lead">De la première idée à la facture, retrouvez vos clients, vos tarifs et vos documents au même endroit. Nilo vous aide à mettre les mots sur votre travail.</p>
+        <div class="site-actions"><a class="site-button site-button-primary" href="/demo">Essayer un devis <span class="site-arrow" aria-hidden="true"></span></a><a class="site-text-link" href="#parcours">Découvrir Rivqo <span aria-hidden="true">↓</span></a></div>
+        <p class="intro-note">Démo sans compte · Données fictives · À votre rythme</p>
       </div>
-
-      <figure class="intro-visual">
-        <div class="preview-frame">
-          <div class="preview-top"><span class="preview-dots" aria-hidden="true"></span><span>L’atelier Rivqo</span></div>
-          <img src="/vitrine/atelier.webp" alt="Accueil de Rivqo avec les brouillons, les devis envoyés et le montant accepté" width="1320" height="850" fetchpriority="high">
+      <div class="intro-visual" aria-label="Exemple illustratif d’un devis Rivqo">
+        <div class="visual-caption"><span class="status-dot" aria-hidden="true"></span> Du travail bien fait. Un devis bien présenté.</div>
+        <div class="sample-quote">
+          <div class="sample-top"><span class="sample-monogram" aria-hidden="true">M.</span><div><strong>Mon entreprise</strong><small>Votre métier, votre signature.</small></div><span class="sample-document">DEVIS</span></div>
+          <div class="sample-heading"><p>DEV-00001 · Exemple</p><h2>Un nouveau projet<br>prend forme.</h2><span>Préparé pour Camille Martin</span></div>
+          <div class="sample-line sample-labels"><span>Prestation</span><span>Montant HT</span></div>
+          <div class="sample-line"><span>Préparation du chantier<small>Protection et mise en place</small></span><strong>360,00 €</strong></div>
+          <div class="sample-line"><span>Réalisation des travaux<small>Selon les prestations convenues</small></span><strong>3 000,00 €</strong></div>
+          <div class="sample-total"><span>Total HT</span><strong>3 360,00 €</strong></div>
+          <p class="sample-foot">Un document clair, prêt à être relu.</p>
         </div>
-      </figure>
-    </section>
-
-    <section class="journey" id="parcours" aria-labelledby="titre-parcours">
-      <div class="site-width">
-        <header class="journey-head">
-          <div>
-            <p class="site-kicker">Un dossier du début à la fin</p>
-            <h2 id="titre-parcours">Le parcours d’un devis.</h2>
-          </div>
-          <p>Suivez une rénovation de cuisine, du premier chiffrage à l’encaissement de l’acompte.</p>
-        </header>
-
-        <nav class="journey-nav" aria-label="Étapes du parcours">
-          <a href="#chiffrer">Préparer</a>
-          <a href="#signer">Faire signer</a>
-          <a href="#facturer">Facturer</a>
-        </nav>
-
-        <div class="journey-scroll">
-          <div class="journey-chapters">
-            <article class="journey-chapter" id="chiffrer" data-screen="Atelier de devis">
-              <div class="chapter-copy">
-                <h3>Chiffrez à votre façon.</h3>
-                <p>Reprenez vos tarifs, composez les lots et ajustez les quantités. La feuille du devis se met à jour pendant la saisie.</p>
-                <ul>
-                  <li>110 prestations de départ et quatre gammes tarifaires</li>
-                  <li>Modèles par métier et édition directe sur la feuille</li>
-                </ul>
-              </div>
-              <figure class="chapter-visual chapter-visual-wide">
-                <img src="/vitrine/devis.webp" alt="Éditeur Rivqo avec les prestations par lot et la feuille du devis à droite" width="1098" height="760" loading="lazy" decoding="async">
-              </figure>
-            </article>
-
-            <article class="journey-chapter" id="signer" data-screen="Portail client">
-              <div class="chapter-copy">
-                <h3>Un lien pour signer.</h3>
-                <p>Le client ouvre le devis dans son navigateur, consulte les travaux et répond depuis le lien privé, sur téléphone ou ordinateur.</p>
-                <ul>
-                  <li>Le client répond sans créer de compte</li>
-                  <li>Nom, consentement et version du devis signée conservés dans le dossier</li>
-                </ul>
-              </div>
-              <figure class="chapter-visual chapter-visual-form">
-                <img src="/vitrine/signature.webp" alt="Formulaire de réponse dans le portail client Rivqo avec le choix Signer et accepter le devis" width="760" height="522" loading="lazy" decoding="async">
-              </figure>
-            </article>
-
-            <article class="journey-chapter" id="facturer" data-screen="Factures et règlements">
-              <div class="chapter-copy">
-                <h3>Voyez ce qui reste à encaisser.</h3>
-                <p>Depuis le devis accepté, créez vos factures d’acompte, de situation ou de solde. Indiquez les règlements reçus au fil du chantier.</p>
-                <ul>
-                  <li>Factures rattachées au devis d’origine</li>
-                  <li>Montants facturés, encaissés et restant à encaisser</li>
-                </ul>
-              </div>
-              <figure class="chapter-visual chapter-visual-ledger">
-                <img src="/vitrine/reglements.webp" alt="Suivi des factures et des règlements avec un acompte partiellement encaissé" width="540" height="584" loading="lazy" decoding="async">
-              </figure>
-            </article>
-          </div>
-
-          <div class="journey-stage" aria-hidden="true">
-            <div class="stage-frame">
-              <div class="stage-top"><span class="preview-dots"></span><span class="stage-title"></span></div>
-              <div class="stage-views"></div>
-            </div>
-            <div class="stage-progress"><span></span></div>
-          </div>
-        </div>
+        <div class="assistant-note"><span class="note-spark" aria-hidden="true">✦</span><div><strong>Un coup de main avec les mots ?</strong><p>Nilo vous aide à préparer votre devis.</p></div></div>
       </div>
     </section>
-
+    <div class="site-width benefits" aria-label="Les essentiels Rivqo"><span>01 <b>Vos tarifs, à portée de main</b></span><span>02 <b>Des documents à votre image</b></span><span>03 <b>Du téléphone au bureau</b></span></div>
+    <section class="site-width journey" id="parcours" aria-labelledby="titre-parcours">
+      <header class="section-heading"><div><p class="site-kicker">Simple à chaque étape</p><h2 id="titre-parcours">Du premier échange<br>au dernier règlement.</h2></div><p>Gardez le fil de votre activité.<br>Rivqo rassemble ce dont vous avez besoin pour avancer.</p></header>
+      <div class="journey-grid">
+        <article class="step-card" id="chiffrer"><span class="step-number">01 / PRÉPARER</span><div class="step-symbol" aria-hidden="true">＋</div><h3>Un devis qui vous ressemble.</h3><p>Choisissez vos prestations, ajustez les quantités et retrouvez vos tarifs. Votre document prend forme au fil de la saisie.</p><a href="/demo">Composer un devis <span class="site-arrow" aria-hidden="true"></span></a></article>
+        <article class="step-card" id="signer"><span class="step-number">02 / PARTAGER</span><div class="step-symbol" aria-hidden="true"><span class="site-arrow"></span></div><h3>Un échange plus simple.</h3><p>Partagez votre devis avec un lien privé. Votre client le consulte et vous répond depuis son téléphone, sans créer de compte.</p><a href="/demo">Explorer le dossier <span class="site-arrow" aria-hidden="true"></span></a></article>
+        <article class="step-card" id="facturer"><span class="step-number">03 / FACTURER</span><div class="step-symbol" aria-hidden="true">✓</div><h3>Une vue claire des paiements.</h3><p>Préparez vos factures depuis le devis accepté. Retrouvez les acomptes, les règlements reçus et ce qu’il reste à encaisser.</p><a href="/demo">Découvrir le suivi <span class="site-arrow" aria-hidden="true"></span></a></article>
+      </div>
+    </section>
+    <section class="site-width nilo-section" id="nilo" aria-labelledby="titre-nilo">
+      <div class="nilo-copy"><p class="site-kicker">Faites connaissance avec Nilo</p><h2 id="titre-nilo">Vous connaissez votre métier.<br>Les mots, ça s’aide.</h2><p>Décrivez votre projet avec vos mots. Avec Gemini configuré, Nilo vous aide à préparer le chiffrage et à préciser ce qui manque. Vous relisez les prestations, les prix et le total avant de valider.</p><a class="site-button site-button-primary" href="/demo">Rencontrer Nilo <span class="site-arrow" aria-hidden="true"></span></a><small>La démo permet d’explorer les parcours guidés, sans connexion à Gemini.</small></div>
+      <div class="conversation" aria-label="Illustration d’un échange avec Nilo"><p class="conversation-label">VOTRE PROJET, VOS MOTS</p><div class="message-user">Je dois poser 30 m² de carrelage dans une cuisine.</div><div class="message-assistant"><span class="note-spark" aria-hidden="true">✦</span><div><strong>On précise ensemble.</strong><p>Faut-il retirer l’ancien revêtement ? Qui fournit le carrelage ?</p></div></div><div class="conversation-result"><span aria-hidden="true">✓</span> Des questions simples pour un devis plus précis.</div><small>Exemple illustratif de préparation d’un devis.</small></div>
+    </section>
     <section class="site-width field" id="terrain" aria-labelledby="titre-terrain">
-      <div class="field-visual">
-        <img class="field-photo" src="/vitrine/chantier.webp" alt="Un professionnel prend des mesures et consulte son téléphone sur un chantier de rénovation" width="1260" height="840" loading="lazy" decoding="async">
-        <div class="field-phone">
-          <img src="/vitrine/mobile.webp" alt="Rivqo sur téléphone, avec un brouillon prêt à reprendre et les onglets Accueil, Devis, Clients et Plus" width="390" height="844" loading="lazy" decoding="async">
-        </div>
-      </div>
-      <div class="field-copy">
-        <p class="site-kicker">Pour le bureau et le terrain</p>
-        <h2 id="titre-terrain">Le même dossier, où que vous soyez.</h2>
-        <p>Commencez sur le téléphone avec les mesures du chantier. Reprenez le brouillon au bureau avec les coordonnées du client et les tarifs de l’équipe.</p>
-        <p>Chiffrez en français ou utilisez la saisie Terrain en persan. Les libellés des prestations restent en français sur le devis client.</p>
-        <a class="site-text-link" href="/demo">Ouvrir un dossier d’exemple <span class="site-arrow" aria-hidden="true"></span></a>
-      </div>
+      <div class="field-visual"><div class="phone-frame"><div class="phone-speaker" aria-hidden="true"></div><img src="/vitrine/mobile.webp" alt="L’accueil Rivqo sur téléphone : reprendre un brouillon et retrouver ses devis" width="390" height="844" loading="lazy"></div><span class="field-label">Votre bureau tient dans votre poche.</span></div>
+      <div class="field-copy"><p class="site-kicker">À vos côtés, partout</p><h2 id="titre-terrain">Sur le terrain.<br>Dans votre poche.</h2><p>Une mesure à noter, une photo à ajouter, un devis à retrouver. Commencez sur votre téléphone et reprenez votre dossier au bureau.</p><ul><li>Une navigation pensée pour le téléphone</li><li>Vos clients et vos tarifs au même endroit</li><li>Une application web à ajouter à l’écran d’accueil</li></ul><p class="field-note">Une connexion est nécessaire pour retrouver et enregistrer vos dossiers.</p><a class="site-text-link" href="/demo">Essayer sur mon téléphone <span class="site-arrow" aria-hidden="true"></span></a></div>
     </section>
-
-    <section class="site-width final-section" aria-labelledby="titre-essai">
-      <div class="final-panel">
-        <div>
-          <h2 id="titre-essai">À vous de jouer sur un devis fictif.</h2>
-          <p>Ouvrez l’atelier de démonstration et modifiez un chiffrage à votre rythme.</p>
-        </div>
-        <div class="site-actions">
-          <a class="site-button site-button-primary" href="/demo">Essayer la démo <span class="site-arrow" aria-hidden="true"></span></a>
-          <a class="site-button site-button-secondary" href="/atelier">Se connecter</a>
-        </div>
-      </div>
-    </section>
+    <section class="site-width final-section"><div class="final-panel"><p class="site-kicker">Votre prochain devis commence ici</p><h2>Moins de paperasse.<br>Plus de place pour votre métier.</h2><a class="site-button site-button-primary" href="/demo">Faire un premier essai <span class="site-arrow" aria-hidden="true"></span></a><p>Un dossier d’exemple. Aucun compte à créer.</p></div></section>
   </main>
-
-  <footer class="site-width site-footer">
-    <a class="site-brand" href="#haut" aria-label="Rivqo, haut de page"><img src="/icon.svg" width="28" height="28" alt=""><span>Rivqo</span></a>
-    <a class="site-text-link" href="#haut">Retour en haut <span aria-hidden="true">↑</span></a>
-  </footer>
+  <footer class="site-width site-footer"><a class="site-brand" href="#haut"><img src="/icon.svg" width="28" height="28" alt=""><span>Rivqo.</span></a><p>Devis, factures et esprit tranquille.</p><a href="/atelier">Ouvrir mon espace <span class="site-arrow" aria-hidden="true"></span></a></footer>
 </body>
 </html>

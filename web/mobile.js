@@ -7,7 +7,7 @@ export function mobileNav(page){
 }
 export function mobileHome(documents,canEdit){
  const draft=documents.find(d=>d.status==='Brouillon');
- return '<section class="mobile-home"><h1>Mes chantiers</h1>'+(canEdit?button('new','Créer un devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
+ return '<section class="mobile-home"><div><p class="mobile-greeting">VOTRE ESPACE RIVQO</p><h1>Mes projets</h1></div>'+(canEdit?button('new','Nouveau devis','plus','primary'):'')+(draft?'<div class="resume-card"><small>Dernier brouillon</small><strong>'+esc(draft.title)+'</strong><p>'+esc([draft.client.name,draft.number].filter(Boolean).join(' · '))+'</p>'+button('open-'+draft.id,canEdit?'Reprendre le devis':'Consulter le devis','arrow')+'</div>':'')+'</section>';
 }
 export function mobileMore(state){
  const links=[['terrain','Saisie chantier · فارسی','users'],['nav-Catalogue','Catalogue des prix','book'],['nav-Activité','Activité de l’équipe','bell'],['nav-Paramètres','Paramètres','gear']];

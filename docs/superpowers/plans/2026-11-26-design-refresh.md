@@ -32,7 +32,7 @@
 
 ### Task 3: Delivery
 - [x] Review complete diff independently, address significant findings.
-- [ ] Capture desktop/mobile previews, commit and make a reviewable GitHub branch/PR where access permits.
+- [x] Capture desktop/mobile previews, commit and make a reviewable GitHub branch/PR where access permits.
 
 ## Execution notes
 Baseline: npm test, 47 passed. User authorized direct implementation; proceed without an extra design approval round. Cosmetic changes use visual validation, not new implementation-mirroring tests.
@@ -46,3 +46,7 @@ Baseline: npm test, 47 passed. User authorized direct implementation; proceed wi
 - Updated landing-page phone image captured from the new UI.
 - Independent review found short-viewport sidebar clipping and joined mobile login sentences. Both reproduced with a failing browser check, fixed, then passed; full suite remains green.
 - Local file URLs are blocked by the browser environment; the standalone demo runtime is covered by the existing test and the same generated HTML is exercised through /demo.
+
+Final review: no outstanding critical/important findings. Deferred minor: Nilo and payment demonstration CTAs open the common /demo workspace rather than deep-linking to those screens. Live Gemini responses and physical-device printing were not exercised.
+
+Delivery: draft PR https://github.com/AliMadandar/Projet-perso/pull/1 on codex/rivqo-design-refresh. Main and deployment unchanged.

@@ -1,3 +1,4 @@
+import { fixedTier } from './pricing.js';
 import { $,esc,button,select,options,input,api,toast,today } from './ui.js';
 import { amounts,euros } from './money.js';
 // Libellés de saisie en persan ; la ligne enregistrée garde le libellé français du catalogue.
@@ -14,8 +15,9 @@ export function terrain(ctx,initial){
  let d=initial?structuredClone(initial):null,dirty=false;
  const resumeSettings = () => {
    const last = d?.lines.at(-1);
+   const previousTier = d?.lines.findLast(line => line.serviceId && fixedTier(state.services.find(service => service.id === line.serviceId) || line) === undefined)?.tier;
    return { service: last?.serviceId ?? state.services[0]?.id, room: last?.lot || 'Cuisine',
-     tier: last?.tier ?? 0, tax: (last?.tax ?? 2000) / 100 };
+     tier: previousTier ?? 0, tax: (last?.tax ?? 2000) / 100 };
  };
  let entry = resumeSettings();
  const serviceOptions = query => {
@@ -33,15 +35,20 @@ export function terrain(ctx,initial){
  const v=f.elements;f.onsubmit=e=>e.preventDefault();
  function price(){
    const s=state.services.find(s=>s.id===v.service.value);
-   $('#faPrice').textContent=s?euros(s.prices[Number(v.tier.value)])+' / '+(unitFa[s.unit]||s.unit):'خدمتی پیدا نشد.';
+   const single = fixedTier(s);
+   const showTier = Boolean(s && single === undefined);
+   v.tier.closest('label').hidden = !showTier;
+   v.tier.disabled = !showTier;
+   $('#faPrice').textContent=s?euros(s.prices[single ?? Number(v.tier.value)])+' / '+(unitFa[s.unit]||s.unit):'خدمتی پیدا نشد.';
    f.querySelector('[data-act=add]').disabled=!s;
  }
  v.query.oninput=()=>{
    const matches=serviceOptions(v.query.value);
    v.service.innerHTML=options(matches,v.service.value);
    v.service.disabled=!matches.length;
+   price();
  };
- v.service.onchange=()=>v.quantity.focus();
+ v.service.onchange=()=>{price();v.quantity.focus();};
  f.oninput=e=>{if(['title','site'].includes(e.target.name)){d[e.target.name]=e.target.value;dirty=true;}if(['name','email'].includes(e.target.name)){d.client[e.target.name]=e.target.value;dirty=true;}price();};price();
  }
  main.onclick=async e=>{const a=e.target.closest('[data-act]')?.dataset.act;if(!a)return;try{
@@ -49,7 +56,8 @@ export function terrain(ctx,initial){
  if(a==='create'){d=fresh(state);d.title='Travaux de rénovation';entry=resumeSettings();dirty=true;}
  if(a.startsWith('draft-')){d=await api('document/'+a.slice(6));if(!edit){go('editor',d);return;}entry=resumeSettings();}
  if(a==='add'){const v=$('#faQuote').elements,s=state.services.find(x=>x.id===v.service.value);if(!s||!v.quantity.reportValidity()||!v.tax.reportValidity()||!Number(v.quantity.value))return;
- d.lines.push({serviceId:s.id,label:s.label,unit:s.unit,tier:Number(v.tier.value),lot:v.room.value,quantity:Math.round(Number(v.quantity.value)*100),price:s.prices[Number(v.tier.value)],tax:Math.round(Number(v.tax.value)*100)});entry=resumeSettings();dirty=true;}
+ const single = fixedTier(s), tier = single ?? Number(v.tier.value);
+ d.lines.push({serviceId:s.id,label:s.label,unit:s.unit,tier,lot:v.room.value,quantity:Math.round(Number(v.quantity.value)*100),price:s.prices[tier],tax:Math.round(Number(v.tax.value)*100),...(single !== undefined && { fixedPrice: true })});entry=resumeSettings();dirty=true;}
  if(a.startsWith('remove-')){d.lines.splice(Number(a.slice(7)),1);dirty=true;}
  if(a==='save'){if(!$('#faQuote').reportValidity())return;const saved=await api('documents',d);done(saved);dirty=false;d=null;toast('پیش‌نویس ذخیره شد');}
  render();

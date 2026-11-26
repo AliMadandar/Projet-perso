@@ -1,5 +1,6 @@
 import { catalog, units } from './catalog.js';
 import { amounts } from '../web/money.js';
+import { fixedTier } from '../web/pricing.js';
 export function fail(message, status = 400) {
   throw Object.assign(new Error(message), {
     status
@@ -75,7 +76,8 @@ export function document(o) {
       price: num(l.price, 0, 10000000),
       tax: num(l.tax, 0, 10000),
       tier: num(l.tier, 0, 3),
-      serviceId: str(l.serviceId || '', 80)
+      serviceId: str(l.serviceId || '', 80),
+      ...(l.fixedPrice === true && { fixedPrice: true })
     };
   });
   const photos = o.photos ?? [];
@@ -190,6 +192,14 @@ export function workspace(db) {
     if(proof)doc.signature=JSON.parse(proof.data);
     return doc;
   };
+  const snapshotPricing = lines => {
+    const services = new Map(all('SELECT * FROM services').map(row => [row.id, unpack(row)]));
+    return lines.map(line => {
+      const service = services.get(line.serviceId) ?? line;
+      return !line.serviceId || fixedTier(service) !== undefined
+        ? { ...line, fixedPrice: true } : line;
+    });
+  };
   const check = (actual, version) => {
     if (actual !== version) fail('Une autre personne a modifié cette fiche. Rechargez avant de continuer.', 409);
   };
@@ -251,6 +261,7 @@ export function workspace(db) {
         check(row?.version || 0, o.version);
         if (row && row.status !== 'Brouillon') fail('Ce devis est figé. Dupliquez-le pour le réviser.', 409);
         const d = document(o);
+        d.lines = snapshotPricing(d.lines);
         d.company = settings();
         d.total = amounts(d.lines, d.discount, d.deposit).total;
         run("INSERT INTO documents(id,data,status,version,updated) VALUES(?,?,'Brouillon',1,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data,version=version+1,updated=excluded.updated", id, JSON.stringify(d), new Date().toISOString());
@@ -272,7 +283,13 @@ export function workspace(db) {
         if (!allowed[d.status]?.includes(next)) fail('Transition indisponible.');
         if (next === 'Validé' && d.valid < new Date().toISOString().slice(0, 10)) fail('Actualisez la date de validité du devis.');
         if (next === 'Validé' && (!d.client.name || !d.lines.length || !amounts(d.lines, d.discount).total)) fail('Ajoutez un client et au moins une prestation facturable.');
-        run('UPDATE documents SET status=?,version=version+1,updated=? WHERE id=?', next, new Date().toISOString(), id);
+        let pricingSnapshot = null;
+        if (d.status === 'Brouillon') {
+          const data = JSON.parse(get('SELECT data FROM documents WHERE id=?', id).data);
+          data.lines = snapshotPricing(data.lines);
+          pricingSnapshot = JSON.stringify(data);
+        }
+        run('UPDATE documents SET data=COALESCE(?,data),status=?,version=version+1,updated=? WHERE id=?', pricingSnapshot, next, new Date().toISOString(), id);
         event(actor, 'Devis · ' + next, id);
         return findDoc(id);
       });

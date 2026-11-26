@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { catalog, tiers, units } from '../src/catalog.js';
 import { fields, conditions } from '../src/domain.js';
 const read = p => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
-const names = ['ui','mobile', 'money', 'voice', 'assistant', 'brief', 'photos','edition','writer','references','courrier','terrain', 'signature','sheet','billing','nilo','editor', 'app'];
+const names = ['ui','mobile', 'money', 'pricing', 'voice', 'assistant', 'brief', 'photos','edition','writer','references','courrier','terrain', 'signature','sheet','billing','nilo','editor', 'app'];
 const logo = 'data:image/svg+xml;base64,' + Buffer.from(read('web/icon.svg')).toString('base64');
 let js = 'const modules={};let demoApi;\n' + read('scripts/demo-runtime.js') + '\n';
 for (const name of names) {

@@ -1,3 +1,4 @@
+import { fixedTier } from '../web/pricing.js';
 import { generateGemini } from './gemini-api.js';
 import { fail, str, uuid } from './workspace.js';
 import { tiers } from './catalog.js';
@@ -208,8 +209,9 @@ function recordPlan(action, scope, target, records, messages) {
     const text = normalize(messages.join(' '));
     const chosen = tiers.map((name, tier) => ({ name, tier })).filter(({ name }) => includesWords(text, normalize(name)));
     const price = literalNumber(messages, euroUnit);
-    if (chosen.length === 1 && price !== undefined && price <= 10000000 && !includesWords(text, 'ttc')) {
-      plan.tier = chosen[0].tier;
+    const single = matches.every(service => fixedTier(service) !== undefined);
+    if ((single || chosen.length === 1) && price !== undefined && price <= 10000000 && !includesWords(text, 'ttc')) {
+      if (!single) plan.tier = chosen[0].tier;
       plan.price = price;
     }
   }

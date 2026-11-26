@@ -1,3 +1,4 @@
+import { hasLineTier } from './pricing.js';
 import { $, esc, button, dialog, input, toast, api } from './ui.js';
 import { startRecording, wavBase64 } from './voice.js';
 import { euros } from './money.js';
@@ -32,7 +33,7 @@ export function brief(state, apply, initialMessage = '') {
       button('send', busy ? 'Analyse en cours…' : 'Analyser avec Gemini', 'arrow', 'primary') + '</div>' +
       (feedback ? '<p class="hint" role="status">' + esc(feedback) + '</p>' : '') +
       (blob ? '<audio controls id="briefAudio"></audio>' : '') +
-      (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, state.tiers[l.tier], l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide"' + (busy ? ' disabled' : '') + '>Ajouter la sélection au devis</button></form>' : ''));
+      (proposal.lines.length ? '<form id="proposal"><h3>Proposition à vérifier</h3>' + proposal.lines.map((l, i) => '<label class="agree"><input type="checkbox" name="line" checked value="' + i + '">' + esc([l.lot, l.label, hasLineTier(l) ? state.tiers[l.tier] : '', l.quantity / 100 + ' ' + l.unit, euros(l.price) + ' HT / ' + l.unit].filter(Boolean).join(' · ')) + '</label>').join('') + input('TVA (%) des lignes retenues', 'tax', 20, 'number', 'min="0" max="100" step=".01" required') + '<button class="wide"' + (busy ? ' disabled' : '') + '>Ajouter la sélection au devis</button></form>' : ''));
     $('#briefText').oninput = e => message = e.target.value;
     const b = a => modal.querySelector('[data-act="' + a + '"]');
     if (playUrl) URL.revokeObjectURL(playUrl);

@@ -34,6 +34,11 @@ test('la proposition IA utilise exclusivement les références et tarifs du cata
   const p = await request();
   assert.equal(p.lines[0].price, 6500);
   assert.equal(p.lines[0].quantity, 255);
+  result.lines[0] = { serviceId: 's54', quantity: 1, tier: 3, lot: 'Salle de bains' };
+  const removal = (await request()).lines[0];
+  assert.equal(removal.price, 35000);
+  assert.equal(removal.tier, 0);
+  assert.equal(removal.fixedPrice, true);
   result.lines[0].serviceId = 'inconnu';
   await assert.rejects(request, /illisible/);
 });

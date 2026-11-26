@@ -1,3 +1,4 @@
+import { fixedTier } from './pricing.js';
 import { $, esc, input, dialog, button, api, toast } from './ui.js';
 import { wavBase64, startRecording } from './voice.js';
 import { amounts, euros } from './money.js';
@@ -56,8 +57,9 @@ export function assistant(state, apply, recipe) {
       base = f.face === 'Mur' ? 's9' : 's1';
     const ids = [base, ...[['removal', 's6'], ['primer', 's7'], ['level', 's8'], ['sealing', 's10']].filter(([k]) => relevant(k) && f[k] === 'Oui').map(x => x[1])];
     return ids.map(id => {
-      const t = id === base ? tier : 1;
       const s = state.services.find(v => v.id === id);
+      const single = fixedTier(s);
+      const t = single ?? (id === base ? tier : 1);
       const price = s?.prices?.[t];
       if (s?.unit !== 'm²' || !Number.isSafeInteger(price) || price < 0) {
         throw Error('Vérifiez les prestations de carrelage et leurs tarifs au m² dans le catalogue.');
@@ -70,7 +72,8 @@ export function assistant(state, apply, recipe) {
         price,
         quantity: Math.round(f.area * 100),
         tax,
-        serviceId: id
+        serviceId: id,
+        ...(single !== undefined && { fixedPrice: true })
       };
     });
   }

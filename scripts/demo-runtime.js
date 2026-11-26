@@ -45,6 +45,7 @@ function createDemoApi({
     quantity: quantity * 100,
     lot,
     tier,
+    ...(modules.pricing.fixedTier(catalog[i]) !== undefined && { fixedPrice: true }),
     price: catalog[i].prices[tier],
     tax: 1000
   });

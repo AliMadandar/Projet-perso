@@ -1,3 +1,4 @@
+import { hasLineTier } from './pricing.js';
 import { esc, dateLabel, $, select, input, area, dialog, onForm, button, api, toast } from './ui.js';
 import { amounts, euros } from './money.js';
 import { photosPaper } from './photos.js';
@@ -41,7 +42,7 @@ export function installments(total,deposit,middle){
 }
 const tierLabels = ['Pose seule', 'Fourniture et pose · Essentiel', 'Fourniture et pose · Confort', 'Fourniture et pose · Premium'];
 
-export function quoteItems(lines, discount) {
+export function quoteItems(lines, discount, draft = false) {
   const groups = [];
   for (const line of lines) {
     const lot = line.lot || '';
@@ -53,13 +54,14 @@ export function quoteItems(lines, discount) {
       ? '<tr class="q-lot" role="row"><th scope="rowgroup" colspan="5" role="rowheader">' + esc(group.lot) + '</th></tr>'
       : '';
     let lotTotal = 0;
-    const rows = group.lines.map(({ label, strong, tier, quantity, unit, price, tax }) => {
+    const rows = group.lines.map(line => {
+      const { label, strong, tier, quantity, unit, price, tax } = line;
       const total = Math.round(quantity * price / 100);
       lotTotal += total;
       const detail = (key, name, value) => '<td class="quote-cell quote-' + key + '" role="cell"><span class="quote-cell-label" aria-hidden="true">' + name + '</span>' + value + '</td>';
       return '<tr class="quote-line" role="row"><td class="quote-description" role="cell">' +
         (strong ? '<strong>' + esc(label) + '</strong>' : esc(label)) +
-        '<small>' + esc(tierLabels[tier] || '') + '</small></td>' +
+        (line.fixedPrice || (draft && !hasLineTier(line)) ? '' : '<small>' + esc(tierLabels[tier] || '') + '</small>') + '</td>' +
         detail('quantity', 'Quantité', esc((quantity / 100).toLocaleString('fr-FR') + ' ' + unit)) +
         detail('price', 'PU HT', euros(price)) + detail('tax', 'TVA', pct(tax)) +
         detail('total', 'Total HT', euros(total)) + '</tr>';
@@ -90,7 +92,7 @@ export function editionPaper(d){
     '<div class="q-meta"><span>Émis le '+(d.issued?dateLabel(d.issued):'…')+'</span><span>Valable jusqu’au '+(d.valid?dateLabel(d.valid):'…')+'</span></div>'+
     '<div class="q-parties"><section><small>Entreprise</small><strong>'+esc(c.name)+'</strong>'+safeLines([c.address,c.phone,c.email,c.identity].filter(Boolean).join('\n'))+'</section><section><small>Destinataire</small><strong>'+esc(d.client.name||'Client à renseigner')+'</strong>'+safeLines([d.client.address,d.client.phone,d.client.email].filter(Boolean).join('\n'))+'</section></div>'+
     fact('Objet des travaux',e.intro)+fact('Spécifications',e.spec)+fact('Fournitures',e.supply)+
-    quoteItems(d.lines,d.discount)+
+    quoteItems(d.lines,d.discount,d.status==='Brouillon')+
     '<section class="q-sum">'+(d.discount?sum('Brut HT',m.gross)+sum('Remise '+pct(d.discount),-m.discount):'')+sum('Total HT',m.net)+m.taxes.map(t=>sum('TVA '+pct(t.rate),t.amount)).join('')+'<div class="q-grand"><span>Total TTC</span><strong>'+euros(m.total)+'</strong></div></section>'+
     (e.order==='Modalités puis échéancier' ? conditions+payment : payment+conditions)+
     '<footer class="q-sign"><b>Bon pour accord</b><span>Nom, date et signature du client</span></footer>'+photosPaper(d.photos)+'</article>';

@@ -1,3 +1,4 @@
+import { fixedTier, hasLineTier } from './pricing.js';
 import { $, esc, input, select, area, button, options, status, dateLabel, today, dialog, onForm, api, toast, icon } from './ui.js';
 import { amounts, euros } from './money.js';
 import { photoDialog, photosPaper } from './photos.js';
@@ -66,7 +67,7 @@ function unsignedPaper(d){
   const m = amounts(d.lines, d.discount, d.deposit),
     c = d.company;
   const row = (s, v, cls = '') => '<div class="' + cls + '"><span>' + esc(s) + '</span><strong>' + euros(v) + '</strong></div>';
-  return '<article class="sheet quote-document"><header><div class="paperbrand"><img src="/ma-logo.png" alt="">' + esc(c.name) + '</div><div><b>DEVIS</b><br>' + esc(d.number || 'Brouillon') + '</div></header><div class="letter"><div><small>ÉMETTEUR</small><strong>' + esc(c.name) + '</strong>' + [c.address, c.email, c.phone, c.identity].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div><small>DESTINATAIRE</small><strong>' + esc(d.client.name || 'Client à renseigner') + '</strong>' + [d.client.address, d.client.email, d.client.phone].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div><h2>' + esc(d.title) + '</h2>' + (d.site ? '<p>' + esc(d.site) + '</p>' : '') + '<p>Émis le ' + (d.issued ? dateLabel(d.issued) : '…') + ' · Valable jusqu’au ' + (d.valid ? dateLabel(d.valid) : '…') + '</p>' + quoteItems(d.lines, d.discount) + '<div class="totals">' + (d.discount ? row('Sous-total HT', m.gross) + row('Remise (' + percent(d.discount) + ')', -m.discount) : '') + row('Total HT', m.net) + m.taxes.map(t => row('TVA ' + percent(t.rate), t.amount)).join('') + row('Total TTC', m.total, 'grand') + (d.deposit ? row('Acompte (' + percent(d.deposit) + ')', m.deposit) + row('Solde TTC', m.total - m.deposit) : '') + '</div>' + (d.notes ? '<section><b>Précisions</b><p>' + esc(d.notes) + '</p></section>' : '') + (d.terms ? '<section><b>Conditions</b><p>' + esc(d.terms) + '</p></section>' : '') + '<footer><b>Bon pour accord</b><p>Date et signature du client</p></footer>' + photosPaper(d.photos) + '</article>';
+  return '<article class="sheet quote-document"><header><div class="paperbrand"><img src="/ma-logo.png" alt="">' + esc(c.name) + '</div><div><b>DEVIS</b><br>' + esc(d.number || 'Brouillon') + '</div></header><div class="letter"><div><small>ÉMETTEUR</small><strong>' + esc(c.name) + '</strong>' + [c.address, c.email, c.phone, c.identity].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div><small>DESTINATAIRE</small><strong>' + esc(d.client.name || 'Client à renseigner') + '</strong>' + [d.client.address, d.client.email, d.client.phone].filter(Boolean).map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div><h2>' + esc(d.title) + '</h2>' + (d.site ? '<p>' + esc(d.site) + '</p>' : '') + '<p>Émis le ' + (d.issued ? dateLabel(d.issued) : '…') + ' · Valable jusqu’au ' + (d.valid ? dateLabel(d.valid) : '…') + '</p>' + quoteItems(d.lines, d.discount, d.status === 'Brouillon') + '<div class="totals">' + (d.discount ? row('Sous-total HT', m.gross) + row('Remise (' + percent(d.discount) + ')', -m.discount) : '') + row('Total HT', m.net) + m.taxes.map(t => row('TVA ' + percent(t.rate), t.amount)).join('') + row('Total TTC', m.total, 'grand') + (d.deposit ? row('Acompte (' + percent(d.deposit) + ')', m.deposit) + row('Solde TTC', m.total - m.deposit) : '') + '</div>' + (d.notes ? '<section><b>Précisions</b><p>' + esc(d.notes) + '</p></section>' : '') + (d.terms ? '<section><b>Conditions</b><p>' + esc(d.terms) + '</p></section>' : '') + '<footer><b>Bon pour accord</b><p>Date et signature du client</p></footer>' + photosPaper(d.photos) + '</article>';
 }
 export function mountEditor(ctx, d) {
   const {
@@ -96,7 +97,7 @@ export function mountEditor(ctx, d) {
     edits++;
     remember();
   };
-  const qrow = (l, i) => '<div class="linebox"><div class="lineinfo"><b>' + esc(l.label) + '</b><small>' + esc(l.lot || 'Prestation') + ' · ' + esc(state.tiers[l.tier]) + ' · ' + decimal(l.quantity) + ' ' + esc(l.unit) + ' × ' + euros(l.price) + '</small></div><strong>' + euros(Math.round(l.price * l.quantity / 100)) + '</strong>' + (editable ? button('line-' + i, 'Modifier', 'edit', 'icononly') + button('del-' + i, 'Retirer', 'trash', 'icononly') : '') + '</div>';
+  const qrow = (l, i) => '<div class="linebox"><div class="lineinfo"><b>' + esc(l.label) + '</b><small>' + esc(l.lot || 'Prestation') + (hasLineTier(l) ? ' · ' + esc(state.tiers[l.tier]) : '') + ' · ' + decimal(l.quantity) + ' ' + esc(l.unit) + ' × ' + euros(l.price) + '</small></div><strong>' + euros(Math.round(l.price * l.quantity / 100)) + '</strong>' + (editable ? button('line-' + i, 'Modifier', 'edit', 'icononly') + button('del-' + i, 'Retirer', 'trash', 'icononly') : '') + '</div>';
   let sheetMode=false,mobilePane=editable?'saisie':'apercu';
   const panes=()=>'<div class="quote-switch" role="group" aria-label="Rubriques du devis">'+[['saisie','Fiche'],['apercu','Feuille'],...(d.version?[['suivi','Suivi']]:[])].map(([id,label])=>'<button type="button" data-act="pane-'+id+'" aria-pressed="'+(mobilePane===id)+'">'+label+'</button>').join('')+'</div>';
   function wireSheet(){
@@ -165,28 +166,48 @@ export function mountEditor(ctx, d) {
   }
   function lineDialog(index) {
     const l = d.lines[index];
-    dialog(l ? 'Modifier la prestation' : 'Ajouter une prestation', '<form id="lineForm">' + select('Filtrer les prestations par métier','categoryFilter',[['','Tous les métiers'],...Array.from(new Set(state.services.map(s=>s.category))).sort().map(c=>[c,c])],'') + select('Catalogue', 'serviceId', [['', 'Ligne libre'], ...state.services.map(s => [s.id, s.category + ' · ' + s.label])], l?.serviceId || '') + select('Gamme tarifaire', 'tier', state.tiers.map((t, i) => [i, t]), l?.tier ?? 0) + input('Libellé', 'label', l?.label || '', 'text', 'required maxlength="250"') + select('Présentation du libellé','emphasis',[['normal','Normal'],['bold','Gras']],l?.strong?'bold':'normal') + input('Pièce ou lot', 'lot', l?.lot ?? d.lines.at(-1)?.lot ?? '', 'text','list="qLotIdeas"') + '<datalist id="qLotIdeas">'+(lotIdeas[d.edition?.trade]||[]).map(x=>'<option value="'+esc(x)+'">').join('')+'</datalist>' + '<div class="fields">' + input('Quantité', 'quantity', decimal(l?.quantity ?? 100), 'number', 'min=".01" max="10000" step=".01" required') + select('Unité', 'unit', state.units.map(v => [v, v]), l?.unit || 'm²') + input('Prix unitaire HT (€)', 'price', decimal(l?.price || 0), 'number', 'min="0" max="100000" step=".01" required') + input('TVA (%)', 'tax', decimal(l?.tax ?? 2000), 'number', 'min="0" max="100" step=".01" required') + '</div>' + (l ? input('Position dans le devis', 'position', index + 1, 'number', 'min="1" max="' + d.lines.length + '" required') : '') + '<button class="primary wide">Appliquer au devis</button></form>');
+    const canSetPrice = state.me.role === 'Administrateur';
+    const serviceOptions = rows => [[ '', canSetPrice || l ? 'Ligne libre' : 'Choisir une prestation'],
+      ...rows.map(service => [service.id, service.category + ' · ' + service.label])];
+    dialog(l ? 'Modifier la prestation' : 'Ajouter une prestation', '<form id="lineForm">' + select('Filtrer les prestations par métier','categoryFilter',[['','Tous les métiers'],...Array.from(new Set(state.services.map(s=>s.category))).sort().map(c=>[c,c])],'') + select('Catalogue', 'serviceId', serviceOptions(state.services), l?.serviceId || '') + select('Gamme tarifaire', 'tier', state.tiers.map((t, i) => [i, t]), l?.tier ?? 0) + input('Libellé', 'label', l?.label || '', 'text', 'required maxlength="250"') + select('Présentation du libellé','emphasis',[['normal','Normal'],['bold','Gras']],l?.strong?'bold':'normal') + input('Pièce ou lot', 'lot', l?.lot ?? d.lines.at(-1)?.lot ?? '', 'text','list="qLotIdeas"') + '<datalist id="qLotIdeas">'+(lotIdeas[d.edition?.trade]||[]).map(x=>'<option value="'+esc(x)+'">').join('')+'</datalist>' + '<div class="fields">' + input('Quantité', 'quantity', decimal(l?.quantity ?? 100), 'number', 'min=".01" max="10000" step=".01" required') + select('Unité', 'unit', state.units.map(v => [v, v]), l?.unit || 'm²') + input('Prix unitaire HT (€)', 'price', decimal(l?.price || 0), 'number', 'min="0" max="100000" step=".01" required') + input('TVA (%)', 'tax', decimal(l?.tax ?? 2000), 'number', 'min="0" max="100" step=".01" required') + '</div>' + (l ? input('Position dans le devis', 'position', index + 1, 'number', 'min="1" max="' + d.lines.length + '" required') : '') + '<button class="primary wide">Appliquer au devis</button></form>');
     const f = $('#lineForm'),
       v = f.elements;
-    function sync() {
-      const s = state.services.find(x => x.id === v.serviceId.value);
-      if (s) {
-        v.label.value = s.label;
-        v.unit.value = s.unit;
-        v.price.value = decimal(s.prices[Number(v.tier.value)]);
-      }
-    }
-    v.categoryFilter.onchange=()=>{
-      const rows=state.services.filter(s=>!v.categoryFilter.value||s.category===v.categoryFilter.value);
-      v.serviceId.innerHTML=options([['','Ligne libre'],...rows.map(s=>[s.id,s.label])],v.serviceId.value);
+    const selected = () => state.services.find(service => service.id === v.serviceId.value);
+    const showTier = () => {
+      const service = selected();
+      const visible = Boolean(service && fixedTier(service) === undefined);
+      v.tier.closest('label').hidden = !visible;
+      v.tier.disabled = !visible;
     };
-    if(state.me.role!=='Administrateur')v.price.readOnly=true;
-    v.serviceId.onchange = sync;
-    v.tier.onchange = sync;
+    v.categoryFilter.onchange = () => {
+      const current = v.serviceId.value;
+      const rows = state.services.filter(service =>
+        !v.categoryFilter.value || service.category === v.categoryFilter.value || service.id === current
+      );
+      v.serviceId.innerHTML = options(serviceOptions(rows), current);
+    };
+    v.price.readOnly = !canSetPrice;
+    v.serviceId.required = !canSetPrice && !l;
+    v.serviceId.onchange = () => {
+      const service = selected();
+      const tier = fixedTier(service) ?? 0;
+      v.tier.value = tier;
+      v.label.value = service?.label || '';
+      v.unit.value = service?.unit || 'm²';
+      v.price.value = service ? decimal(service.prices[tier]) : '';
+      showTier();
+    };
+    v.tier.onchange = () => {
+      const service = selected();
+      if (service) v.price.value = decimal(service.prices[Number(v.tier.value)]);
+    };
+    showTier();
     onForm('#lineForm', async o => {
+      const service = selected();
       const line = {
         ...o,
-        tier: Number(o.tier)
+        tier: Number(v.tier.value),
+        ...((!service || fixedTier(service) !== undefined) && { fixedPrice: true })
       };
       line.strong = o.emphasis === 'bold';
       delete line.emphasis;

@@ -14,6 +14,7 @@ import {correspondence,gmailReady} from './correspondance.js';
 import {rewriteText} from './rewrite.js';
 import { fields, conditions, validate } from './domain.js';
 import { tiers, units } from './catalog.js';
+import { fixedTier } from '../web/pricing.js';
 const store = openStore(process.env.DB_PATH || 'data/atelier.sqlite');
 const w = workspace(store.db),
   access = await auth(w), mail=correspondence(w),
@@ -25,7 +26,7 @@ if (prod && (!origin || !origin.startsWith('https://'))) throw Error('APP_ORIGIN
 const pages = new Map([['/', 'vitrine.html'], ['/atelier', 'index.html'], ['/client', 'client.html']]);
 const assets = new Set([
   'index.html','theme.js','mobile.js','mobile.css', 'app.js', 'ui.js', 'editor.js', 'photos.js','edition.js','courrier.js','terrain.js','writer.js','ma-logo.png','references.js', 'assistant.js', 'brief.js', 'voice.js', 'style.css', 'money.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'sw.js', 'offline.html', 'client.html', 'client.js','billing.js','sheet.js','signature.js','fonts/inter-latin.woff2','fonts/OFL-Inter.txt',
-  'nilo.js', 'vitrine.html', 'vitrine.css', 'vitrine.js', 'vitrine/atelier.webp', 'vitrine/devis.webp',
+  'nilo.js', 'pricing.js', 'vitrine.html', 'vitrine.css', 'vitrine.js', 'vitrine/atelier.webp', 'vitrine/devis.webp',
   'vitrine/signature.webp', 'vitrine/reglements.webp', 'vitrine/chantier.webp', 'vitrine/mobile.webp'
 ]);
 const types = {
@@ -239,7 +240,9 @@ const server = http.createServer(async (req, res) => {
         const prices=new Map(w.list('services').map(s=>[s.id,s]));
         const prior=o.version?w.findDoc(uuid(o.id)).lines:[];
         for(const l of o.lines){
-          if(prices.get(l.serviceId)?.prices?.[l.tier]===l.price)continue;
+          const service = prices.get(l.serviceId);
+          const single = fixedTier(service);
+          if ((single === undefined || l.tier === single) && service?.prices?.[l.tier] === l.price) continue;
           if(prior.some(p=>p.serviceId===l.serviceId&&p.tier===l.tier&&p.price===l.price))continue;
           fail('Tarif réservé à l’administration. Choisissez une prestation du catalogue.',403);
         }

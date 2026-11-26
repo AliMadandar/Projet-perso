@@ -1,3 +1,4 @@
+import { fixedTier } from './pricing.js';
 import { mobileNav, mobileMore, mobileHome, bindPageSwipe } from './mobile.js';
 import {terrain} from './terrain.js';
 import { priceReference } from './references.js';
@@ -160,16 +161,28 @@ function serviceForm(s = {
   version: 0,
   prices: [0, 0, 0, 0]
 }, { name = s.label, tier, price } = {}) {
-  const prices = state.tiers.map((label, i) => {
-    const cents = i === tier && Number.isSafeInteger(price) ? price : s.prices[i];
-    return input(label + ' (€ HT)', 'p' + i, cents / 100, 'number', 'min="0" max="100000" step=".01" required');
-  }).join('');
-  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', name, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields">' + prices + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
+  let single = fixedTier({ ...s, label: name });
+  const proposedTier = single ?? tier;
+  const values = s.prices.map((cents, i) => (i === proposedTier && Number.isSafeInteger(price) ? price : cents) / 100);
+  const priceFields = () => (single === undefined ? state.tiers.map((label, i) => [i, label]) : [[single, 'Tarif unique']])
+    .map(([i, label]) => input(label + ' (€ HT)', 'p' + i, values[i], 'number', 'min="0" max="100000" step=".01" required'))
+    .join('');
+  dialog(s.version ? 'Modifier le tarif' : 'Nouvelle prestation', '<form id="service">' + input('Prestation', 'label', name, 'text', 'required') + input('Corps de métier', 'category', s.category, 'text', 'required') + select('Unité', 'unit', state.units.map(x => [x, x]), s.unit) + '<div class="fields" id="servicePrices">' + priceFields() + '</div><button class="primary wide">Enregistrer les tarifs</button></form>');
+  const form = $('#service');
+  form.elements.label.oninput = () => {
+    const next = fixedTier({ ...s, label: form.elements.label.value });
+    if (next === single) return;
+    values.forEach((_, i) => {
+      if (form.elements['p' + i]) values[i] = form.elements['p' + i].value;
+    });
+    single = next;
+    form.querySelector('#servicePrices').innerHTML = priceFields();
+  };
   onForm('#service', async o => {
     replace(state.services, await api('services', {
       ...s,
       ...o,
-      prices: state.tiers.map((_, i) => Math.round(Number(o['p' + i]) * 100))
+      prices: s.prices.map((cents, i) => o['p' + i] === undefined ? cents : Math.round(Number(o['p' + i]) * 100))
     }));
     modal.close();
     go('Catalogue');
@@ -177,7 +190,7 @@ function serviceForm(s = {
   });
 }
 function catalogue(main, selected) {
-  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes, par formule.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', selected?.label || '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
+  main.innerHTML = head('Catalogue des prix', 'Tarifs unitaires hors taxes et gammes selon les prestations.', admin() ? button('service', 'Nouvelle prestation', 'plus', 'primary') : '') + '<section class="card"><div class="filters">' + input('Rechercher', 'query', selected?.label || '', 'search', 'placeholder="Carrelage, parquet…"') + select('Corps de métier', 'category', ['Tous', ...new Set(state.services.map(s => s.category))].map(s => [s, s]), 'Tous') + '</div><div id="results" class="tablewrap"></div></section>';
   main.insertAdjacentHTML('beforeend','<details><summary>Rechercher une fourniture</summary>'+input('Produit, format ou référence','produit','','search')+'<div class="actions"><a id="leroy" target="_blank" rel="noopener">Leroy Merlin</a><a id="plateforme" target="_blank" rel="noopener">La Plateforme du Bâtiment</a></div></details>'+priceReference());
   const supplier=()=>{const q=$('[name=produit]').value.trim();$('#leroy').href='https://www.leroymerlin.fr/recherche/?q='+encodeURIComponent(q);
     $('#plateforme').href=q?'https://www.google.com/search?q='+encodeURIComponent('site:laplateforme.com '+q):'https://www.laplateforme.com/';};
@@ -187,7 +200,11 @@ function catalogue(main, selected) {
       cat = $('[name=category]').value;
     const rows = state.services.filter(s => selected ? s.id === selected.id :
       (cat === 'Tous' || s.category === cat) && s.label.toLowerCase().includes(q));
-    $('#results').innerHTML = '<table><thead><tr><th>Prestation</th>' + state.tiers.map(t => '<th>' + t + '</th>').join('') + '</tr></thead><tbody>' + rows.map(s => '<tr><td>' + (admin() ? button('service-' + s.id, s.label, '', 'link') : esc(s.label)) + '<small>' + esc(s.category) + ' · ' + esc(s.unit) + '</small></td>' + s.prices.map(v => '<td>' + euros(v) + '</td>').join('') + '</tr>').join('') + '</tbody></table>' + (rows.length ? '' : '<p class="empty">Aucune prestation correspondante.</p>');
+    $('#results').innerHTML = '<table><thead><tr><th>Prestation</th>' + state.tiers.map(t => '<th>' + t + '</th>').join('') + '</tr></thead><tbody>' + rows.map(s => {
+      const single = fixedTier(s);
+      return '<tr><td>' + (admin() ? button('service-' + s.id, s.label, '', 'link') : esc(s.label)) + '<small>' + esc(s.category) + ' · ' + esc(s.unit) + '</small></td>' + (single === undefined ? s.prices.map(v => '<td>' + euros(v) + '</td>').join('') :
+        '<td colspan="4"><strong>' + euros(s.prices[single]) + '</strong><small>Tarif unique</small></td>') + '</tr>';
+    }).join('') + '</tbody></table>' + (rows.length ? '' : '<p class="empty">Aucune prestation correspondante.</p>');
   }
   main.oninput = event => {
     if (event.target.name !== 'produit') selected = undefined;
